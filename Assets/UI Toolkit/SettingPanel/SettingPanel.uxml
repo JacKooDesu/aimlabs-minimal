@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/SettingPanel/setting-panel.uss?fileID=7433441132597879392&amp;guid=173d37edd1d68c947b71e0fe35e13a8d&amp;type=3#setting-panel" />
+    <ui:VisualElement name="BasePanel" class="panel">
+        <ui:VisualElement name="UpperSelection" class="upper-selection" style="align-items: stretch;">
+            <ui:Button text="Gameplay" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Gameplay" class="upper-selection__item" />
+            <ui:Button text="Control" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Control" class="upper-selection__item" />
+            <ui:Button text="Graphic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Graphic" class="upper-selection__item" />
+        </ui:VisualElement>
+        <ui:ScrollView name="ContentArea">
+            <ui:VisualElement name="Gameplay-Page" class="content-base" style="flex-grow: 1;" />
+            <ui:VisualElement name="Control-Page" class="content-base" style="flex-grow: 1;" />
+            <ui:VisualElement name="Graphic-Page" class="content-base" style="flex-grow: 1;" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
