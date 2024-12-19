@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7332948264354272102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4727857526360420674}
+  - component: {fileID: 903707489479508920}
+  - component: {fileID: 6321737515882331602}
+  - component: {fileID: 961159730489425727}
+  - component: {fileID: 3979374072820464202}
+  - component: {fileID: 2300667001759315932}
+  m_Layer: 0
+  m_Name: Setting Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4727857526360420674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903707489479508920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: a3441e6761653144cbc80a74173c0a1e, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 4684425dc814c2345b9c0ce2da0319b5, type: 3}
+  m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!114 &6321737515882331602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0505729c401e41949a98e0e33b859eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _items:
+  - rid: 4488369609210331139
+  - rid: 4488369609210331140
+  - rid: 4488369609210331141
+  _index: 0
+  _defaultActiveProperty: active
+  _defaultInctiveProperty: hide
+  _defaultLinkSuffix: -Page
+  references:
+    version: 2
+    RefIds:
+    - rid: 4488369609210331139
+      type: {class: LinkedPages/ButtonItem, ns: ALM.Util.UIToolkitExtend, asm: ALM}
+      data:
+        <Name>k__BackingField: Gameplay
+    - rid: 4488369609210331140
+      type: {class: LinkedPages/ButtonItem, ns: ALM.Util.UIToolkitExtend, asm: ALM}
+      data:
+        <Name>k__BackingField: Control
+    - rid: 4488369609210331141
+      type: {class: LinkedPages/ButtonItem, ns: ALM.Util.UIToolkitExtend, asm: ALM}
+      data:
+        <Name>k__BackingField: Graphic
+--- !u!114 &961159730489425727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53340a3c5fb7b2d458d46f3b3fc2b736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Target>k__BackingField: Gameplay-Page
+--- !u!114 &3979374072820464202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53340a3c5fb7b2d458d46f3b3fc2b736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Target>k__BackingField: Control-Page
+--- !u!114 &2300667001759315932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01b25792e2a2b34ab86705c01ad17ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameplaySettingBinder: {fileID: 961159730489425727}
+  _controlSettingBinder: {fileID: 3979374072820464202}
+  _graphicSettingBinder: {fileID: 0}

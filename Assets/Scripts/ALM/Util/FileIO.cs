@@ -12,28 +12,37 @@ namespace ALM.Util
 
         readonly static string SAVE_PATH =
 #if UNITY_EDITOR
-            Application.dataPath;
+            Application.dataPath + "/../";
 #else
             Application.persistentDataPath;
 #endif
 
-        public static void JSave<T>(T obj, string path)
+        public static void JSave<T>(T obj, string path, string name)
         {
             string json = JsonConvert.SerializeObject(obj);
-            File.WriteAllText(path, json);
+            File.WriteAllText(GetPath(path, name).Dbg("saving: "), json);
         }
 
-        public static T JLoad<T>(string path)
+        public static T JLoad<T>(string path, string name, bool createDefault = false)
         {
-            string json = File.ReadAllText(path);
+            var filePath = GetPath(path, name).Dbg("loading: ");
+
+            if (createDefault && !File.Exists(filePath))
+            {
+                var obj = System.Activator.CreateInstance<T>();
+                JSave(obj, path, name);
+                return obj;
+            }
+
+            string json = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        static string GetSavePath(string subPath, string name)
+        static string GetPath(string subPath, string name)
         {
-            var path = Path.Combine(SAVE_PATH, subPath, name);
+            var path = Path.Combine(SAVE_PATH, subPath);
             Directory.CreateDirectory(path);
-            return path;
+            return Path.Combine(SAVE_PATH, subPath, name);
         }
     }
 }
