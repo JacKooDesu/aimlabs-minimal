@@ -24,7 +24,14 @@ namespace ALM.Screens.Base
         [Inject]
         public ControlSetting _controlSetting;
 
-        bool _binding = false;
+        VisualElement _ui;
+
+        public bool Binding { get; private set; }
+
+        void Awake()
+        {
+            _ui = GetComponent<UIDocument>().rootVisualElement;
+        }
 
         void Start()
         {
@@ -39,7 +46,7 @@ namespace ALM.Screens.Base
             _controlSettingBinder.Bindings.ForEach(b =>
                 b.Element.RegisterCallback<ClickEvent>(e =>
                 {
-                    if (_binding)
+                    if (Binding)
                         return;
 
                     b.Element.SetEnabled(false);
@@ -54,11 +61,13 @@ namespace ALM.Screens.Base
                         }
                     ).Forget();
                 }));
+
+            SetActive(false, true);
         }
 
         async UniTask<KeyCode?> SetKeybind()
         {
-            _binding = true;
+            Binding = true;
 
             var keys = Enum.GetValues(typeof(KeyCode)).Cast<KeyCode>().ToArray();
             KeyCode? input = null;
@@ -67,12 +76,31 @@ namespace ALM.Screens.Base
                 Input.GetKeyDown(k) &&
                 (input = k) is not null));
 
-            _binding = false;
+            Binding = false;
 
             if (input is KeyCode.Escape)
                 return null;
 
             return input.Dbg();
+        }
+
+        public void SwitchActive()
+        {
+            if (Binding)
+                return;
+
+            SetActive(!_ui.visible);
+        }
+
+        public void SetActive(bool active, bool ignoreSave = false)
+        {
+            _ui.visible = active;
+
+            if (!active && !ignoreSave)
+            {
+                _gameplaySetting.Save();
+                _controlSetting.Save();
+            }
         }
     }
 }

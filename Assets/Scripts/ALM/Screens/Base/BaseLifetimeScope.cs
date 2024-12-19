@@ -13,14 +13,14 @@ namespace ALM.Screens.Base
             builder.RegisterEntryPoint<BaseEntry>();
 
             builder.Register<GameplaySetting>(
-                c => FileIO.JLoad<GameplaySetting>(
-                    "settings", "gameplay_setting.json", true),
+                _ => GameplaySetting.Load(),
                 Lifetime.Singleton);
 
             builder.Register<ControlSetting>(
-                c => FileIO.JLoad<ControlSetting>(
-                    "settings", "control_setting.json", true),
+                _ => ControlSetting.Load(),
                 Lifetime.Singleton);
+
+            builder.RegisterComponentInHierarchy<SettingPanel>();
         }
     }
 }

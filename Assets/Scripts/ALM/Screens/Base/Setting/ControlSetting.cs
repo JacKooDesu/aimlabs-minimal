@@ -5,10 +5,15 @@ using ALM.Util.UIToolkitExtend;
 
 namespace ALM.Screens.Base.Setting
 {
+    using Util;
     using static Util.UIToolkitExtend.DataBinder;
 
     public class ControlSetting
     {
+        const string PATH = "settings";
+        const string NAME = "gameplay_setting.json";
+
+
         [JsonProperty("fire_button")]
         public KeyCode FireButton { get; private set; } = KeyCode.Mouse0;
         [JsonProperty("jump_button")]
@@ -37,5 +42,10 @@ namespace ALM.Screens.Base.Setting
                 Bindable.Create<KeybindElement.Bindalbe>("Right Button", nameof(RightButton)),
             };
         }
+
+        public static ControlSetting Load() =>
+            FileIO.JLoad<ControlSetting>(PATH, NAME, true);
+        public void Save() =>
+            FileIO.JSave(this, PATH, NAME);
     }
 }

@@ -3,10 +3,16 @@ using Newtonsoft.Json;
 
 namespace ALM.Screens.Base.Setting
 {
+    using Util;
     using static Util.UIToolkitExtend.DataBinder;
+
     [JsonObject]
     public class GameplaySetting
     {
+        const string PATH = "settings";
+        const string NAME = "gameplay_setting.json";
+
+
         [JsonProperty("sensitivity")]
         public float Sensitivity { get; private set; } = 1.0f;
         [JsonProperty("invertY")]
@@ -23,5 +29,10 @@ namespace ALM.Screens.Base.Setting
                 Bindable.Create<Toggle>("Invert X", nameof(InvertX)),
             };
         }
+
+        public static GameplaySetting Load() =>
+            FileIO.JLoad<GameplaySetting>(PATH, NAME, true);
+        public void Save() => 
+            FileIO.JSave(this, PATH, NAME);
     }
 }
