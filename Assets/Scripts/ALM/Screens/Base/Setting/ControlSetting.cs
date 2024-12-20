@@ -11,7 +11,7 @@ namespace ALM.Screens.Base.Setting
     public class ControlSetting
     {
         const string PATH = "settings";
-        const string NAME = "gameplay_setting.json";
+        const string NAME = "control_setting.json";
 
 
         [JsonProperty("fire_button")]
