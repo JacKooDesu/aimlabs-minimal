@@ -1,3 +1,3 @@
-import UnityEngine from "csharp.UnityEngine";
+import UnityEngine from "csharp";
 
-UnityEngine.Debug.Log("Hello");
+CS.UnityEngine.Debug.Log("Hello, World!");

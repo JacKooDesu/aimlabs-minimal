@@ -12,13 +12,18 @@
     "../Assets/Gen/Typing/csharp/"
   ],
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES6",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": [
       "DOM",
       "ES2020",
       "ScriptHost",
       "DOM.Iterable"
+    ],
+    "typeRoots": [
+      "../Assets/Puerts/Typing",
+      "../Assets/Gen/Typing",
+      "./node_modules/@types"
     ],
     "types": [],
     "preserveSymlinks": true,
