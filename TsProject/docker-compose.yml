@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  npm-env:
+    container_name: puerts-env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    volumes:
+      - ..:/Project
+    working_dir: /Project/TsProject
