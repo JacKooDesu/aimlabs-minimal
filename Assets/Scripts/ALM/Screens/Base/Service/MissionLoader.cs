@@ -31,7 +31,7 @@ namespace ALM.Screens.Base
             foreach (var mFolder in Directory.GetDirectories(missionDir))
             {
                 DirectoryInfo di = new(mFolder);
-                
+
                 var outlinePath = Path.Combine(
                     di.FullName,
                     $"{(di.Name)}.json");
@@ -64,5 +64,7 @@ namespace ALM.Screens.Base
             _missions[index];
         public PlayableMission GetMission(string name) =>
             _missions.Find(x => x.Outline.Name == name);
+        public IEnumerable<PlayableMission> GetMissions() =>
+            _missions;
     }
 }
