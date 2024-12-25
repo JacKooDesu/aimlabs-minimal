@@ -1,20 +1,51 @@
+using System.Collections.Generic;
 using UnityEngine.UIElements;
 
 namespace ALM.Screens.Menu
 {
+    using ALM.Screens.Base;
     using Common;
 
     public class SelectMission : MenuUIBase
     {
         protected override string BaseElementName => "MissionPanel";
         public override uint Index => ((uint)UIIndex.SelectMission);
+        readonly MissionLoader _missionLoader;
+
+        List<Button> _missionButtons { get; } = new();
+
+        public SelectMission(MissionLoader missionLoader)
+        {
+            _missionLoader = missionLoader;
+        }
 
         protected override void AfterConfig()
         {
             base.AfterConfig();
+            GenerateMissionList();
+        }
 
-            _elementBase.Q<Button>("TestMissionButton").RegisterCallback<ClickEvent>(
-                _ => UIStackHandler.PushUI((uint)UIIndex.MissionInfo));
+        void GenerateMissionList()
+        {
+            var selectionInner = _elementBase.Q(name: "SelectionInner");
+
+            _missionButtons.ForEach(button => selectionInner.Remove(button));
+            _missionButtons.Clear();
+
+            foreach (var mission in _missionLoader.GetMissions())
+            {
+                Button button = new();
+                button.text = mission.Outline.Name;
+                button.RegisterCallback<ClickEvent>(_ => OnSelectMission(mission));
+                selectionInner.Add(button);
+
+                _missionButtons.Add(button);
+            }
+        }
+
+        void OnSelectMission(MissionLoader.PlayableMission mission)
+        {
+            UIStackHandler.PushUI((uint)UIIndex.MissionInfo, mission);
         }
     }
 }

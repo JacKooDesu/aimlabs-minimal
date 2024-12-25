@@ -10,9 +10,7 @@
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="MissionPanel" class="selection-parent 2nd inactive" style="height: auto; top: 10%; bottom: 10%;">
-        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
-            <engine:Button text="Test Mission" name="TestMissionButton" />
-        </engine:VisualElement>
+        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="CreditPanel" class="selection-parent 2nd inactive">
@@ -23,8 +21,10 @@
     </engine:VisualElement>
     <engine:VisualElement name="MissionInfo" class="selection-parent 3rd inactive">
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
-            <engine:Label text="Mission Info Name" name="Title" class="credit-title" />
-            <engine:Label text="Mission Desc" name="Content" class="credit-content" />
+            <engine:Label text="Mission Info Name" name="MissionName" class="credit-title" />
+            <engine:Label text="Mission Desc" name="MissionDescription" class="credit-content" />
+            <engine:Label text="Mission Desc" name="MissionAuthor" class="credit-content" />
+            <engine:Button text="Play" name="Play" />
         </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>

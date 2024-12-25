@@ -8,7 +8,7 @@ namespace ALM.Common
 {
     public static class UIStackHandler
     {
-        public record UI(uint index, UIBase ui);
+        public record UI(uint index, UIBase ui, object data = null);
         static Stack<UI> _uiStack = new();
         static Dictionary<uint, UIBase> _uiDict = new();
 
@@ -23,15 +23,15 @@ namespace ALM.Common
 
         }
 
-        public static void PushUI(uint index)
+        public static void PushUI(uint index, object data = null)
         {
             if (_uiStack.TryPeek(out var currentUI))
                 currentUI.ui.Overlapped();
 
             if (_uiDict.TryGetValue((uint)index, out var nextUI))
             {
+                _uiStack.Push(new((uint)index, nextUI, data));
                 nextUI.Push();
-                _uiStack.Push(new((uint)index, nextUI));
             }
         }
 
@@ -60,5 +60,7 @@ namespace ALM.Common
             foreach (var ui in uis)
                 _uiDict.Add(ui.Index, ui);
         }
+
+        public static UI Current() => _uiStack.Peek();
     }
 }

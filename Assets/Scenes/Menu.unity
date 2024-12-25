@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: 
+    TypeName: ALM.Screens.Base.BaseLifetimeScope
   autoRun: 1
   autoInjectGameObjects: []
   _rootUi: {fileID: 763082920}
