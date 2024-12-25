@@ -3,13 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace ALM.Util
 {
     public static class FileIO
     {
-        // public abstract record SaveSetting();
-
         readonly static string SAVE_PATH =
 #if UNITY_EDITOR
             Application.dataPath + "/../";
@@ -17,10 +16,25 @@ namespace ALM.Util
             Application.persistentDataPath;
 #endif
 
+        readonly static DirectoryInfo _saveDirInfo = new(SAVE_PATH);
+
+        [RuntimeInitializeOnLoadMethod]
+        static void InitDirectories()
+        {
+            Directory.CreateDirectory(SAVE_PATH);
+            Directory.CreateDirectory(Constants.SETTING_PATH);
+        }
+
         public static void JSave<T>(T obj, string path, string name)
         {
             string json = JsonConvert.SerializeObject(obj);
             File.WriteAllText(GetPath(path, name).Dbg("saving: "), json);
+        }
+
+        public static void JSave<T>(T obj, string filePath)
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            File.WriteAllText(GetPath(filePath).Dbg("saving: "), json);
         }
 
         public static T JLoad<T>(string path, string name, bool createDefault = false)
@@ -38,10 +52,23 @@ namespace ALM.Util
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        static string GetPath(string subPath, string name)
+        public static T JLoad<T>(string filePath, bool createDefault = false)
+        {
+            filePath = GetPath(filePath);
+            if (createDefault && !File.Exists(filePath))
+            {
+                var obj = System.Activator.CreateInstance<T>();
+                JSave(obj, filePath);
+                return obj;
+            }
+
+            string json = File.ReadAllText(filePath);
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        public static string GetPath(string subPath, string name = "")
         {
             var path = Path.Combine(SAVE_PATH, subPath);
-            Directory.CreateDirectory(path);
             return Path.Combine(SAVE_PATH, subPath, name);
         }
     }
