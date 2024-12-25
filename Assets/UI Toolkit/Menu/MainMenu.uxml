@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Menu/main-menu.uss?fileID=7433441132597879392&amp;guid=2e4effc7af7c8e94e964056549cc6c47&amp;type=3#main-menu" />
+    <engine:VisualElement name="Base" style="flex-grow: 1;">
+        <engine:VisualElement name="SelectionParent" class="selection-parent" style="flex-grow: 1; top: 0;">
+            <engine:Button text="Select Mission" name="SelectMission" />
+            <engine:Button text="Import Mission" name="ImportMission" />
+            <engine:Button text="Check Update" name="CheckUpdate" />
+            <engine:Button text="Credit" name="Credit" />
+        </engine:VisualElement>
+        <engine:Button text="X" name="Exit" class="exit-button" style="bottom: auto; position: absolute; right: 20px; top: 20px;" />
+    </engine:VisualElement>
+</engine:UXML>
