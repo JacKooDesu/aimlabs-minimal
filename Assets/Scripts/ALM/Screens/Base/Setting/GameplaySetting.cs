@@ -9,7 +9,6 @@ namespace ALM.Screens.Base.Setting
     [JsonObject]
     public class GameplaySetting
     {
-        const string PATH = "settings";
         const string NAME = "gameplay_setting.json";
 
 
@@ -31,8 +30,8 @@ namespace ALM.Screens.Base.Setting
         }
 
         public static GameplaySetting Load() =>
-            FileIO.JLoad<GameplaySetting>(PATH, NAME, true);
+            FileIO.JLoad<GameplaySetting>(Constants.SETTING_PATH, NAME, true);
         public void Save() => 
-            FileIO.JSave(this, PATH, NAME);
+            FileIO.JSave(this, Constants.SETTING_PATH, NAME);
     }
 }

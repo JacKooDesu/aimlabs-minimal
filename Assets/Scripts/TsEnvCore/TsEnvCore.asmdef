@@ -1,0 +1,16 @@
+{
+    "name": "TsEnvCore",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8824668e3a036ee4393255e54803b71a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

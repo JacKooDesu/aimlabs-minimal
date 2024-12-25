@@ -10,7 +10,6 @@ namespace ALM.Screens.Base.Setting
 
     public class ControlSetting
     {
-        const string PATH = "settings";
         const string NAME = "control_setting.json";
 
 
@@ -44,8 +43,8 @@ namespace ALM.Screens.Base.Setting
         }
 
         public static ControlSetting Load() =>
-            FileIO.JLoad<ControlSetting>(PATH, NAME, true);
+            FileIO.JLoad<ControlSetting>(Constants.SETTING_PATH, NAME, true);
         public void Save() =>
-            FileIO.JSave(this, PATH, NAME);
+            FileIO.JSave(this, Constants.SETTING_PATH, NAME);
     }
 }
