@@ -1,21 +1,65 @@
 .selection-parent {
     flex-grow: 1;
     width: 40%;
-    margin-top: 80px;
-    margin-right: 80px;
-    margin-bottom: 80px;
-    margin-left: 80px;
-    padding-top: 80px;
-    padding-right: 80px;
-    padding-bottom: 80px;
-    padding-left: 80px;
     background-color: rgba(17, 0, 20, 0.7);
     align-content: flex-start;
-    scale: 1 1;
-    transition-property: scale;
+    transition-property: width;
     transition-duration: 0.5s;
     transition-timing-function: ease-out-cubic;
-    transform-origin: left top;
+    position: absolute;
+    height: 80%;
+    top: 10%;
+    left: 5%;
+}
+
+.selection-parent.2nd {
+    flex-grow: 1;
+    width: 40%;
+    background-color: rgba(17, 0, 20, 0.7);
+    align-content: flex-start;
+    transition-property: width, left;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    position: absolute;
+    height: 80%;
+    top: 10%;
+    left: 12%;
+    transition-delay: 0s, 0s;
+}
+
+.selection-parent.3rd {
+    flex-grow: 1;
+    width: 40%;
+    background-color: rgba(17, 0, 20, 0.7);
+    align-content: flex-start;
+    transition-property: width, left;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    position: absolute;
+    height: 80%;
+    top: 10%;
+    left: 19%;
+    transition-delay: 0s, 0s;
+}
+
+.selection-parent.hide {
+    flex-grow: 1;
+    width: 5%;
+    background-color: rgba(17, 0, 20, 0.7);
+    align-content: flex-start;
+    min-width: 0;
+}
+
+.selection-parent.inactive {
+    display: none;
+    visibility: hidden;
+    width: 0;
+    transition-property: width, visibility, display, left;
+    transition-duration: 0.5s, 0s, 0s, 0.5s;
+    transition-timing-function: ease-out-cubic, ease, ease, ease-out-cubic;
+    transition-delay: 0s, 0.5s, 0.5s, 0s;
+    position: absolute;
+    left: 52%;
 }
 
 .selection-parent .unity-button {
@@ -89,27 +133,72 @@
     scale: 1.1 1.1;
 }
 
-.selection-parent__sleep {
-    flex-grow: 1;
-    width: 40%;
+.selection-inner {
     margin-top: 80px;
     margin-right: 80px;
     margin-bottom: 80px;
     margin-left: 80px;
-    padding-top: 80px;
-    padding-right: 80px;
-    padding-bottom: 80px;
-    padding-left: 80px;
-    background-color: rgba(17, 0, 20, 0.7);
-    align-content: flex-start;
-    transform-origin: left top;
-    scale: 0.1 1;
-    transition-duration: 0.5s;
-    transition-timing-function: ease-out-cubic;
-    transition-property: scale;
 }
 
-.selection-parent__sleep .unity-button {
+.credit-title {
+    -unity-font-definition: url("project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&guid=e3265ab4bf004d28a9537516768c1c75&type=3#LiberationSans");
+    -unity-font-style: bold;
+    font-size: 42px;
+    color: rgb(201, 201, 201);
+}
+
+.credit-content {
+    -unity-font-definition: url("project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&guid=e3265ab4bf004d28a9537516768c1c75&type=3#LiberationSans");
+    -unity-font-style: bold;
+    font-size: 32px;
+    color: rgb(152, 152, 152);
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.selection-parent > .return-button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(27, 27, 27, 0);
+    display: none;
+    visibility: hidden;
+}
+
+.selection-parent.hide > .return-button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(27, 27, 27, 0);
+    display: flex;
+    visibility: visible;
+}
+
+.selection-parent.inactive > .return-button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(27, 27, 27, 0);
+}
+
+.hide .unity-button {
     background-color: rgba(102, 102, 102, 0.4);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
@@ -133,4 +222,31 @@
     transition-property: opacity, visibility;
     transition-timing-function: ease-in-cubic, ease;
     transition-delay: 0s, 0.2s;
+}
+
+.inactive .unity-label {
+    opacity: 0;
+    transition-duration: 0.2s, 0s;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-timing-function: ease-in-cubic, ease;
+    transition-delay: 0s, 0.2s;
+}
+
+.hide .unity-label {
+    opacity: 0;
+    transition-duration: 0.2s, 0s;
+    visibility: hidden;
+    transition-property: opacity, visibility;
+    transition-timing-function: ease-in-cubic, ease;
+    transition-delay: 0s, 0.2s;
+}
+
+.inactive {
+    display: none;
+    visibility: hidden;
+    width: 0;
+    transition-property: width;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-out-cubic;
 }
