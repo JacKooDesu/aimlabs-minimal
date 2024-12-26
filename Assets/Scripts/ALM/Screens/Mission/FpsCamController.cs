@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using ALM.Screens.Base;
+using ALM.Screens.Base.Setting;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
+using VContainer;
 
 namespace ALM.Screens.Mission
 {
-    public class FpsCamController : MonoBehaviour
+    public class FpsCamController : MonoBehaviour, IRaycaster
     {
         [SerializeField]
         float _mouseSensitivity = 100.0f;
@@ -21,20 +25,48 @@ namespace ALM.Screens.Mission
 
         Quaternion _originRot;
 
+        [Inject]
+        ControlSetting _controlSetting;
+        [Inject]
+        GameplaySetting _gameplaySetting;
+        // [Inject]
+        // CameraSetting _cameraSetting;
+        [Inject]
+        RaycasterService _raycasterService;
+
+        public Action OnFire;
+
+        #region IRaycaster
+        public Vector3 Origin => transform.position;
+        public Vector3 Direction => transform.forward;
+        #endregion
+
         void Awake()
         {
             _originRot = transform.localRotation;
+
+            OnFire += Fire;
         }
 
         void Update()
         {
-            _rotY += Input.GetAxisRaw("Mouse Y") * _mouseSensitivity;
-            _rotX += Input.GetAxisRaw("Mouse X") * _mouseSensitivity;
+            _rotY += Input.GetAxisRaw("Mouse Y") * _gameplaySetting.Sensitivity;
+            _rotX += Input.GetAxisRaw("Mouse X") * _gameplaySetting.Sensitivity;
 
             var qY = Quaternion.AngleAxis(_rotY, Vector3.left);
             var qX = Quaternion.AngleAxis(_rotX, Vector3.up);
 
             transform.localRotation = _originRot * qX * qY;
+
+            if (Input.GetKeyDown(_controlSetting.FireButton))
+                OnFire?.Invoke();
         }
+
+        void Fire()
+        {
+            _raycasterService.Cast(this);
+        }
+
+        public Action UpdateOverride = null;
     }
 }

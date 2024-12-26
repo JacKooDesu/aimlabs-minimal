@@ -19,11 +19,17 @@ namespace ALM.Screens.Base
             builder.Register<ControlSetting>(
                 _ => ControlSetting.Load(),
                 Lifetime.Singleton);
+            
+            builder.Register<ObjectSetting>(
+                _ => ObjectSetting.Load(),
+                Lifetime.Singleton);
+
             builder.Register<MissionLoader>(
                 _ => new(),
                 Lifetime.Singleton);
 
             builder.RegisterComponentInHierarchy<SettingPanel>();
+            builder.RegisterComponentInHierarchy<Room>();
         }
     }
 }

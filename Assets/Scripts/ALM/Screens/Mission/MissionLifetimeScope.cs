@@ -8,12 +8,7 @@ using TsEnvCore;
 
 namespace ALM.Screens.Mission
 {
-    using ALM.Util;
-    using ALM.Data;
     using ALM.Screens.Base;
-    using UnityEngine.Rendering.VirtualTexturing;
-    using ALM.Screens.Base.Setting;
-
     public class MissionLifetimeScope : LifetimeScope
     {
         [SerializeField]
@@ -44,6 +39,10 @@ namespace ALM.Screens.Mission
 
                     return new JsEnv(loader);
                 }, Lifetime.Scoped);
+
+            builder.Register<BallPoolService>(Lifetime.Scoped);
+            builder.Register<RaycasterService>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<FpsCamController>();
         }
     }
 }

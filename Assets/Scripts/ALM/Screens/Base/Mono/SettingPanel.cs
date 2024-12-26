@@ -17,16 +17,22 @@ namespace ALM.Screens.Base
         [SerializeField]
         DataBinder _controlSettingBinder;
         [SerializeField]
+        DataBinder _objectSettingBinder;
+        [SerializeField]
         DataBinder _graphicSettingBinder;
 
         [Inject]
         public GameplaySetting _gameplaySetting;
         [Inject]
         public ControlSetting _controlSetting;
+        [Inject]
+        public ObjectSetting _objectSetting;
 
         VisualElement _ui;
 
         public bool Binding { get; private set; }
+
+        CursorLockMode _lastLockMode;
 
         void Awake()
         {
@@ -61,6 +67,10 @@ namespace ALM.Screens.Base
                         }
                     ).Forget();
                 }));
+
+            _objectSettingBinder.ManualBuild(
+                ObjectSetting.GetBindable(),
+                _objectSetting);
 
             SetActive(false, true);
         }
@@ -101,6 +111,14 @@ namespace ALM.Screens.Base
                 _gameplaySetting.Save();
                 _controlSetting.Save();
             }
+
+            if (active)
+            {
+                _lastLockMode = UnityEngine.Cursor.lockState;
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+            }
+            else
+                UnityEngine.Cursor.lockState = _lastLockMode;
         }
     }
 }
