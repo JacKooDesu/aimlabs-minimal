@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6321737515882331602}
   - component: {fileID: 961159730489425727}
   - component: {fileID: 3979374072820464202}
+  - component: {fileID: 1658957746504849021}
   - component: {fileID: 2300667001759315932}
   m_Layer: 0
   m_Name: Setting Panel
@@ -71,6 +72,7 @@ MonoBehaviour:
   - rid: 4488369609210331139
   - rid: 4488369609210331140
   - rid: 4488369609210331141
+  - rid: 4488369795898802436
   _index: 0
   _defaultActiveProperty: active
   _defaultInctiveProperty: hide
@@ -90,6 +92,10 @@ MonoBehaviour:
       type: {class: LinkedPages/ButtonItem, ns: ALM.Util.UIToolkitExtend, asm: ALM}
       data:
         <Name>k__BackingField: Graphic
+    - rid: 4488369795898802436
+      type: {class: LinkedPages/ButtonItem, ns: ALM.Util.UIToolkitExtend, asm: ALM}
+      data:
+        <Name>k__BackingField: Object
 --- !u!114 &961159730489425727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,6 +109,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Target>k__BackingField: Gameplay-Page
+  <Bindings>k__BackingField: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3979374072820464202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +126,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Target>k__BackingField: Control-Page
+  <Bindings>k__BackingField: []
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &1658957746504849021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53340a3c5fb7b2d458d46f3b3fc2b736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Target>k__BackingField: Object-Page
+  <Bindings>k__BackingField: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2300667001759315932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,4 +161,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameplaySettingBinder: {fileID: 961159730489425727}
   _controlSettingBinder: {fileID: 3979374072820464202}
+  _objectSettingBinder: {fileID: 1658957746504849021}
   _graphicSettingBinder: {fileID: 0}

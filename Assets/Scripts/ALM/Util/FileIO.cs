@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
+using System;
 
 namespace ALM.Util
 {
@@ -64,6 +65,18 @@ namespace ALM.Util
 
             string json = File.ReadAllText(filePath);
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        internal static Texture2D LoadTexture(string texturePath)
+        {
+            var path = GetPath(Constants.CUSTOMIZE_PATH, texturePath);
+            if (!File.Exists(path.Dbg("texture")))
+                return null;
+
+            byte[] bytes = File.ReadAllBytes(path);
+            Texture2D texture = new(2, 2);
+            texture.LoadImage(bytes);
+            return texture;
         }
 
         public static string GetPath(string subPath, string name = "")

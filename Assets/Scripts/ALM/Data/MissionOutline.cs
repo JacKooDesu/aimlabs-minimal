@@ -14,6 +14,9 @@ namespace ALM.Data
 
         [JsonProperty("map")]
         public string Map { get; private set; }
+        [JsonProperty("map_size")]
+        public float MapSize { get; private set; }
+
         [JsonProperty("time_seconds")]
         public int Time { get; private set; }
     }

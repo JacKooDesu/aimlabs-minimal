@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using ALM.Common;
+using ALM.Screens.Base;
+using UnityEngine;
 using UnityEngine.UIElements;
+using VContainer;
 using VContainer.Unity;
 
 namespace ALM.Screens.Menu
@@ -13,6 +16,9 @@ namespace ALM.Screens.Menu
         readonly SelectMission _selectMission;
 
         IEnumerable<MenuUIBase> _menuUIs;
+
+        [Inject]
+        Room _room;
 
         public MenuEntry(
             UIDocument rootUi,
@@ -28,8 +34,10 @@ namespace ALM.Screens.Menu
         {
             foreach (var ui in _menuUIs)
                 ui.Config(_rootUi.rootVisualElement);
-            
+
             UIStackHandler.PushUI((uint)UIIndex.MainMenu);
+
+            _room.SetSize(40);
         }
     }
 }

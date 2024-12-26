@@ -5,11 +5,13 @@
             <ui:Button text="Gameplay" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Gameplay" class="upper-selection__item" />
             <ui:Button text="Control" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Control" class="upper-selection__item" />
             <ui:Button text="Graphic" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Graphic" class="upper-selection__item" />
+            <ui:Button text="Object" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Object" class="upper-selection__item" />
         </ui:VisualElement>
         <ui:ScrollView name="ContentArea" enabled="true">
             <ui:VisualElement name="Gameplay-Page" class="content-base" style="flex-grow: 1; justify-content: flex-start;" />
             <ui:VisualElement name="Control-Page" class="content-base" style="flex-grow: 1;" />
             <ui:VisualElement name="Graphic-Page" class="content-base" style="flex-grow: 1;" />
+            <ui:VisualElement name="Object-Page" class="content-base" style="flex-grow: 1;" />
         </ui:ScrollView>
     </ui:VisualElement>
 </ui:UXML>

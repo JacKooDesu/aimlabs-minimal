@@ -402,6 +402,16 @@
         {
             protected [__keep_incompatibility]: never;
         }
+        interface AsyncCallback
+        { 
+        (ar: System.IAsyncResult) : void; 
+        Invoke?: (ar: System.IAsyncResult) => void;
+        }
+        var AsyncCallback: { new (func: (ar: System.IAsyncResult) => void): AsyncCallback; }
+        class IntPtr extends System.ValueType implements System.Runtime.Serialization.ISerializable, System.IEquatable$1<System.IntPtr>
+        {
+            protected [__keep_incompatibility]: never;
+        }
     }
     namespace UnityEngine {
         /** Provides access to application runtime data.
@@ -3938,6 +3948,80 @@
         {
             protected [__keep_incompatibility]: never;
             public constructor ()
+        }
+    }
+    namespace ALM.Screens.Mission {
+        class JsConfigure extends System.Object implements System.IEquatable$1<ALM.Screens.Mission.JsConfigure>
+        {
+            protected [__keep_incompatibility]: never;
+            public get Raycaster(): ALM.Screens.Mission.RaycasterService;
+            public set Raycaster(value: ALM.Screens.Mission.RaycasterService);
+            public get BallPool(): ALM.Screens.Mission.BallPoolService;
+            public set BallPool(value: ALM.Screens.Mission.BallPoolService);
+            public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
+            public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
+            public Equals ($obj: any) : boolean
+            public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService)
+            public static Equals ($objA: any, $objB: any) : boolean
+            public constructor ()
+        }
+        class RaycasterService extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public Cast ($raycaster: ALM.Screens.Mission.IRaycaster) : void
+            public constructor ()
+        }
+        class BallPoolService extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get Pool(): UnityEngine.Pool.ObjectPool$1<ALM.Screens.Mission.Ball>;
+            public Ball ($index: number) : ALM.Screens.Mission.Ball
+            public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
+            public constructor ($objectSetting: ALM.Screens.Base.Setting.ObjectSetting)
+            public constructor ()
+        }
+        interface JsConfigureDel
+        { 
+        (configure: ALM.Screens.Mission.JsConfigure) : void; 
+        Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
+        }
+        var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
+        class Ball extends UnityEngine.MonoBehaviour implements ALM.Screens.Mission.IRaycastTarget
+        {
+            protected [__keep_incompatibility]: never;
+            public add_OnHitBy ($value: System.Action$1<number>) : void
+            public remove_OnHitBy ($value: System.Action$1<number>) : void
+            public add_OnHit ($value: System.Action) : void
+            public remove_OnHit ($value: System.Action) : void
+            public HitBy ($index: number) : void
+        }
+        interface IRaycastTarget
+        {
+            add_OnHitBy ($value: System.Action$1<number>) : void
+            remove_OnHitBy ($value: System.Action$1<number>) : void
+            add_OnHit ($value: System.Action) : void
+            remove_OnHit ($value: System.Action) : void
+            HitBy ($index: number) : void
+        }
+        interface IRaycaster
+        {
+        }
+    }
+    namespace UnityEngine.Pool {
+        class ObjectPool$1<T> extends System.Object implements UnityEngine.Pool.IObjectPool$1<T>, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IObjectPool$1<T>
+        {
+        }
+    }
+    namespace ALM.Screens.Base.Setting {
+        class ObjectSetting extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
         }
     }
 }

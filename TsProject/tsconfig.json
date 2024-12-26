@@ -9,8 +9,9 @@
     "./types/**.d.ts",
     "../Assets/PuerTS/Typing",
     "../Assets/Gen/Typing/",
-    "../Assets/Gen/Typing/csharp/"
-  ],
+    "../Assets/Gen/Typing/csharp/", 
+    "src/core/alm-mission.cts"  
+, "src/actions/mapSetup.cts"  ],
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
