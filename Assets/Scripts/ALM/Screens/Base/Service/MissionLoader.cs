@@ -9,7 +9,6 @@ namespace ALM.Screens.Base
 
     public class MissionLoader
     {
-        const string MissionDir = "Missions";
         List<PlayableMission> _missions { get; } = new();
 
         public record PlayableMission(
@@ -26,7 +25,7 @@ namespace ALM.Screens.Base
         {
             _missions.Clear();
 
-            var missionDir = FileIO.GetPath(MissionDir);
+            var missionDir = FileIO.GetPath(Constants.MISSION_PATH);
 
             foreach (var mFolder in Directory.GetDirectories(missionDir))
             {

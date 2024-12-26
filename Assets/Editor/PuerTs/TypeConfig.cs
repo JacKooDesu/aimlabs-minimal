@@ -41,6 +41,7 @@ public class TypeConfig
                 typeof(Behaviour),
                 typeof(MonoBehaviour),
                 typeof(System.IO.File),
+                typeof(System.Action<,>),
 
                 typeof(UnityEngine.Networking.UnityWebRequest),
                 typeof(UnityEngine.Networking.DownloadHandler),
@@ -53,6 +54,13 @@ public class TypeConfig
                 typeof(UnityEngine.UI.Toggle),
                 typeof(UnityEngine.UI.Toggle.ToggleEvent),
                 typeof(UnityEngine.Events.UnityEvent<bool>),
+
+                // ALM Domain
+                typeof(ALM.Screens.Mission.JsConfigure),
+                typeof(ALM.Screens.Mission.JsConfigureDel),
+                typeof(ALM.Screens.Mission.BallPoolService),
+                typeof(ALM.Screens.Mission.RaycasterService),
+                typeof(ALM.Screens.Mission.IRaycastTarget),
             };
         }
     }
