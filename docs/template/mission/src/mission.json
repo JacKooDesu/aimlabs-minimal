@@ -1,0 +1,7 @@
+{
+  "name": "test-mission",
+  "description": "This is a test mission",
+  "map": "10m",
+  "map_size": 20,
+  "time_seconds": 90
+}

@@ -4,11 +4,11 @@
 
 [中文這裡](./docs/README-ZH.md)
 
-# AimLab Minimal
+# AimLabs Minimal
 
-I am a poor skill FPS game lover and improve skill with AimLab before. As you can see, the tool became bloated these day. (idk why a training tool can up to 10 or 20 gb)
+I am a poor skill FPS game lover and improve skill with AimLabs before. As you can see, the tool became bloated these day. (idk why a training tool can up to 10 or 20 gb)
 
-So here comes AimLab Minimal aka ALM!!
+So here comes AimLabs Minimal aka ALM!!
 
 ## Features
 
