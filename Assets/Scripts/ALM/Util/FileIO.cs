@@ -29,13 +29,19 @@ namespace ALM.Util
         public static void JSave<T>(T obj, string path, string name)
         {
             string json = JsonConvert.SerializeObject(obj);
-            File.WriteAllText(GetPath(path, name).Dbg("saving: "), json);
+            var absolutePath = GetPath(path, name);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
+            File.WriteAllText(absolutePath.Dbg("saving: "), json);
         }
 
         public static void JSave<T>(T obj, string filePath)
         {
             string json = JsonConvert.SerializeObject(obj);
-            File.WriteAllText(GetPath(filePath).Dbg("saving: "), json);
+            var absolutePath = GetPath(filePath);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
+            File.WriteAllText(absolutePath.Dbg("saving: "), json);
         }
 
         public static T JLoad<T>(string path, string name, bool createDefault = false)

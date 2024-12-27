@@ -14,7 +14,7 @@ namespace TsEnvCore
     {
         List<LoaderData> _loaders { get; } = new();
         Dictionary<string, ILoader> _lazyFileLoaderDict { get; } = new();
-        
+
         public LoaderCollection(params ILoader[] loaders)
         {
             _loaders.AddRange(
@@ -48,19 +48,17 @@ namespace TsEnvCore
         }
     }
 
-    public class Loader : ILoader
+    public class RootBasedLoader : ILoader
     {
-        readonly Func<string, bool> _validator;
+        string _root = "";
 
-        public Loader(params string[] defaultPaths)
+        public RootBasedLoader(string root)
         {
-            _validator = (path) =>
-                defaultPaths.Any(x => path.StartsWith(x));
+            _root = root;
         }
 
         public bool FileExists(string filepath)
         {
-            // return _validator(filepath);
             return File.Exists(GetPath(filepath));
         }
 
@@ -70,21 +68,16 @@ namespace TsEnvCore
 
             debugpath = "";
 
-#if UNITY_EDITOR
             var path = GetPath(filepath);
+#if UNITY_EDITOR
             Debug.Log("Load: " + path);
-
-            return File.ReadAllText(path);
 #endif
+            return File.ReadAllText(path);
         }
 
         string GetPath(string file)
         {
-#if UNITY_EDITOR
-            return Path.Combine(Directory.GetCurrentDirectory() + "\\TsProject\\output\\", file);
-#else
-            return file;
-#endif
+            return Path.Combine(_root, file);
         }
     }
 }
