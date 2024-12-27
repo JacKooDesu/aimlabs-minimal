@@ -35,7 +35,7 @@ namespace ALM.Screens.Mission
                 {
                     var loader = new LoaderCollection();
                     loader.AddLoader(new DefaultLoader());
-                    loader.AddLoader(new TsEnvCore.Loader(mission.Path));
+                    loader.AddLoader(new TsEnvCore.RootBasedLoader(mission.Path));
 
                     return new JsEnv(loader);
                 }, Lifetime.Scoped);
