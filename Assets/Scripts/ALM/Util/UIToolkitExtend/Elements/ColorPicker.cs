@@ -17,9 +17,9 @@ namespace ALM.Util.UIToolkitExtend.Elements
         public float V { get; set; }
 
         [SerializeField, DontCreateProperty]
-        Color _color;
+        Color _color = Color.black;
         [UxmlAttribute, CreateProperty]
-        public Color _Color
+        public Color Color
         {
             get => _color;
             set
@@ -32,6 +32,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
             }
         }
 
+        public event Action<Color> OnChangeColor;
         #endregion
 
         static CustomStyleProperty<float> s_ColorRingWidth = new("--color-ring-width");
@@ -124,7 +125,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
         void OnDrageEnd(PointerUpEvent e)
         {
             _operationMode = OperationMode.None;
-            _controlingOverlay.style.visibility = Visibility.Visible;
+            _controlingOverlay.style.visibility = Visibility.Hidden;
         }
 
         void OnDragUpdate(PointerMoveEvent e)
@@ -142,14 +143,16 @@ namespace ALM.Util.UIToolkitExtend.Elements
             var dir = (Vector2)localPoint - rect.center;
 
             if (_operationMode is OperationMode.H)
-                _Color = Color.HSVToRGB(GetHue(dir), S, V);
+                Color = Color.HSVToRGB(GetHue(dir), S, V);
             else if (_operationMode is OperationMode.SV)
             {
                 var (s, v) = GetSV(localPoint, _RingSize);
-                _Color = Color.HSVToRGB(H, s, v);
+                Color = Color.HSVToRGB(H, s, v);
             }
 
             MarkDirtyRepaint();
+
+            OnChangeColor?.Invoke(Color);
         }
 
         enum OperationMode
