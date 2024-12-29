@@ -25,11 +25,12 @@ namespace ALM.Util.UIToolkitExtend
         public void ManualBuild(Bindable[] bindables, object obj)
         {
             _ui ??= GetComponent<UIDocument>().rootVisualElement;
+            var targetUI = _ui.Q(Target);
 
             Bindings = new(bindables);
 
             foreach (var bind in Bindings)
-                bind.Bind(_ui.Q(Target), obj, obj.GetType().GetMember(bind.DataPath)[0]);
+                bind.Bind(targetUI, obj);
         }
 
         [Serializable]
@@ -40,7 +41,7 @@ namespace ALM.Util.UIToolkitExtend
             [field: SerializeField]
             public string DataPath { get; private set; }
 
-            public BindableElement Element { get; private set; }
+            public BindableElement Element { get; set; }
 
             public static T Create<T>(
                 string label, string dataPath)
@@ -52,15 +53,17 @@ namespace ALM.Util.UIToolkitExtend
                 return bind;
             }
 
-            public abstract void Bind(VisualElement ui, object obj, MemberInfo info);
+            public abstract void Bind(VisualElement ui, object obj);
 
             public virtual T ElementBuilder<T>()
                 where T : BindableElement, new() =>
                 new T();
 
-            protected void CommonBind<T, N>(VisualElement ui, object obj, MemberInfo info)
+            protected void CommonBind<T, N>(VisualElement ui, object obj)
                 where T : BindableElement, INotifyValueChanged<N>, new()
             {
+                var info = obj.GetType().GetMember(DataPath, (BindingFlags)int.MaxValue)[0];
+
                 var element = ElementBuilder<T>();
                 this.Element = element;
 
@@ -89,6 +92,25 @@ namespace ALM.Util.UIToolkitExtend
 
                     action(obj, value.newValue);
                 };
+        }
+
+        [Serializable]
+        public class DirectBindable<B, BElement, BType> : Bindable
+            where B : Bindable, new()
+            where BElement : BindableElement, INotifyValueChanged<BType>, new()
+        {
+            public override void Bind(VisualElement ui, object obj)
+            {
+                var bindable = Create<B>(Label, DataPath);
+                var element = bindable.ElementBuilder<BElement>();
+                ui.Add(element);
+
+                element.dataSource = obj;
+                element.dataSourceType = obj.GetType();
+                element.bindingPath = DataPath;
+
+                this.Element = element;
+            }
         }
     }
 }

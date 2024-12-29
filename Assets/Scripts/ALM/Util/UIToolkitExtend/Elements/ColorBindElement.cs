@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Unity.Properties;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
         FloatField _b;
 
         Button _colorBlock;
+        public event Action<ClickEvent> OnClickColorBlock;
 
         public ColorBindElement() : base("Color", RGBContainer()) => new ColorBindElement("Color");
         public ColorBindElement(string label) : base(label, RGBContainer())
@@ -31,6 +33,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 value = GetColorCopy(b: v.newValue));
 
             this.AddToClassList("color-input-field");
+
+            _colorBlock.RegisterCallback<ClickEvent>(e => OnClickColorBlock?.Invoke(e));
 
             Color GetColorCopy(float r = -1, float g = -1, float b = -1)
             {
@@ -87,8 +91,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
         {
             public override T ElementBuilder<T>() =>
                 new ColorBindElement(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<ColorBindElement, Color>(ui, obj, info);
+            public override void Bind(VisualElement ui, object obj) =>
+                CommonBind<ColorBindElement, Color>(ui, obj);
         }
     }
 }

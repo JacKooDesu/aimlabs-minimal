@@ -1,3 +1,8 @@
+.outside {
+    transform-origin: left top;
+    flex-shrink: 0;
+}
+
 .hsv-ring-color-picker {
     flex-grow: 5;
     margin-top: 20px;
@@ -6,11 +11,11 @@
     margin-left: 20px;
 }
 
-.mainpanel {
+.main-panel {
     position: absolute;
     width: 600px;
     height: 750px;
-    background-color: rgba(32, 32, 32, 0.33);
+    background-color: rgba(0, 0, 0, 0.7);
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
@@ -24,6 +29,10 @@
     border-top-color: rgba(240, 240, 240, 0.33);
     border-bottom-color: rgba(240, 240, 240, 0.33);
     transform-origin: left top;
+    transition-property: scale;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-cubic;
+    visibility: visible;
 }
 
 .color-block {
@@ -58,4 +67,19 @@
     justify-content: space-between;
     width: 80%;
     align-self: center;
+}
+
+.hide {
+    display: flex;
+    visibility: hidden;
+    transition-property: scale, visibility;
+    transition-duration: 0.2s, 0s;
+    transition-timing-function: ease-out-cubic, ease;
+    transition-delay: 0s, 0.2s;
+}
+
+.hide .main-panel {
+    display: flex;
+    visibility: hidden;
+    scale: 0 0;
 }

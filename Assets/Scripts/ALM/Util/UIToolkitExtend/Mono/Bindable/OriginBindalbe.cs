@@ -12,8 +12,8 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.Slider(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.Slider, float>(ui, obj, info);
+            public override void Bind(VisualElement ui, object obj) =>
+                CommonBind<UIElements.Slider, float>(ui, obj);
         }
 
         [Serializable]
@@ -21,8 +21,8 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.TextField(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.TextField, string>(ui, obj, info);
+            public override void Bind(VisualElement ui, object obj) =>
+                CommonBind<UIElements.TextField, string>(ui, obj);
         }
 
         [Serializable]
@@ -30,8 +30,8 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.Toggle(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.Toggle, bool>(ui, obj, info);
+            public override void Bind(VisualElement ui, object obj) =>
+                CommonBind<UIElements.Toggle, bool>(ui, obj);
         }
 
         [Serializable]
@@ -39,8 +39,8 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.FloatField(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.FloatField, float>(ui, obj, info);
+            public override void Bind(VisualElement ui, object obj) =>
+                CommonBind<UIElements.FloatField, float>(ui, obj);
         }
 
         [Serializable]
@@ -48,8 +48,8 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.IntegerField(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.IntegerField, int>(ui, obj, info);
+            public override void Bind(VisualElement ui, object obj) =>
+                CommonBind<UIElements.IntegerField, int>(ui, obj);
         }
     }
 }

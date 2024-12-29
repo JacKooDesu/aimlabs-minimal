@@ -17,8 +17,10 @@ namespace ALM.Util.UIToolkitExtend
         where B : Bindable, new()
         where BElement : BindableElement, INotifyValueChanged<BType>, new()
     {
-        public override void Bind(VisualElement ui, object obj, MemberInfo info)
+        public override void Bind(VisualElement ui, object obj)
         {
+            var info = obj.GetType().GetMember(DataPath, (BindingFlags)int.MaxValue)[0];
+
             var arrObj = info switch
             {
                 FieldInfo field => field.GetValue(obj),
@@ -35,11 +37,13 @@ namespace ALM.Util.UIToolkitExtend
 
                 var bindable = Bindable.Create<B>(Label + ' ' + index, DataPath + $".Array.data[{i}]");
                 var element = bindable.ElementBuilder<BElement>();
+                bindable.Element = element;
 
                 ui.Add(element);
                 element.value = (BType)arr.GetValue(index);
-                element.dataSource = DataPath + $".Array.data[{index}]";
-                element.bindingPath = info.Name;
+                element.dataSource = obj;
+                element.dataSourceType = obj.GetType();
+                element.bindingPath = DataPath + $".Array.data[{index}]";
                 element.RegisterValueChangedCallback<BType>(v => arr.SetValue(v.newValue, index));
             }
         }

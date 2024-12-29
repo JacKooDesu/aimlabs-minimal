@@ -1,8 +1,11 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
 namespace ALM.Screens.Base.Setting
 {
+    using System.Linq;
     using ALM.Util.Serialization;
     using ALM.Util.UIToolkitExtend;
     using ALM.Util.UIToolkitExtend.Elements;
@@ -16,7 +19,7 @@ namespace ALM.Screens.Base.Setting
         const string NAME = "object_setting.json";
 
         [JsonProperty("ball_colors")]
-        public Color[] BallColors = new Color[]
+        Color[] BallColors { get; set; } = new Color[]
         {
             Color.red,
             Color.green,
@@ -40,13 +43,20 @@ namespace ALM.Screens.Base.Setting
         public void Save() =>
             FileIO.JSave(this, Constants.SETTING_PATH, NAME, new UColorJsonConverter());
 
-        internal static DataBinder.Bindable[] GetBindable() => new Bindable[]
+        internal Bindable[] GetBindable()
         {
-            Bindable.Create<TextField>("Room Texture Name", nameof(RommTextureName)),
-            Bindable.Create<FloatField>("Room Texture Scaler", nameof(RoomTextureScale)),
-            Bindable.Create<BindableFlatArr<ColorBindElement.Bindalbe, ColorBindElement, Color>>(
-                    "Ball Colors",
-                    nameof(BallColors))
-        };
+            List<Bindable> list = new()
+            {
+                Bindable.Create<TextField>("Room Texture Name", nameof(RommTextureName)),
+                Bindable.Create<FloatField>("Room Texture Scaler", nameof(RoomTextureScale)),
+            };
+
+            list.AddRange(
+                CollectionBinder.Array<
+                    ObjectSetting, ColorBindElement.Bindalbe, ColorBindElement, Color>(
+                    this, "Ball Colors", nameof(BallColors)));
+
+            return list.ToArray();
+        }
     }
 }
