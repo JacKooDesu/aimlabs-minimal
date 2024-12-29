@@ -28,7 +28,7 @@ namespace ALM.Util.UIToolkitExtend
 
         public class Bindalbe : DataBinder.Bindable
         {
-            protected override T ElementBuilder<T>() =>
+            public override T ElementBuilder<T>() =>
                 new KeybindElement(Label) as T;
             public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
                 CommonBind<KeybindElement, KeyCode>(ui, obj, info);

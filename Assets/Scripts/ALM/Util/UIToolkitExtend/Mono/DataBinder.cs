@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UIElements = UnityEngine.UIElements;
 
 namespace ALM.Util.UIToolkitExtend
 {
-    public class DataBinder : MonoBehaviour
+    public partial class DataBinder : MonoBehaviour
     {
         VisualElement _ui;
 
@@ -55,7 +54,7 @@ namespace ALM.Util.UIToolkitExtend
 
             public abstract void Bind(VisualElement ui, object obj, MemberInfo info);
 
-            protected virtual T ElementBuilder<T>()
+            public virtual T ElementBuilder<T>()
                 where T : BindableElement, new() =>
                 new T();
 
@@ -74,7 +73,7 @@ namespace ALM.Util.UIToolkitExtend
                 };
                 element.dataSource = obj;
                 element.dataSourceType = obj.GetType();
-                element.bindingPath = info.Name;                
+                element.bindingPath = info.Name;
                 element.RegisterValueChangedCallback<N>(CommonCallback<N>(obj, info));
             }
             protected EventCallback<ChangeEvent<T>> CommonCallback<T>(object obj, MemberInfo info) =>
@@ -84,56 +83,12 @@ namespace ALM.Util.UIToolkitExtend
                     {
                         FieldInfo field => field.SetValue,
                         PropertyInfo property => property.SetValue,
+                        MethodInfo method => (o, v) => method.Invoke(o, new[] { v }),
                         _ => throw new NotImplementedException()
                     };
 
                     action(obj, value.newValue);
                 };
-        }
-
-        [Serializable]
-        public class Slider : Bindable
-        {
-            protected override T ElementBuilder<T>() =>
-                new UIElements.Slider(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.Slider, float>(ui, obj, info);
-        }
-
-        [Serializable]
-        public class TextField : Bindable
-        {
-            protected override T ElementBuilder<T>() =>
-                new UIElements.TextField(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.TextField, string>(ui, obj, info);
-        }
-
-        [Serializable]
-        public class Toggle : Bindable
-        {
-            protected override T ElementBuilder<T>() =>
-                new UIElements.Toggle(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.Toggle, bool>(ui, obj, info);
-        }
-
-        [Serializable]
-        public class FloatField : Bindable
-        {
-            protected override T ElementBuilder<T>() =>
-                new UIElements.FloatField(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.FloatField, float>(ui, obj, info);
-        }
-
-        [Serializable]
-        public class IntegerField : Bindable
-        {
-            protected override T ElementBuilder<T>() =>
-                new UIElements.IntegerField(Label) as T;
-            public override void Bind(VisualElement ui, object obj, MemberInfo info) =>
-                CommonBind<UIElements.IntegerField, int>(ui, obj, info);
         }
     }
 }

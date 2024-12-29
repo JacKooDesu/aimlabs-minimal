@@ -110,6 +110,7 @@ namespace ALM.Screens.Base
             {
                 _gameplaySetting.Save();
                 _controlSetting.Save();
+                _objectSetting.Save();
             }
 
             if (active)
