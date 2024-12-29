@@ -3,9 +3,9 @@
     <engine:VisualElement name="Outside" style="flex-grow: 1;">
         <engine:VisualElement name="MainPanel" class="mainpanel">
             <ALM.Util.UIToolkitExtend.Elements.ColorPicker name="ColorPicker" class="hsv-ring-color-picker" />
-            <engine:VisualElement name="ColorInfo" class="color-info">
-                <engine:VisualElement name="ColorBlock" class="color-block" />
-                <engine:Label text="RGB(#fffffff)" name="RgbLabel" class="rgb-label" />
+            <engine:VisualElement name="ColorInfo" picking-mode="Ignore" class="color-info">
+                <engine:VisualElement name="ColorBlock" picking-mode="Ignore" class="color-block" />
+                <engine:Label text="RGB(#fffffff)" name="RgbLabel" picking-mode="Ignore" class="rgb-label" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

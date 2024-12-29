@@ -12,9 +12,37 @@ namespace ALM.Util.UIToolkitExtend.Elements
     public partial class ColorPicker : VisualElement
     {
         #region public
-        public float H { get; set; }
-        public float S { get; set; }
-        public float V { get; set; }
+        public float H
+        {
+            get => _h;
+            private set
+            {
+                _h = value;
+                SetHSVToRGB();
+            }
+        }
+        float _h;
+        public float S
+        {
+            get => _s;
+            private set
+            {
+                _s = value;
+                SetHSVToRGB();
+            }
+        }
+        float _s;
+        public float V
+        {
+            get => _v;
+            private set
+            {
+                _v = value;
+                SetHSVToRGB();
+            }
+        }
+        float _v;
+        void SetHSVToRGB() => _color = Color.HSVToRGB(H, S, V);
 
         [SerializeField, DontCreateProperty]
         Color _color = Color.black;
@@ -143,11 +171,10 @@ namespace ALM.Util.UIToolkitExtend.Elements
             var dir = (Vector2)localPoint - rect.center;
 
             if (_operationMode is OperationMode.H)
-                Color = Color.HSVToRGB(GetHue(dir), S, V);
+                H = GetHue(dir);
             else if (_operationMode is OperationMode.SV)
             {
-                var (s, v) = GetSV(localPoint, _RingSize);
-                Color = Color.HSVToRGB(H, s, v);
+                (S, V) = GetSV(localPoint, _RingSize);
             }
 
             MarkDirtyRepaint();
