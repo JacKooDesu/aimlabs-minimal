@@ -1,0 +1,85 @@
+.outside {
+    transform-origin: left top;
+    flex-shrink: 0;
+}
+
+.hsv-ring-color-picker {
+    flex-grow: 5;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.main-panel {
+    position: absolute;
+    width: 600px;
+    height: 750px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-left-color: rgba(240, 240, 240, 0.33);
+    border-right-color: rgba(240, 240, 240, 0.33);
+    border-top-color: rgba(240, 240, 240, 0.33);
+    border-bottom-color: rgba(240, 240, 240, 0.33);
+    transform-origin: left top;
+    transition-property: scale;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-cubic;
+    visibility: visible;
+}
+
+.color-block {
+    flex-grow: 2;
+    background-color: rgb(255, 255, 255);
+    width: 50px;
+    height: 50px;
+    border-left-color: rgb(178, 178, 178);
+    border-right-color: rgb(178, 178, 178);
+    border-top-color: rgb(178, 178, 178);
+    border-bottom-color: rgb(178, 178, 178);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.rgb-label {
+    flex-grow: 4;
+    -unity-font-style: bold;
+    font-size: 36px;
+    color: rgb(178, 178, 178);
+    letter-spacing: 10px;
+    -unity-text-align: middle-right;
+    width: 50%;
+}
+
+.color-info {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    align-self: center;
+}
+
+.hide {
+    display: flex;
+    visibility: hidden;
+    transition-property: scale, visibility;
+    transition-duration: 0.2s, 0s;
+    transition-timing-function: ease-out-cubic, ease;
+    transition-delay: 0s, 0.2s;
+}
+
+.hide .main-panel {
+    display: flex;
+    visibility: hidden;
+    scale: 0 0;
+}

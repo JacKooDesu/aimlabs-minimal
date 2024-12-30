@@ -26,40 +26,50 @@ namespace ALM.Util
             Directory.CreateDirectory(Constants.SETTING_PATH);
         }
 
-        public static void JSave<T>(T obj, string path, string name)
+        public static void JSave<T>(
+            T obj, string path, string name,
+            params JsonConverter[] converters)
         {
-            string json = JsonConvert.SerializeObject(obj);
+            string json = JsonConvert.SerializeObject(obj, converters);
             var absolutePath = GetPath(path, name);
 
             Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
             File.WriteAllText(absolutePath.Dbg("saving: "), json);
         }
 
-        public static void JSave<T>(T obj, string filePath)
+        public static void JSave<T>(
+            T obj, string filePath,
+            params JsonConverter[] converters)
         {
-            string json = JsonConvert.SerializeObject(obj);
+            string json = JsonConvert.SerializeObject(obj, converters);
             var absolutePath = GetPath(filePath);
 
             Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
             File.WriteAllText(absolutePath.Dbg("saving: "), json);
         }
 
-        public static T JLoad<T>(string path, string name, bool createDefault = false)
+        public static T JLoad<T>(
+            string path, string name,
+            bool createDefault = false,
+            params JsonConverter[] converters)
         {
             var filePath = GetPath(path, name).Dbg("loading: ");
 
             if (createDefault && !File.Exists(filePath))
             {
                 var obj = System.Activator.CreateInstance<T>();
-                JSave(obj, path, name);
+                JSave(obj, path, name, converters);
                 return obj;
             }
 
             string json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<T>(json, converters);
         }
 
-        public static T JLoad<T>(string filePath, bool createDefault = false)
+        public static T JLoad<T>(
+            string filePath,
+            bool createDefault = false,
+            params JsonConverter[] converters)
         {
             filePath = GetPath(filePath);
             if (createDefault && !File.Exists(filePath))
@@ -70,7 +80,7 @@ namespace ALM.Util
             }
 
             string json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<T>(json, converters);
         }
 
         internal static Texture2D LoadTexture(string texturePath)

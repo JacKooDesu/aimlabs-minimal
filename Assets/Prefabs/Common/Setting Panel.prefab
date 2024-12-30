@@ -163,3 +163,8 @@ MonoBehaviour:
   _controlSettingBinder: {fileID: 3979374072820464202}
   _objectSettingBinder: {fileID: 1658957746504849021}
   _graphicSettingBinder: {fileID: 0}
+  _objectSetting:
+    BallColors:
+    - {r: 1, g: 0.48113203, b: 0.48113203, a: 1}
+    - {r: 0, g: 1, b: 0, a: 1}
+    - {r: 0, g: 0, b: 1, a: 1}

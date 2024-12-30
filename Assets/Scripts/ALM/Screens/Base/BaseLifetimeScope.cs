@@ -3,6 +3,7 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Base
 {
+    using ALM.Common;
     using ALM.Util;
     using ALM.Util.UIToolkitExtend;
     using Setting;
@@ -30,6 +31,7 @@ namespace ALM.Screens.Base
 
             builder.RegisterComponentInHierarchy<SettingPanel>();
             builder.RegisterComponentInHierarchy<Room>();
+            builder.RegisterComponentInHierarchy<ColorPickerUI>();
         }
     }
 }

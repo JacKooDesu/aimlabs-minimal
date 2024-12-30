@@ -1,13 +1,15 @@
+using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using VContainer;
+using Cysharp.Threading.Tasks;
 
 namespace ALM.Screens.Base
 {
-    using System;
-    using Cysharp.Threading.Tasks;
+    using ALM.Common;
+    using ALM.Util.UIToolkitExtend.Elements;
     using Screens.Base.Setting;
-    using UnityEngine.UIElements;
     using Util.UIToolkitExtend;
 
     public class SettingPanel : MonoBehaviour
@@ -27,6 +29,9 @@ namespace ALM.Screens.Base
         public ControlSetting _controlSetting;
         [Inject]
         public ObjectSetting _objectSetting;
+
+        [Inject]
+        ColorPickerUI ColorPickerUI;
 
         VisualElement _ui;
 
@@ -69,8 +74,26 @@ namespace ALM.Screens.Base
                 }));
 
             _objectSettingBinder.ManualBuild(
-                ObjectSetting.GetBindable(),
+                _objectSetting.GetBindable(),
                 _objectSetting);
+
+            _objectSettingBinder.Bindings
+                .ForEach(b =>
+                {
+                    if (b.Element is not ColorBindElement element)
+                        return;
+
+                    element.OnClickColorBlock += e =>
+                    {
+                        Binding = true;
+                        ColorPickerUI.ConfigColorAsync(
+                            new ColorPickerUI.OpenBy(e.position),
+                            c => element.value = c,
+                            element.value)
+                            .ContinueWith(_ => Binding = false)
+                            .Forget();
+                    };
+                });
 
             SetActive(false, true);
         }
@@ -110,6 +133,7 @@ namespace ALM.Screens.Base
             {
                 _gameplaySetting.Save();
                 _controlSetting.Save();
+                _objectSetting.Save();
             }
 
             if (active)
