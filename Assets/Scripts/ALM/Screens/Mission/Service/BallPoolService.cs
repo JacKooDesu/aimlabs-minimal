@@ -9,6 +9,8 @@ namespace ALM.Screens.Mission
         readonly ObjectSetting _objectSetting;
         public ObjectPool<Ball> Pool { get; private set; }
 
+        readonly Material _material;
+
         public BallPoolService(ObjectSetting objectSetting)
         {
             _objectSetting = objectSetting;
@@ -17,14 +19,16 @@ namespace ALM.Screens.Mission
                 GetBall,
                 ReleaseBall,
                 DestroyBall);
+
+            _material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         }
 
         Ball CreateBall()
         {
             var ball = GameObject
-                .CreatePrimitive(PrimitiveType.Sphere)
-                .AddComponent<Ball>();
-            return ball;
+                .CreatePrimitive(PrimitiveType.Sphere);
+            ball.GetComponent<MeshRenderer>().material = _material;
+            return ball.AddComponent<Ball>();
         }
 
         void GetBall(Ball ball) { }
@@ -43,7 +47,7 @@ namespace ALM.Screens.Mission
             var balls = new Ball[count];
             for (var i = 0; i < count; i++)
                 balls[i] = Ball(type);
-            
+
             return balls;
         }
     }
