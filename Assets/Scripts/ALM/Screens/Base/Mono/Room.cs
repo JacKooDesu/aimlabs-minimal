@@ -29,8 +29,8 @@ namespace ALM.Screens.Base
         public void SetSize(float size)
         {
             transform.localScale = Vector3.one * size;
-            _renderer.material.mainTextureScale = Vector2.one * size /
-                (_objectSetting?.RoomTextureScale ?? DEFAULT_TEXTURE_SCALER);
+            _renderer.material.SetTextureScale("_BaseMap",
+                Vector2.one * size / (_objectSetting?.RoomTextureScale ?? DEFAULT_TEXTURE_SCALER));
         }
     }
 }
