@@ -10,7 +10,8 @@ using VContainer;
 
 namespace ALM.Screens.Mission
 {
-    public class FpsCamController : MonoBehaviour, IRaycaster
+    using Common;
+    public class FpsCamController : MonoBehaviour, IRaycaster, IManagedTickable
     {
         [SerializeField]
         float _mouseSensitivity = 100.0f;
@@ -48,7 +49,7 @@ namespace ALM.Screens.Mission
             OnFire += Fire;
         }
 
-        void Update()
+        public void Tick()
         {
             _rotY += Input.GetAxisRaw("Mouse Y") * _gameplaySetting.Sensitivity;
             _rotX += Input.GetAxisRaw("Mouse X") * _gameplaySetting.Sensitivity;

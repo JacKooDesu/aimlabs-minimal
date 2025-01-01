@@ -32,6 +32,8 @@ namespace ALM.Screens.Base
 
         [Inject]
         ColorPickerUI ColorPickerUI;
+        [Inject]
+        GameStatusHandler _gameStatusHandler;
 
         VisualElement _ui;
 
@@ -136,13 +138,8 @@ namespace ALM.Screens.Base
                 _objectSetting.Save();
             }
 
-            if (active)
-            {
-                _lastLockMode = UnityEngine.Cursor.lockState;
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
-            }
-            else
-                UnityEngine.Cursor.lockState = _lastLockMode;
+            _gameStatusHandler.GlobalSet(new Force(
+                active ? GameStatus.Paused : GameStatus.Playing));
         }
     }
 }

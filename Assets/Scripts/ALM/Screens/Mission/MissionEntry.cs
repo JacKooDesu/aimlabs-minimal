@@ -8,6 +8,7 @@ using Puerts;
 namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
+    using UnityEditor;
     using UnityEngine;
 
     public record JsConfigure(
@@ -16,7 +17,7 @@ namespace ALM.Screens.Mission
     // this is delegate to configure service required by js env
     public delegate void JsConfigureDel(JsConfigure configure);
 
-    public class MissionEntry : IAsyncStartable, ITickable, IDisposable
+    public class MissionEntry : HandlableEntry
     {
         readonly JsEnv _jsEnv;
         readonly MissionLoader.PlayableMission _mission;
@@ -38,10 +39,8 @@ namespace ALM.Screens.Mission
             _room = room;
         }
 
-        public async UniTask StartAsync(CancellationToken ct)
+        public override void Start()
         {
-            await UniTask.CompletedTask;
-
             _room.SetSize(_mission.Outline.MapSize);
 
             foreach (var script in _mission.Scripts)
@@ -60,9 +59,14 @@ namespace ALM.Screens.Mission
 
             // lock cursor
             Cursor.lockState = CursorLockMode.Locked;
+
+            _handler.Register<MissionEntry>(
+                GameStatus.Paused, () => Cursor.lockState = CursorLockMode.None);
+            _handler.Register<MissionEntry>(
+                GameStatus.Playing, () => Cursor.lockState = CursorLockMode.Locked);
         }
 
-        public void Tick()
+        protected override void Tick()
         {
             _jsEnv.Tick();
         }
@@ -71,7 +75,7 @@ namespace ALM.Screens.Mission
         {
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             Cursor.lockState = CursorLockMode.None;
         }

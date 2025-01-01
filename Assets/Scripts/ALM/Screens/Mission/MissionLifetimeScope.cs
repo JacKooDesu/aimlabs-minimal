@@ -9,7 +9,7 @@ using TsEnvCore;
 namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
-    public class MissionLifetimeScope : LifetimeScope
+    public class MissionLifetimeScope : HandlableLifetimeScope<MissionEntry>
     {
         [SerializeField]
         string _missionName = null;
@@ -25,11 +25,12 @@ namespace ALM.Screens.Mission
 
         protected override void Configure(IContainerBuilder builder)
         {
+            base.Configure(builder);
+
             var missionLoader = Parent.Container.Resolve<MissionLoader>();
             var mission = missionLoader.GetMission(_missionName);
 
             builder.Register(_ => mission, Lifetime.Scoped);
-            builder.RegisterEntryPoint<MissionEntry>();
             builder.Register<JsEnv>(
                 r =>
                 {
@@ -42,7 +43,6 @@ namespace ALM.Screens.Mission
 
             builder.Register<BallPoolService>(Lifetime.Scoped);
             builder.Register<RaycasterService>(Lifetime.Scoped);
-            builder.RegisterComponentInHierarchy<FpsCamController>();
         }
     }
 }
