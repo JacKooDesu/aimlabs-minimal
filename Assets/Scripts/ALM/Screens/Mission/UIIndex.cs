@@ -4,6 +4,7 @@ namespace ALM.Screens.Mission
     {
         Pause = 1,
         Countdown,
-        MissionInfo
+        MissionInfo,
+        Base,
     }
 }

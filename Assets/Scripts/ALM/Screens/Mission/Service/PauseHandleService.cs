@@ -29,8 +29,8 @@ namespace ALM.Screens.Mission
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (UIStackHandler.Length() is not 0 &&
-                    UIStackHandler.Current().index is not (uint)UIIndex.Countdown)
+                if (!CheckIsCountUI() &&
+                    UIStackHandler.Current()?.index is not (uint)UIIndex.Base)
                     UIStackHandler.PopUI();
                 else
                     Paused();
@@ -55,11 +55,11 @@ namespace ALM.Screens.Mission
         {
             _handler.Set<MissionEntry>(new Set(GameStatus.Paused));
 
-            _countDownTimer.Reset();
-            _countDownTicker = _countDownTimer.Tick;
-
             if (!CheckIsCountUI())
                 UIStackHandler.PushUI((uint)UIIndex.Countdown, _countDownTimer);
+
+            _countDownTimer.Reset();
+            _countDownTicker = _countDownTimer.Tick;
         }
 
         void Resume()

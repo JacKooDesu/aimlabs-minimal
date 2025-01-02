@@ -24,6 +24,7 @@ namespace ALM.Screens.Mission
         readonly BallPoolService _ballPoolService;
         readonly RaycasterService _raycasterService;
         readonly PauseHandleService _pauseHandleService;
+        readonly Timer _timer;
         readonly Room _room;
 
         public MissionEntry(
@@ -33,6 +34,7 @@ namespace ALM.Screens.Mission
             RaycasterService raycasterService,
             PauseHandleService pauseHandleService,
             Room room,
+            Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
         {
             _jsEnv = jsEnv;
@@ -41,6 +43,8 @@ namespace ALM.Screens.Mission
             _raycasterService = raycasterService;
             _pauseHandleService = pauseHandleService;
             _room = room;
+
+            _timer = timerFactory(_mission.Outline.Time);
         }
 
         public override void Start()
@@ -69,6 +73,9 @@ namespace ALM.Screens.Mission
             _handler.Register<MissionEntry>(
                 GameStatus.Playing, () => Cursor.lockState = CursorLockMode.Locked);
 
+            _timer.OnComplete += () => Menu.MenuLifetimeScope.Load().Forget();
+            UIStackHandler.PushUI(((uint)UIIndex.Base), _timer);
+            _timer.Reset();
             _pauseHandleService.CountDown();
         }
 
@@ -80,6 +87,7 @@ namespace ALM.Screens.Mission
         protected override void Tick()
         {
             _jsEnv.Tick();
+            _timer.Tick();
         }
 
         void AssignToJsEnv()
