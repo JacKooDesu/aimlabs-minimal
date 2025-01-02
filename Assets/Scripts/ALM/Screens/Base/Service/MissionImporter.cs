@@ -8,9 +8,7 @@ namespace ALM.Screens.Base
     {
         readonly string DEFAULT_PATH =
             UnityEngine.Application.dataPath +
-#if UNITY_EDITOR
                 "/../" +
-#endif
                 "/mission-import";
 
         public MissionImporter()

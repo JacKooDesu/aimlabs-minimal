@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../build/StandaloneWindows64/mission-import"
+    "outDir": "../build/StandaloneWindows64/mission-import"
   }
 }
