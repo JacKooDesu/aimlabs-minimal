@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc -p tsconfig.json && copyfiles -u 1 src/**/*.json output/",
-    "build-ci": "tsc -p tsconfig.ci.json && copyfiles -u 1 src/**/*.json ../../build/mission-import",
+    "build-ci": "tsc -p tsconfig.ci.json && copyfiles -u 1 src/**/*.json ../../build/StandaloneWindows64/mission-import",
     "build:dev": "tsc -watch -p tsconfig.json"
   },
   "dependencies": {},
