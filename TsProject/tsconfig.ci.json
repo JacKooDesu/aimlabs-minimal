@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../build/mssion-import"
+    "outDir": "../../build/mission-import"
   }
 }
