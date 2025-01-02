@@ -17,7 +17,7 @@ namespace ALM.Screens.Mission
     // this is delegate to configure service required by js env
     public delegate void JsConfigureDel(JsConfigure configure);
 
-    public class MissionEntry : HandlableEntry
+    public class MissionEntry : HandlableEntry<MissionEntry>
     {
         readonly JsEnv _jsEnv;
         readonly MissionLoader.PlayableMission _mission;

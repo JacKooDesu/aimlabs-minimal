@@ -6,7 +6,7 @@ namespace ALM.Screens.Base
 {
     public class GameStatusHandler
     {
-        public GameStatus this[HandlableEntry entry] => _statusDict[entry.GetType()].status;
+        // public GameStatus this[HandlableEntry entry] => _statusDict[entry.GetType()].status;
 
         readonly Dictionary<Type, (uint priority, GameStatus status)> _statusDict;
         readonly Dictionary<Type, Dictionary<GameStatus, List<Action>>> _triggerDict;
@@ -18,7 +18,7 @@ namespace ALM.Screens.Base
         }
 
         public void AddEntry<T>(T entry)
-            where T : HandlableEntry =>
+            where T : HandlableEntry<T> =>
             AddEntry(typeof(T));
         public void AddEntry(Type type)
         {
@@ -27,9 +27,10 @@ namespace ALM.Screens.Base
         }
 
         public void RemoveEntry<T>(T entry)
-            where T : HandlableEntry
+            where T : HandlableEntry<T> =>
+            RemoveEntry(typeof(T));
+        public void RemoveEntry(Type type)
         {
-            var type = typeof(T);
             _statusDict.Remove(type);
             _triggerDict.Remove(type);
         }
@@ -37,7 +38,7 @@ namespace ALM.Screens.Base
         public void Register<T>(GameStatus status, Action action) =>
             Register(typeof(T), status, action);
         public void Register<T>(T _, GameStatus status, Action action)
-            where T : HandlableEntry =>
+            where T : HandlableEntry<T> =>
             Register(typeof(T), status, action);
         public void Register(Type type, GameStatus status, Action action)
         {
@@ -60,7 +61,7 @@ namespace ALM.Screens.Base
         }
 
         public void Set<T>(GameStatusSetter setter)
-            where T : HandlableEntry =>
+            where T : HandlableEntry<T> =>
             Set(typeof(T), setter);
 
         public void Set(Type type, GameStatusSetter setter)

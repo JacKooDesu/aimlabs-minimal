@@ -8,7 +8,8 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Base
 {
-    public abstract class HandlableEntry : ITickable, IStartable, IDisposable
+    public abstract class HandlableEntry<TEntry> : ITickable, IStartable, IDisposable
+        where TEntry : HandlableEntry<TEntry>
     {
         bool _paused = false;
 
@@ -25,7 +26,7 @@ namespace ALM.Screens.Base
             IEnumerable<IAutoRegister> autoRegisters,
             IEnumerable<IManagedTickable> tickables)
         {
-            var type = this.GetType();
+            var type = typeof(TEntry);
             _handler = handler;
             _tickables = tickables;
             _handler.AddEntry(type);
@@ -78,10 +79,13 @@ namespace ALM.Screens.Base
         protected virtual void ConstTick() { }
         protected virtual void Tick() { }
 
-        public virtual void Dispose()
+        void IDisposable.Dispose()
         {
-            _handler.RemoveEntry(this);
+            _handler.RemoveEntry(typeof(TEntry));
+            this.Dispose();
         }
+
+        public virtual void Dispose() { }
 
         interface IAutoRegister
         {

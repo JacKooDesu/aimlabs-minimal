@@ -9,7 +9,7 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Menu
 {
-    public class MenuEntry : HandlableEntry
+    public class MenuEntry : HandlableEntry<MenuEntry>
     {
         readonly MainMenu _mainMenu;
         readonly SelectMission _selectMission;

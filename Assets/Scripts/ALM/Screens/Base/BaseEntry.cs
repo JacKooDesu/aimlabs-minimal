@@ -6,20 +6,23 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Base
 {
+    using ALM.Screens.Menu;
     using Screens.Base.Setting;
     using Util.UIToolkitExtend;
 
-    public class BaseEntry : IStartable
+    public class BaseEntry : IStartable, IInitializable
     {
         [Inject]
         Room _room;
         [Inject]
         ObjectSetting _objectSetting;
 
-        public void Start()
+        public void Initialize()
         {
             if (_objectSetting?.GetRoomTexture() is Texture2D tex)
                 _room?.SetTexture(tex);
         }
+
+        public void Start() { }
     }
 }

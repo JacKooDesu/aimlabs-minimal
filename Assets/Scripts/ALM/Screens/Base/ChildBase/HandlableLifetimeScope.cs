@@ -12,7 +12,7 @@ namespace ALM.Screens.Base
 
     public abstract class HandlableLifetimeScope<TScope, TEntry> : LifetimeScope
         where TScope : HandlableLifetimeScope<TScope, TEntry>
-        where TEntry : HandlableEntry
+        where TEntry : HandlableEntry<TEntry>
     {
         protected virtual Type[] UiTypes() => Array.Empty<Type>();
 
@@ -30,7 +30,8 @@ namespace ALM.Screens.Base
             var scope = LifetimeScope.Find<TScope>() as TScope;
             scope.AfterLoad(payload);
 
-            scope.Build();
+            if (!scope.autoRun)
+                scope.Build();
         }
 
         /// <summary>
