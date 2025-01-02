@@ -19,7 +19,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ fromJson(secrets.SETTING).repo }}
           ref: "refs/heads/${{inputs.branch}}"
           token: ${{ fromJson(secrets.SETTING).PAT }}
           lfs: true # 使用 LFS
@@ -89,6 +88,14 @@ jobs:
           UNITY_PASSWORD: ${{ fromJson(secrets.SETTING).password }}
         with:
           targetPlatform: StandaloneWindows64
+
+      # 自動編譯並匯入預設任務
+      - name: Ts Mission Compile Job
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build-ci
 
       # 輸出成artifact
       - name: Ouput Artifact
