@@ -1,3 +1,5 @@
+using System;
+using ALM.Screens.Base;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
@@ -5,18 +7,23 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Menu
 {
-    public class MenuLifetimeScope : LifetimeScope
+    [HandlabeScene("Menu")]
+    public class MenuLifetimeScope : HandlableLifetimeScope<MenuLifetimeScope, MenuEntry>
     {
         [SerializeField] UIDocument _rootUi;
 
+        protected override Type[] UiTypes() => new[]
+        {
+            typeof(MainMenu),
+            typeof(SelectMission),
+            typeof(MissionInfo)
+        };
+
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<MenuEntry>();
-            builder.RegisterComponent<UIDocument>(_rootUi);
+            base.Configure(builder);
 
-            builder.Register<MainMenu>(Lifetime.Scoped).As<MenuUIBase>();
-            builder.Register<SelectMission>(Lifetime.Scoped).As<MenuUIBase>();
-            builder.Register<MissionInfo>(Lifetime.Scoped).As<MenuUIBase>();
+            builder.RegisterComponent<UIDocument>(_rootUi);
         }
     }
 }

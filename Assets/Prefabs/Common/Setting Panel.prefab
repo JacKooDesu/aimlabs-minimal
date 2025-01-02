@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: a3441e6761653144cbc80a74173c0a1e, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 4684425dc814c2345b9c0ce2da0319b5, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
@@ -163,8 +163,3 @@ MonoBehaviour:
   _controlSettingBinder: {fileID: 3979374072820464202}
   _objectSettingBinder: {fileID: 1658957746504849021}
   _graphicSettingBinder: {fileID: 0}
-  _objectSetting:
-    BallColors:
-    - {r: 1, g: 0.48113203, b: 0.48113203, a: 1}
-    - {r: 0, g: 1, b: 0, a: 1}
-    - {r: 0, g: 0, b: 1, a: 1}

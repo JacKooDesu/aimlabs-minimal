@@ -14,6 +14,8 @@ namespace ALM.Screens.Base
 
     public class SettingPanel : MonoBehaviour
     {
+        public const uint INDEX = 1 << 10;
+
         [SerializeField]
         DataBinder _gameplaySettingBinder;
         [SerializeField]
@@ -119,14 +121,6 @@ namespace ALM.Screens.Base
             return input.Dbg();
         }
 
-        public void SwitchActive()
-        {
-            if (Binding)
-                return;
-
-            SetActive(!_ui.visible);
-        }
-
         public void SetActive(bool active, bool ignoreSave = false)
         {
             _ui.visible = active;
@@ -137,9 +131,16 @@ namespace ALM.Screens.Base
                 _controlSetting.Save();
                 _objectSetting.Save();
             }
+        }
 
-            _gameStatusHandler.GlobalSet(new Force(
-                active ? GameStatus.Paused : GameStatus.Playing));
+        public async UniTask ActiveAsync(
+            Action onClose = null, Func<bool> closeCondition = null)
+        {
+            SetActive(true);
+            closeCondition ??= () => Input.GetKeyDown(KeyCode.Escape);
+            await UniTask.WaitUntil(() => closeCondition() && !Binding);
+            SetActive(false);
+            onClose?.Invoke();
         }
     }
 }

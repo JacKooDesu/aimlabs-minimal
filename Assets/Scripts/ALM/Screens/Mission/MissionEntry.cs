@@ -1,15 +1,15 @@
 using System;
-using System.Linq;
-using System.Threading;
-using VContainer.Unity;
+using UnityEngine;
+using UnityEngine.UIElements;
 using Cysharp.Threading.Tasks;
 using Puerts;
 
+using Cursor = UnityEngine.Cursor;
+
 namespace ALM.Screens.Mission
 {
+    using ALM.Common;
     using ALM.Screens.Base;
-    using UnityEditor;
-    using UnityEngine;
 
     public record JsConfigure(
         RaycasterService Raycaster,
@@ -30,7 +30,8 @@ namespace ALM.Screens.Mission
             MissionLoader.PlayableMission mission,
             BallPoolService ballPoolService,
             RaycasterService raycasterService,
-            Room room)
+            Room room,
+            UIDocument rootUi) : base(rootUi)
         {
             _jsEnv = jsEnv;
             _mission = mission;
@@ -64,6 +65,23 @@ namespace ALM.Screens.Mission
                 GameStatus.Paused, () => Cursor.lockState = CursorLockMode.None);
             _handler.Register<MissionEntry>(
                 GameStatus.Playing, () => Cursor.lockState = CursorLockMode.Locked);
+        }
+
+        protected override void ConstTick()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (UIStackHandler.Length() is not 0)
+                    UIStackHandler.PopUI();
+                else
+                {
+                    UIStackHandler.PushUI((uint)UIIndex.Pause);
+                    UIStackHandler.WaitUntilUiPop((uint)UIIndex.Pause)
+                        .ContinueWith(() => _handler.Set<MissionEntry>(new Set(GameStatus.Playing)))
+                        .Forget();
+                    _handler.Set<MissionEntry>(new Set(GameStatus.Paused));
+                }
+            }
         }
 
         protected override void Tick()

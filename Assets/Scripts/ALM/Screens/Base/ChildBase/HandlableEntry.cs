@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ALM.Common;
+using UnityEngine.UIElements;
 using VContainer;
 using VContainer.Unity;
 
@@ -11,13 +12,16 @@ namespace ALM.Screens.Base
     {
         bool _paused = false;
 
-        [Inject]
+        protected IEnumerable<UIBase> _uis;
         protected IEnumerable<IManagedTickable> _tickables;
-        [Inject]
         protected GameStatusHandler _handler;
+
+        protected readonly UIDocument _rootUi;
+
         [Inject]
         void _Inject(
             GameStatusHandler handler,
+            IEnumerable<UIBase> uis,
             IEnumerable<IAutoRegister> autoRegisters,
             IEnumerable<IManagedTickable> tickables)
         {
@@ -31,6 +35,13 @@ namespace ALM.Screens.Base
 
             foreach (var r in autoRegisters)
                 _handler.Register(type, r.OnStatus, r.Action);
+
+            UIStackHandler.RegisterUIs(_uis = uis);
+        }
+
+        public HandlableEntry(UIDocument rootUi)
+        {
+            _rootUi = rootUi;
         }
 
         public HandlableEntry()
@@ -40,6 +51,9 @@ namespace ALM.Screens.Base
 
         void IStartable.Start()
         {
+            foreach (var ui in _uis)
+                ui.Config(_rootUi.rootVisualElement);
+
             Start();
         }
 
@@ -47,6 +61,8 @@ namespace ALM.Screens.Base
 
         void ITickable.Tick()
         {
+            this.ConstTick();
+
             if (_paused)
                 return;
 
@@ -56,6 +72,10 @@ namespace ALM.Screens.Base
                 tickable.Tick();
         }
 
+        /// <summary>
+        /// ConstTick is called every frame even entry is paused.
+        /// </summary>
+        protected virtual void ConstTick() { }
         protected virtual void Tick() { }
 
         public virtual void Dispose()

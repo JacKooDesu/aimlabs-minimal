@@ -8,11 +8,29 @@ using TsEnvCore;
 
 namespace ALM.Screens.Mission
 {
+    using System;
     using ALM.Screens.Base;
-    public class MissionLifetimeScope : HandlableLifetimeScope<MissionEntry>
+    using UnityEngine.UIElements;
+
+    [HandlabeScene("Mission")]
+    public class MissionLifetimeScope : HandlableLifetimeScope<MissionLifetimeScope, MissionEntry>
     {
         [SerializeField]
         string _missionName = null;
+        [SerializeField]
+        UIDocument _rootUi;
+
+        protected override Type[] UiTypes() => new[]
+        {
+            typeof(PauseUi),
+        };
+
+        public record Payload(string MissionName) : LoadPayload;
+        public override void AfterLoad(LoadPayload payload)
+        {
+            var p = payload as Payload;
+            _missionName = p.MissionName;
+        }
 
         public static async UniTask LoadMission(string missionName)
         {
@@ -43,6 +61,8 @@ namespace ALM.Screens.Mission
 
             builder.Register<BallPoolService>(Lifetime.Scoped);
             builder.Register<RaycasterService>(Lifetime.Scoped);
+
+            builder.RegisterComponent<UIDocument>(_rootUi);
         }
     }
 }
