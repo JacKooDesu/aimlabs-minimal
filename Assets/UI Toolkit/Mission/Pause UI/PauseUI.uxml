@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Mission/Pause%20UI/pause_ui.uss?fileID=7433441132597879392&amp;guid=04dacfb90f4cebe4391b19a823883142&amp;type=3#pause_ui" />
+    <engine:VisualElement name="PausePanel" class="base-panel inactive" style="flex-grow: 1; align-items: stretch;">
+        <engine:Button text="RESUME" name="Resume" class="selection-item" />
+        <engine:Button text="SETTING" name="Setting" class="selection-item" />
+        <engine:Button text="RETURN TITLE" name="BackTitle" class="selection-item" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -9,9 +9,8 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Menu
 {
-    public class MenuEntry : IStartable
+    public class MenuEntry : HandlableEntry<MenuEntry>
     {
-        readonly UIDocument _rootUi;
         readonly MainMenu _mainMenu;
         readonly SelectMission _selectMission;
 
@@ -20,21 +19,12 @@ namespace ALM.Screens.Menu
         [Inject]
         Room _room;
 
-        public MenuEntry(
-            UIDocument rootUi,
-            IEnumerable<MenuUIBase> menuUIs)
+        public MenuEntry(UIDocument rootUi) : base(rootUi)
         {
-            _rootUi = rootUi;
-            _menuUIs = menuUIs;
-
-            UIStackHandler.RegisterUIs(menuUIs);
         }
 
-        public void Start()
+        public override void Start()
         {
-            foreach (var ui in _menuUIs)
-                ui.Config(_rootUi.rootVisualElement);
-
             UIStackHandler.PushUI((uint)UIIndex.MainMenu);
 
             _room.SetSize(40);

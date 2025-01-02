@@ -14,6 +14,8 @@ namespace ALM.Screens.Base
 
     public class SettingPanel : MonoBehaviour
     {
+        public const uint INDEX = 1 << 10;
+
         [SerializeField]
         DataBinder _gameplaySettingBinder;
         [SerializeField]
@@ -32,6 +34,8 @@ namespace ALM.Screens.Base
 
         [Inject]
         ColorPickerUI ColorPickerUI;
+        [Inject]
+        GameStatusHandler _gameStatusHandler;
 
         VisualElement _ui;
 
@@ -117,14 +121,6 @@ namespace ALM.Screens.Base
             return input.Dbg();
         }
 
-        public void SwitchActive()
-        {
-            if (Binding)
-                return;
-
-            SetActive(!_ui.visible);
-        }
-
         public void SetActive(bool active, bool ignoreSave = false)
         {
             _ui.visible = active;
@@ -135,14 +131,16 @@ namespace ALM.Screens.Base
                 _controlSetting.Save();
                 _objectSetting.Save();
             }
+        }
 
-            if (active)
-            {
-                _lastLockMode = UnityEngine.Cursor.lockState;
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
-            }
-            else
-                UnityEngine.Cursor.lockState = _lastLockMode;
+        public async UniTask ActiveAsync(
+            Action onClose = null, Func<bool> closeCondition = null)
+        {
+            SetActive(true);
+            closeCondition ??= () => Input.GetKeyDown(KeyCode.Escape);
+            await UniTask.WaitUntil(() => closeCondition() && !Binding);
+            SetActive(false);
+            onClose?.Invoke();
         }
     }
 }

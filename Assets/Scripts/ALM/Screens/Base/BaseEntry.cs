@@ -6,29 +6,23 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Base
 {
+    using ALM.Screens.Menu;
     using Screens.Base.Setting;
     using Util.UIToolkitExtend;
 
-    public class BaseEntry : IStartable, ITickable
+    public class BaseEntry : IStartable, IInitializable
     {
-        // FIXME: 之後要統一管理 UI Layers
-        [Inject]
-        SettingPanel _settingPanel;
         [Inject]
         Room _room;
         [Inject]
         ObjectSetting _objectSetting;
 
-        public void Start()
+        public void Initialize()
         {
             if (_objectSetting?.GetRoomTexture() is Texture2D tex)
                 _room?.SetTexture(tex);
         }
 
-        public void Tick()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                _settingPanel.SwitchActive();
-        }
+        public void Start() { }
     }
 }

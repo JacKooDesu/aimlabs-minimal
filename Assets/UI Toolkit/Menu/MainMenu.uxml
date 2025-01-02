@@ -5,6 +5,7 @@
             <engine:Button text="Select Mission" name="SelectMission" />
             <engine:Button text="Import Mission" name="ImportMission" />
             <engine:Button text="Check Update" name="CheckUpdate" />
+            <engine:Button text="Setting" name="Setting" />
             <engine:Button text="Credit" name="Credit" />
         </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />

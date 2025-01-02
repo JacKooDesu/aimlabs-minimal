@@ -25,9 +25,9 @@ namespace ALM.Screens.Menu
             _missionAuthor = _elementBase.Q<Label>("MissionAuthor");
 
             _elementBase.Q<Button>("Play").RegisterCallback<ClickEvent>(
-                _ => MissionLifetimeScope.LoadMission(
+                _ => MissionLifetimeScope.Load(new MissionLifetimeScope.Payload(
                     (UIStackHandler.Current().data as MissionLoader.PlayableMission)
-                        .Outline.Name).Forget());
+                        .Outline.Name)).Forget());
         }
 
         public override void Push()
