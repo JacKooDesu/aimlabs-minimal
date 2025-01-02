@@ -23,6 +23,7 @@ namespace ALM.Screens.Mission
         protected override Type[] UiTypes() => new[]
         {
             typeof(PauseUi),
+            typeof(CountdownUi),
         };
 
         public record Payload(string MissionName) : LoadPayload;
@@ -61,6 +62,10 @@ namespace ALM.Screens.Mission
 
             builder.Register<BallPoolService>(Lifetime.Scoped);
             builder.Register<RaycasterService>(Lifetime.Scoped);
+            builder.Register<PauseHandleService>(Lifetime.Scoped);
+            builder.RegisterFactory<float, Timer>(
+                _ => f => new(f),
+                Lifetime.Scoped);
 
             builder.RegisterComponent<UIDocument>(_rootUi);
         }
