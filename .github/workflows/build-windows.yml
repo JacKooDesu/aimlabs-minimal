@@ -94,8 +94,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build-ci
+      - name: npm install
+        working-directory: ./TsProject
+        run: npm ci
+
+      - name: npm build
+        working-directory: ./TsProject
+        run: npm run build-ci
 
       # 輸出成artifact
       - name: Ouput Artifact
