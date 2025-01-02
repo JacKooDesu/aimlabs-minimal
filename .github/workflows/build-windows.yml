@@ -94,6 +94,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: 'npm'
+          cache-dependency-path: './TsProject/package-lock.json'
+
       - name: npm install
         working-directory: ./TsProject
         run: npm ci
