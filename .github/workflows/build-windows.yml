@@ -98,11 +98,11 @@ jobs:
 
       - name: npm install
         working-directory: ./TsProject
-        run: npm ci
+        run: sudo npm ci
 
       - name: npm build
         working-directory: ./TsProject
-        run: npm run build-ci
+        run: sudo npm run build-ci
 
       # 輸出成artifact
       - name: Ouput Artifact
