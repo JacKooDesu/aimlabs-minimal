@@ -23,6 +23,8 @@ namespace ALM.Screens.Mission
         readonly MissionLoader.PlayableMission _mission;
         readonly BallPoolService _ballPoolService;
         readonly RaycasterService _raycasterService;
+        readonly PauseHandleService _pauseHandleService;
+        readonly Timer _timer;
         readonly Room _room;
 
         public MissionEntry(
@@ -30,14 +32,19 @@ namespace ALM.Screens.Mission
             MissionLoader.PlayableMission mission,
             BallPoolService ballPoolService,
             RaycasterService raycasterService,
+            PauseHandleService pauseHandleService,
             Room room,
+            Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
         {
             _jsEnv = jsEnv;
             _mission = mission;
             _ballPoolService = ballPoolService;
             _raycasterService = raycasterService;
+            _pauseHandleService = pauseHandleService;
             _room = room;
+
+            _timer = timerFactory(_mission.Outline.Time);
         }
 
         public override void Start()
@@ -65,28 +72,22 @@ namespace ALM.Screens.Mission
                 GameStatus.Paused, () => Cursor.lockState = CursorLockMode.None);
             _handler.Register<MissionEntry>(
                 GameStatus.Playing, () => Cursor.lockState = CursorLockMode.Locked);
+
+            _timer.OnComplete += () => Menu.MenuLifetimeScope.Load().Forget();
+            UIStackHandler.PushUI(((uint)UIIndex.Base), _timer);
+            _timer.Reset();
+            _pauseHandleService.CountDown();
         }
 
         protected override void ConstTick()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (UIStackHandler.Length() is not 0)
-                    UIStackHandler.PopUI();
-                else
-                {
-                    UIStackHandler.PushUI((uint)UIIndex.Pause);
-                    UIStackHandler.WaitUntilUiPop((uint)UIIndex.Pause)
-                        .ContinueWith(() => _handler.Set<MissionEntry>(new Set(GameStatus.Playing)))
-                        .Forget();
-                    _handler.Set<MissionEntry>(new Set(GameStatus.Paused));
-                }
-            }
+            _pauseHandleService.CheckState();
         }
 
         protected override void Tick()
         {
             _jsEnv.Tick();
+            _timer.Tick();
         }
 
         void AssignToJsEnv()

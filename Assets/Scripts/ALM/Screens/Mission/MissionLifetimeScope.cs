@@ -23,6 +23,8 @@ namespace ALM.Screens.Mission
         protected override Type[] UiTypes() => new[]
         {
             typeof(PauseUi),
+            typeof(CountdownUi),
+            typeof(BaseUi),
         };
 
         public record Payload(string MissionName) : LoadPayload;
@@ -30,15 +32,6 @@ namespace ALM.Screens.Mission
         {
             var p = payload as Payload;
             _missionName = p.MissionName;
-        }
-
-        public static async UniTask LoadMission(string missionName)
-        {
-            await SceneManager.LoadSceneAsync("Mission").ToUniTask();
-
-            var scope = LifetimeScope.Find<MissionLifetimeScope>() as MissionLifetimeScope;
-            scope._missionName = missionName;
-            scope.Build();
         }
 
         protected override void Configure(IContainerBuilder builder)
@@ -61,6 +54,10 @@ namespace ALM.Screens.Mission
 
             builder.Register<BallPoolService>(Lifetime.Scoped);
             builder.Register<RaycasterService>(Lifetime.Scoped);
+            builder.Register<PauseHandleService>(Lifetime.Scoped);
+            builder.RegisterFactory<float, Timer>(
+                _ => f => new(f),
+                Lifetime.Scoped);
 
             builder.RegisterComponent<UIDocument>(_rootUi);
         }

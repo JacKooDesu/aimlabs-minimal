@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="PauseUI" src="project://database/Assets/UI%20Toolkit/Mission/Pause%20UI/PauseUI.uxml?fileID=9197481963319205126&amp;guid=bf17d85ba8b848f4297a9409557c886f&amp;type=3#PauseUI" />
+    <Style src="project://database/Assets/UI%20Toolkit/Mission/main-ui.uss?fileID=7433441132597879392&amp;guid=105612950f3b3454d9793e70eabf9ee5&amp;type=3#main-ui" />
+    <Style src="project://database/Assets/UI%20Toolkit/Mission/Pause%20UI/pause_ui.uss?fileID=7433441132597879392&amp;guid=04dacfb90f4cebe4391b19a823883142&amp;type=3#pause_ui" />
+    <engine:VisualElement name="BaseUI" class="container" style="flex-grow: 1;">
+        <engine:VisualElement name="Timer" class="timer-panel" style="flex-grow: 1;">
+            <engine:Label text="00:00" name="TimerLabel" class="timer-text" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:Label text="3" picking-mode="Ignore" name="CountDownText" class="countdown-text inactive" />
+    <engine:Instance template="PauseUI" name="PauseUI" class="container" />
+</engine:UXML>
