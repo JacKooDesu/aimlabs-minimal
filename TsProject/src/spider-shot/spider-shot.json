@@ -1,0 +1,7 @@
+{
+  "name": "spider-shot",
+  "description": "This is a simple spider shot",
+  "map": "10m",
+  "map_size": 20,
+  "time_seconds": 90
+}
