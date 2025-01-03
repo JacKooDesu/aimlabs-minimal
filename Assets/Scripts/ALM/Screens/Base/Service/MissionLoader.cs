@@ -27,6 +27,8 @@ namespace ALM.Screens.Base
             _missions.Clear();
 
             var missionDir = FileIO.GetPath(Constants.MISSION_PATH);
+            if (!Directory.Exists(missionDir))
+                Directory.CreateDirectory(missionDir);
 
             foreach (var mFolder in Directory.GetDirectories(missionDir))
             {
