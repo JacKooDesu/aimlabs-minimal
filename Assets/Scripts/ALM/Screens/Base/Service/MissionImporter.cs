@@ -30,14 +30,15 @@ namespace ALM.Screens.Base
                     missionDir,
                     Path.GetFileName(folder));
 
-                // TODO: Validate origin one here!!
+                // TODO: Validate origin one here!! (version?)
                 if (Directory.Exists(dest))
                 {
                     Directory.Delete(dest, true);
                     $"Old Mission Deleted: {dest}".Dbg();
                 }
 
-                Directory.Move(folder, dest);
+                FileIO.CopyDirectory(folder, dest);
+                Directory.Delete(folder, true);
             }
         }
     }
