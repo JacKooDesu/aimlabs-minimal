@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 
 namespace ALM.Screens.Menu
 {
+    using System.Linq;
     using ALM.Screens.Base;
     using Common;
 
@@ -23,6 +24,14 @@ namespace ALM.Screens.Menu
         {
             base.AfterConfig();
             GenerateMissionList();
+        }
+
+        public override void Push()
+        {
+            base.Push();
+            
+            if (_missionLoader.GetMissions().Count() != _missionButtons.Count)
+                GenerateMissionList();
         }
 
         void GenerateMissionList()

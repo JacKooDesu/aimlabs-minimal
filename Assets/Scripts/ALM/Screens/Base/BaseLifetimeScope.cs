@@ -4,6 +4,7 @@ using VContainer.Unity;
 namespace ALM.Screens.Base
 {
     using ALM.Common;
+    using ALM.Screens.Mission;
     using ALM.Util;
     using ALM.Util.UIToolkitExtend;
     using Setting;
@@ -29,6 +30,8 @@ namespace ALM.Screens.Base
             builder.Register<MissionLoader>(
                 _ => new(),
                 Lifetime.Singleton);
+
+            builder.Register<MissionImporter>(Lifetime.Singleton);
 
             builder.RegisterComponentInHierarchy<SettingPanel>();
             builder.RegisterComponentInHierarchy<Room>();

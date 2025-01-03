@@ -16,4 +16,7 @@ connect:
 	${CONTAINER_CMD} sh
 
 compile:
+	${CONTAINER_CMD} npm run build
+
+compile-dbg:
 	${CONTAINER_CMD} npm run build:dev

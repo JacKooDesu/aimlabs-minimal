@@ -701,7 +701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentReference:
     TypeName: ALM.Screens.Base.BaseLifetimeScope
-  autoRun: 1
+  autoRun: 0
   autoInjectGameObjects: []
   _missionName: test-mission
   _rootUi: {fileID: 1374097342}

@@ -100,5 +100,23 @@ namespace ALM.Util
             var path = Path.Combine(SAVE_PATH, subPath);
             return Path.Combine(SAVE_PATH, subPath, name);
         }
+
+        public static void CopyDirectory(string source, string dest)
+        {
+            if (!Directory.Exists(dest))
+                Directory.CreateDirectory(dest);
+
+            foreach (var file in Directory.GetFiles(source))
+            {
+                var destFile = Path.Combine(dest, Path.GetFileName(file));
+                File.Copy(file, destFile, true);
+            }
+
+            foreach (var folder in Directory.GetDirectories(source))
+            {
+                var destFolder = Path.Combine(dest, Path.GetFileName(folder));
+                CopyDirectory(folder, destFolder);
+            }
+        }
     }
 }

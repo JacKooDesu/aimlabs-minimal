@@ -56,8 +56,8 @@ namespace ALM.Screens.Mission
                 _jsEnv.UsingAction<JsConfigureDel>();
                 var module = _jsEnv.ExecuteModule(script);
 
-                var configure = module.Get<Func<JsConfigureDel>>("configure");
-                configure?.Invoke()?.Invoke(new(
+                var configure = module.Get<JsConfigureDel>("configure");
+                configure?.Invoke(new(
                     _raycasterService,
                     _ballPoolService));
 

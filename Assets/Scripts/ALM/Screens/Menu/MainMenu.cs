@@ -16,6 +16,11 @@ namespace ALM.Screens.Menu
         [Inject]
         SettingPanel _settingPanel;
 
+        [Inject]
+        MissionImporter _missionImporter;
+        [Inject]
+        MissionLoader _missionLoader;
+
         protected override void AfterConfig()
         {
             base.AfterConfig();
@@ -25,11 +30,20 @@ namespace ALM.Screens.Menu
 
             _elementBase.Q<Button>("Setting").RegisterCallback<ClickEvent>(
                 OpenSetting);
+
+            _elementBase.Q<Button>("ImportMission").RegisterCallback<ClickEvent>(
+                ImportMission);
         }
 
         void OpenSetting(ClickEvent _)
         {
             _settingPanel.ActiveAsync().Forget();
+        }
+
+        void ImportMission(ClickEvent _)
+        {
+            _missionImporter.Import();
+            _missionLoader.Reload();
         }
     }
 }
