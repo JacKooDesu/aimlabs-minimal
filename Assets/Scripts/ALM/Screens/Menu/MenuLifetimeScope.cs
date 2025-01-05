@@ -16,7 +16,8 @@ namespace ALM.Screens.Menu
         {
             typeof(MainMenu),
             typeof(SelectMission),
-            typeof(MissionInfo)
+            typeof(MissionInfo),
+            typeof(ImportMission),
         };
 
         protected override void Configure(IContainerBuilder builder)

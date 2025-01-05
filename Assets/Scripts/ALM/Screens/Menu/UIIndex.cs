@@ -4,6 +4,7 @@ namespace ALM.Screens.Menu
     {
         MainMenu,
         SelectMission,
-        MissionInfo
+        MissionInfo,
+        ImportMission,
     }
 }

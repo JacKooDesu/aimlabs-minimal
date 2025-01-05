@@ -1,15 +1,17 @@
+using System;
+using System.Linq;
 using System.IO;
+using System.IO.Compression;
 using System.Collections.Generic;
 
 namespace ALM.Screens.Base
 {
-    using System;
-    using System.Linq;
     using ALM.Data;
     using ALM.Util;
 
     public class MissionLoader
     {
+        public int MissionVersion { get; private set; } = Int32.MinValue;
         List<PlayableMission> _missions { get; } = new();
 
         public record PlayableMission(
@@ -45,6 +47,8 @@ namespace ALM.Screens.Base
                     scripts));
                 $"Mission loaded: {outline.Name}".Dbg();
             }
+
+            MissionVersion++;
         }
 
         public PlayableMission GetMission(int index) =>
@@ -96,6 +100,51 @@ namespace ALM.Screens.Base
             outline = FileIO.JLoad<MissionOutline>(outlinePath);
             fullPath = di.FullName;
             return true;
+        }
+
+        /// <summary>
+        /// Validate mission zip file, the json always at first element
+        /// </summary>
+        public static ZipArchiveEntry[] Validate(ZipArchive archive)
+        {
+            var scriptCount = 0;
+            List<ZipArchiveEntry> entries = new();
+
+            var outline = archive.Entries
+                    .First(e => GetMissionPath(e));
+
+            if (outline is null)
+                return Array.Empty<ZipArchiveEntry>();
+
+            entries.Add(outline);
+
+            var path = string.Join('/', outline!
+                .FullName
+                .Split('/')[..^1]) + '/';
+
+            foreach (var e in archive.Entries)
+            {
+                if (!e.FullName.StartsWith(path) ||
+                    e.FullName == path)
+                    continue;
+
+                if (e == outline)
+                    continue;
+
+                if (e.FullName.EndsWith("js"))
+                    scriptCount++;
+
+                entries.Add(e);
+            }
+
+            return scriptCount > 0 ?
+                entries.ToArray() : Array.Empty<ZipArchiveEntry>();
+
+            bool GetMissionPath(ZipArchiveEntry entry)
+            {
+                var arr = entry.FullName.Split('/');
+                return arr[^1].EndsWith(".json");
+            }
         }
 
         static List<FileInfo> ScriptRecursion(DirectoryInfo di, List<FileInfo> list = null)
