@@ -18,11 +18,12 @@ namespace ALM.Screens.Base
         ObjectSetting _objectSetting;
 
         public void Initialize()
+        { }
+
+        public void Start()
         {
             if (_objectSetting?.GetRoomTexture() is Texture2D tex)
                 _room?.SetTexture(tex);
         }
-
-        public void Start() { }
     }
 }
