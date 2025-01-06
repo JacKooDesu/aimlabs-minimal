@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace ALM.Screens.Base
             SetActive(false);
         }
 
-        public async UniTask Queue(string[] messgaes, float time, bool skipable = true)
+        public async UniTask Queue(IEnumerable<string> messgaes, float time, bool skipable = true)
         {
             foreach (var msg in messgaes)
                 await Show(msg, time, skipable);

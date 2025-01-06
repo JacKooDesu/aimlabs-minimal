@@ -4,11 +4,13 @@ using System.IO.Compression;
 
 namespace ALM.Screens.Menu
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using ALM.Screens.Base;
     using ALM.Util;
+    using Cysharp.Threading.Tasks;
 
     public class ImportMission : MenuUIBase
     {
@@ -19,6 +21,8 @@ namespace ALM.Screens.Menu
         MissionImporter _missionImporter;
         [Inject]
         MissionLoader _missionLoader;
+        [Inject]
+        QuickHint _quickHint;
 
         protected override void AfterConfig()
         {
@@ -31,7 +35,11 @@ namespace ALM.Screens.Menu
 
         void AutoImport(ClickEvent _)
         {
-            _missionImporter.Import();
+            var result = _missionImporter.AutoImport();
+            if (result.Count() is 0)
+                return;
+
+            DisplayResult(result);
             _missionLoader.Reload();
         }
 
@@ -41,43 +49,26 @@ namespace ALM.Screens.Menu
                 "Select Mission Zip",
                 "",
                 "zip",
-                false,
+                true,
                 FileSelected);
         }
 
         void FileSelected(string[] paths)
         {
-            foreach (var item in paths)
-            {
-                using (var archive = ZipFile.OpenRead(item))
-                {
-                    var entries = MissionValidator.Validate(archive);
-                    if (entries.Length is 0)
-                        continue;
+            if (paths.Length is 0)
+                return;
 
-                    var outlineEntry = entries[0];
-                    var baseDir = string.Join('/', outlineEntry
-                        .FullName
-                        .Split('/')[..^1]) + '/';
-                    var missionDir = FileIO.GetPath(
-                        Constants.MISSION_PATH,
-                        outlineEntry.FullName
-                            .Split('/')[^1]
-                            .Replace(".json", ""));
-
-                    foreach (var e in entries)
-                    {
-                        var dest = Path.Combine(
-                            missionDir,
-                            e.FullName.Replace(baseDir, ""));
-
-                        Directory.CreateDirectory(Path.GetDirectoryName(dest));
-                        e.ExtractToFile(dest, true);
-                    }
-                }
-            }
+            var result = paths.Where(p => !string.IsNullOrEmpty(_missionImporter.ImportZip(p)));
+            DisplayResult(result);
 
             _missionLoader.Reload();
+        }
+
+        void DisplayResult(IEnumerable<string> missions)
+        {
+            _quickHint.Queue(
+                missions.Select(nm => "Imported: " + nm),
+                1.5f).Forget();
         }
     }
 }

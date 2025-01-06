@@ -148,7 +148,7 @@ namespace ALM.Screens.Base
             bool GetMissionPath(ZipArchiveEntry entry)
             {
                 var arr = entry.FullName.Split('/');
-                return arr[^1].EndsWith(".json");
+                return arr[^1].EndsWith(Constants.OUTLINE_EXT);
             }
         }
 
