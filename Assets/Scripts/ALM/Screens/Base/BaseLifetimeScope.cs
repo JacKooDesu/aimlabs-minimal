@@ -36,6 +36,7 @@ namespace ALM.Screens.Base
             builder.RegisterComponentInHierarchy<SettingPanel>();
             builder.RegisterComponentInHierarchy<Room>();
             builder.RegisterComponentInHierarchy<ColorPickerUI>();
+            builder.RegisterComponentInHierarchy<QuickHint>();
         }
     }
 }

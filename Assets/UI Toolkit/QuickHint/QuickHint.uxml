@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/QuickHint/quick-hint.uss?fileID=7433441132597879392&amp;guid=e88423e9f4748b841817f6417ea62949&amp;type=3#quick-hint" />
+    <engine:VisualElement name="MainPanel" class="bar">
+        <engine:Label text="has imported" name="Text" picking-mode="Ignore" />
+    </engine:VisualElement>
+</engine:UXML>
