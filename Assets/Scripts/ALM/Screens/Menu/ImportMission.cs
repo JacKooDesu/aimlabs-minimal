@@ -67,9 +67,6 @@ namespace ALM.Screens.Menu
 
                     foreach (var e in entries)
                     {
-                        if (e.FullName.EndsWith('/'))
-                            continue;
-
                         var dest = Path.Combine(
                             missionDir,
                             e.FullName.Replace(baseDir, ""));

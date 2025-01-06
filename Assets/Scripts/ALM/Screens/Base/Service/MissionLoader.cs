@@ -121,11 +121,16 @@ namespace ALM.Screens.Base
             var path = string.Join('/', outline!
                 .FullName
                 .Split('/')[..^1]) + '/';
-
+            var isRoot = path is "/";
             foreach (var e in archive.Entries)
             {
-                if (!e.FullName.StartsWith(path) ||
-                    e.FullName == path)
+                if (!isRoot && !e.FullName.StartsWith(path))
+                    continue;
+
+                if (e.FullName == path)
+                    continue;
+
+                if (e.FullName.EndsWith('/'))
                     continue;
 
                 if (e == outline)
