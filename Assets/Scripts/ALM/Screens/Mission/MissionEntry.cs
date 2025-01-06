@@ -44,7 +44,8 @@ namespace ALM.Screens.Mission
             _pauseHandleService = pauseHandleService;
             _room = room;
 
-            _timer = timerFactory(_mission.Outline.Time);
+            if (_mission.Outline.Time > 0)
+                _timer = timerFactory(_mission.Outline.Time);
         }
 
         public override void Start()
@@ -73,9 +74,12 @@ namespace ALM.Screens.Mission
             _handler.Register<MissionEntry>(
                 GameStatus.Playing, () => Cursor.lockState = CursorLockMode.Locked);
 
-            _timer.OnComplete += () => Menu.MenuLifetimeScope.Load().Forget();
             UIStackHandler.PushUI(((uint)UIIndex.Base), _timer);
-            _timer.Reset();
+            if (_timer is not null)
+            {
+                _timer.OnComplete += () => Menu.MenuLifetimeScope.Load().Forget();
+                _timer.Reset();
+            }
             _pauseHandleService.CountDown();
         }
 
@@ -87,7 +91,7 @@ namespace ALM.Screens.Mission
         protected override void Tick()
         {
             _jsEnv.Tick();
-            _timer.Tick();
+            _timer?.Tick();
         }
 
         void AssignToJsEnv()

@@ -26,7 +26,8 @@ namespace ALM.Screens.Mission
         public override void Push()
         {
             var timer = UIStackHandler.Current()?.data as Timer;
-            timer.OnUpdateInt += UpdateTimer;
+            if (timer is not null)
+                timer.OnUpdateInt += UpdateTimer;
         }
 
         public override void Return() { }
