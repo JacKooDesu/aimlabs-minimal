@@ -14,6 +14,13 @@
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
+    <engine:VisualElement name="ImportPanel" class="selection-parent 2nd inactive" style="height: auto; top: 10%; bottom: 10%;">
+        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
+            <engine:Button text="Auto Import" name="AutoImport" />
+            <engine:Button text="Select File" name="SelectFile" />
+        </engine:VisualElement>
+        <engine:Button name="ReturnButton" class="return-button" />
+    </engine:VisualElement>
     <engine:VisualElement name="CreditPanel" class="selection-parent 2nd inactive">
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
             <engine:Label text="Aim Lab Minimal" name="Title" class="credit-title" />

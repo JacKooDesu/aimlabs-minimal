@@ -32,18 +32,12 @@ namespace ALM.Screens.Menu
                 OpenSetting);
 
             _elementBase.Q<Button>("ImportMission").RegisterCallback<ClickEvent>(
-                ImportMission);
+                _ => UIStackHandler.PushUI((uint)UIIndex.ImportMission));
         }
 
         void OpenSetting(ClickEvent _)
         {
             _settingPanel.ActiveAsync().Forget();
-        }
-
-        void ImportMission(ClickEvent _)
-        {
-            _missionImporter.Import();
-            _missionLoader.Reload();
         }
     }
 }

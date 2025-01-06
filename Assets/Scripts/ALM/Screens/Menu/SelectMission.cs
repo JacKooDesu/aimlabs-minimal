@@ -14,6 +14,7 @@ namespace ALM.Screens.Menu
         readonly MissionLoader _missionLoader;
 
         List<Button> _missionButtons { get; } = new();
+        int _missionVersion;
 
         public SelectMission(MissionLoader missionLoader)
         {
@@ -29,8 +30,8 @@ namespace ALM.Screens.Menu
         public override void Push()
         {
             base.Push();
-            
-            if (_missionLoader.GetMissions().Count() != _missionButtons.Count)
+
+            if (_missionLoader.MissionVersion != _missionVersion)
                 GenerateMissionList();
         }
 
@@ -50,6 +51,8 @@ namespace ALM.Screens.Menu
 
                 _missionButtons.Add(button);
             }
+
+            _missionVersion = _missionLoader.MissionVersion;
         }
 
         void OnSelectMission(MissionLoader.PlayableMission mission)

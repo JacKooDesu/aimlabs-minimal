@@ -1,0 +1,29 @@
+.bar {
+    background-color: rgba(0, 0, 0, 0.9);
+    max-height: 10%;
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    min-height: 10%;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    font-size: 36px;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    transition-property: color, background-color;
+    transition-duration: 0.1s, 0.1s;
+    transition-timing-function: linear, linear;
+    transition-delay: 0s, 0s;
+}
+
+.hide {
+    display: flex;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(27, 27, 27, 0);
+    transition-property: color, background-color, visibility;
+    transition-timing-function: linear, linear, ease;
+    transition-delay: 0s, 0s, 0.2s;
+    transition-duration: 0.2s, 0.2s, 0s;
+}
