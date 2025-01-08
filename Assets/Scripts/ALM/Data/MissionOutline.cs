@@ -30,6 +30,8 @@ namespace ALM.Data
             None,
             [EnumMember(Value = "flicking")]
             Flicking,
+            [EnumMember(Value = "reaction")]
+            Reaction,
             [EnumMember(Value = "tracking")]
             Tracking,
         }

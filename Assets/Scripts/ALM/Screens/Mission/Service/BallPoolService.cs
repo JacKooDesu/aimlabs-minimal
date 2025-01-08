@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 using VContainer;
 
 namespace ALM.Screens.Mission
 {
+    using ALM.Screens.Base;
     using Base.Setting;
+
     public class BallPoolService
     {
         readonly MissionLifetimeScope _scope;
@@ -13,14 +16,18 @@ namespace ALM.Screens.Mission
 
         readonly Material _material;
 
+        public event Action<Ball> OnBallHit;
+
         public BallPoolService(
             MissionLifetimeScope scope,
-            ObjectSetting objectSetting)
+            MissionScoreData missionScoreData,
+            ObjectSetting objectSetting,
+            MissionLoader.PlayableMission mission)
         {
             _scope = scope;
             _objectSetting = objectSetting;
             Pool = new ObjectPool<Ball>(
-                CreateBall,
+                () => CreateBall(missionScoreData, mission),
                 GetBall,
                 ReleaseBall,
                 DestroyBall);
@@ -28,12 +35,17 @@ namespace ALM.Screens.Mission
             _material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         }
 
-        Ball CreateBall()
+        Ball CreateBall(
+            MissionScoreData scoreData,
+            MissionLoader.PlayableMission mission)
         {
             var ball = GameObject
                 .CreatePrimitive(PrimitiveType.Sphere);
             ball.GetComponent<MeshRenderer>().material = _material;
-            return ball.AddComponent<Ball>();
+            var component = ball.AddComponent<Ball>();
+            component.OnHit += 
+                () => OnBallHit?.Invoke(component);
+            return component;
         }
 
         void GetBall(Ball ball)

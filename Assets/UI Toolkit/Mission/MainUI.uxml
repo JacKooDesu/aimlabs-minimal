@@ -3,8 +3,16 @@
     <Style src="project://database/Assets/UI%20Toolkit/Mission/main-ui.uss?fileID=7433441132597879392&amp;guid=105612950f3b3454d9793e70eabf9ee5&amp;type=3#main-ui" />
     <Style src="project://database/Assets/UI%20Toolkit/Mission/Pause%20UI/pause_ui.uss?fileID=7433441132597879392&amp;guid=04dacfb90f4cebe4391b19a823883142&amp;type=3#pause_ui" />
     <engine:VisualElement name="BaseUI" class="container" style="flex-grow: 1;">
-        <engine:VisualElement name="Timer" class="timer-panel" style="flex-grow: 1;">
-            <engine:Label text="00:00" name="TimerLabel" class="timer-text" />
+        <engine:VisualElement name="UpperGroup" class="upper-group" style="flex-grow: 1;">
+            <engine:VisualElement name="Acc" class="score-panel" style="flex-grow: 1;">
+                <engine:Label text="--%" name="AccText" />
+            </engine:VisualElement>
+            <engine:VisualElement name="Timer" class="timer-panel" style="flex-grow: 1;">
+                <engine:Label text="00:00" name="TimerLabel" class="timer-text" />
+            </engine:VisualElement>
+            <engine:VisualElement name="Score" class="score-panel" style="flex-grow: 1;">
+                <engine:Label text="00000000" name="ScoreText" />
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
     <engine:Label text="3" picking-mode="Ignore" name="CountDownText" class="countdown-text inactive" />

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using VContainer;
 
 namespace ALM.Screens.Mission
 {
@@ -12,11 +13,23 @@ namespace ALM.Screens.Mission
 
         protected override string BaseElementName => "BaseUI";
 
+        [Inject]
+        public MissionScoreData _scoreData;
+
         Label _timerLabel;
+        Label _scoreLabel;
+        Label _accLabel;
 
         protected override void AfterConfig()
         {
             _timerLabel = _elementBase.Q<Label>("TimerLabel");
+            _scoreLabel = _elementBase.Q<Label>("ScoreText");
+            _accLabel = _elementBase.Q<Label>("AccText");
+
+            _scoreData.OnAccuracyChange += acc =>
+                _accLabel.text = acc.ToString("P0");
+            _scoreData.OnScoreChanged += score =>
+                _scoreLabel.text = score.ToString();
         }
 
         public override void Overlapped() { }

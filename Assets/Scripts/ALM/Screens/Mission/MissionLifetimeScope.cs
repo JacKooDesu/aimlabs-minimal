@@ -58,8 +58,13 @@ namespace ALM.Screens.Mission
             builder.RegisterFactory<float, Timer>(
                 _ => f => new(f),
                 Lifetime.Scoped);
+            builder.Register<ScoreService>(Lifetime.Scoped)
+                .AsImplementedInterfaces()
+                .AsSelf();
 
             builder.RegisterComponent<UIDocument>(_rootUi);
+
+            builder.RegisterInstance(new MissionScoreData());
         }
     }
 }
