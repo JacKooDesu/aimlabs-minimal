@@ -1,0 +1,110 @@
+name: Build Windows
+
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
+      # 查看repo
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ fromJson(secrets.SETTING).PAT }}
+          lfs: true # 使用 LFS
+
+      # Cache可以讓你之後Build更快
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Free Disk Space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
+          # Before
+          echo "Disk space before:"
+          df -h
+
+          #echo "Listing 100 largest packages"
+          #dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
+          #echo "Removing large packages"
+          #sudo apt-get remove -y '^ghc-8.*'
+          #sudo apt-get remove -y '^dotnet-.*'
+          #sudo apt-get remove -y '^llvm-.*'
+          #sudo apt-get remove -y 'php.*'
+          #sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
+          #sudo apt-get autoremove -y
+          #sudo apt-get clean
+          #df -h
+
+          echo "Removing large directories"
+          # https://github.com/apache/flink/blob/master/tools/azure-pipelines/free_disk_space.sh
+          rm -rf /usr/share/dotnet/
+
+          # https://github.com/actions/virtual-environments/issues/709#issuecomment-612569242
+          rm -rf "/usr/local/share/boost"
+          rm -rf "$AGENT_TOOLSDIRECTORY"
+
+          # After
+          echo "Disk space after:"
+          df -h
+
+      # 用Game-CI Builder建置專案
+      - name: Build project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ fromJson(secrets.SETTING).email }}
+          UNITY_PASSWORD: ${{ fromJson(secrets.SETTING).password }}
+        with:
+          targetPlatform: StandaloneWindows64
+
+    # Pro build
+    #   - name: Pro Build project
+    #     if: ${{ inputs.proBuild }}
+    #     uses: game-ci/unity-builder@v4
+    #     env:
+    #       UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+    #       UNITY_EMAIL: ${{ fromJson(secrets.SETTING).email }}
+    #       UNITY_PASSWORD: ${{ fromJson(secrets.SETTING).password }}
+    #     with:
+    #       targetPlatform: StandaloneWindows64
+
+      # 自動編譯並匯入預設任務
+      - name: Ts Mission Compile Job
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          cache-dependency-path: './TsProject/package-lock.json'
+
+      - name: npm install
+        working-directory: ./TsProject
+        run: sudo npm ci
+
+      - name: npm build
+        working-directory: ./TsProject
+        run: sudo npm run build-ci
+
+      - name: Zip File
+        run: |
+          cd build
+          zip -r build.zip *
+          mv build.zip ../build.zip
+
+      - name: Release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build.zip
