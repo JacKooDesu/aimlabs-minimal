@@ -10,6 +10,12 @@ on:
         required: false
         type: boolean
 
+  push:
+    branches:
+      - main
+    tags:
+      - '**'
+
 jobs:
   build:
     name: Build Project
@@ -106,9 +112,21 @@ jobs:
 
       # 輸出成artifact
       - name: Ouput Artifact
-        if: ${{ !inputs.noArtifact }}
+        if: github.event_name != 'push'
         uses: actions/upload-artifact@v3
         with:
           name: Build
           path: build
           retention-days: 1
+
+      - name: Zip File
+        run: |
+          cd build
+          zip -r build.zip *
+          mv build.zip ../build.zip
+
+      - name: Release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build.zip
