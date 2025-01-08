@@ -41,7 +41,9 @@ namespace ALM.Screens.Base
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<TEntry>();
+            builder.RegisterEntryPoint<TEntry>()
+                .AsSelf()
+                .As<HandlableEntry<TEntry>>();
 
             foreach (var ui in UiTypes())
                 builder.Register(ui, Lifetime.Scoped).As<UIBase>();

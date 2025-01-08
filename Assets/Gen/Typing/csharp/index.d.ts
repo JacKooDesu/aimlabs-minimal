@@ -3977,9 +3977,9 @@
         {
             protected [__keep_incompatibility]: never;
             public get Pool(): UnityEngine.Pool.ObjectPool$1<ALM.Screens.Mission.Ball>;
-            public Ball ($index: number) : ALM.Screens.Mission.Ball
+            public Ball ($typeIndex?: number) : ALM.Screens.Mission.Ball
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
-            public constructor ($objectSetting: ALM.Screens.Base.Setting.ObjectSetting)
+            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting)
             public constructor ()
         }
         interface JsConfigureDel
@@ -3988,14 +3988,20 @@
         Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
         }
         var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
-        class Ball extends UnityEngine.MonoBehaviour implements ALM.Screens.Mission.IRaycastTarget
+        class Ball extends UnityEngine.MonoBehaviour implements ALM.Screens.Mission.IRaycastTarget, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
+            public set Color(value: UnityEngine.Color);
+            public get Hp(): number;
+            public set Hp(value: number);
             public add_OnHitBy ($value: System.Action$1<number>) : void
             public remove_OnHitBy ($value: System.Action$1<number>) : void
             public add_OnHit ($value: System.Action) : void
             public remove_OnHit ($value: System.Action) : void
+            public Tick () : void
             public HitBy ($index: number) : void
+            public HasHpBar () : ALM.Screens.Mission.Ball
+            public constructor ()
         }
         interface IRaycastTarget
         {
@@ -4005,7 +4011,20 @@
             remove_OnHit ($value: System.Action) : void
             HitBy ($index: number) : void
         }
+        class MissionEntry extends ALM.Screens.Base.HandlableEntry$1<ALM.Screens.Mission.MissionEntry> implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MissionLifetimeScope extends ALM.Screens.Base.HandlableLifetimeScope$2<ALM.Screens.Mission.MissionLifetimeScope, ALM.Screens.Mission.MissionEntry> implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
         interface IRaycaster
+        {
+        }
+    }
+    namespace ALM.Common {
+        interface IManagedTickable
         {
         }
     }
@@ -4016,6 +4035,28 @@
         }
         interface IObjectPool$1<T>
         {
+        }
+    }
+    namespace VContainer.Unity {
+        class LifetimeScope extends UnityEngine.MonoBehaviour implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IStartable
+        {
+        }
+        interface ITickable
+        {
+        }
+    }
+    namespace ALM.Screens.Base {
+        class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class HandlableLifetimeScope$2<TScope, TEntry> extends VContainer.Unity.LifetimeScope implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
         }
     }
     namespace ALM.Screens.Base.Setting {

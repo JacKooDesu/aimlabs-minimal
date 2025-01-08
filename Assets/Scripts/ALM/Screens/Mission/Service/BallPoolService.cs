@@ -1,18 +1,23 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using VContainer;
 
 namespace ALM.Screens.Mission
 {
     using Base.Setting;
     public class BallPoolService
     {
+        readonly MissionLifetimeScope _scope;
         readonly ObjectSetting _objectSetting;
         public ObjectPool<Ball> Pool { get; private set; }
 
         readonly Material _material;
 
-        public BallPoolService(ObjectSetting objectSetting)
+        public BallPoolService(
+            MissionLifetimeScope scope,
+            ObjectSetting objectSetting)
         {
+            _scope = scope;
             _objectSetting = objectSetting;
             Pool = new ObjectPool<Ball>(
                 CreateBall,
@@ -31,9 +36,21 @@ namespace ALM.Screens.Mission
             return ball.AddComponent<Ball>();
         }
 
-        void GetBall(Ball ball) { }
-        void ReleaseBall(Ball ball) { }
-        void DestroyBall(Ball ball) { }
+        void GetBall(Ball ball)
+        {
+            var entry = _scope.Container.Resolve<MissionEntry>();
+            entry.RegTickable(ball);
+        }
+        void ReleaseBall(Ball ball)
+        {
+            var entry = _scope.Container.Resolve<MissionEntry>();
+            entry.UnregTickable(ball);
+        }
+        void DestroyBall(Ball ball)
+        {
+            var entry = _scope.Container.Resolve<MissionEntry>();
+            entry.UnregTickable(ball);
+        }
 
         public Ball Ball(int typeIndex = 0)
         {

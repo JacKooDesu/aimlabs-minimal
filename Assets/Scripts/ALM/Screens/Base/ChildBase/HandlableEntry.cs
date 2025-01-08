@@ -14,7 +14,7 @@ namespace ALM.Screens.Base
         bool _paused = false;
 
         protected IEnumerable<UIBase> _uis;
-        protected IEnumerable<IManagedTickable> _tickables;
+        protected List<IManagedTickable> _tickables;
         protected GameStatusHandler _handler;
 
         protected readonly UIDocument _rootUi;
@@ -28,7 +28,7 @@ namespace ALM.Screens.Base
         {
             var type = typeof(TEntry);
             _handler = handler;
-            _tickables = tickables;
+            _tickables = new(tickables);
             _handler.AddEntry(type);
 
             _handler.Register(type, GameStatus.Paused, () => _paused = true);
@@ -70,7 +70,7 @@ namespace ALM.Screens.Base
             this.Tick();
 
             foreach (var tickable in _tickables)
-                tickable.Tick();
+                tickable?.Tick();
         }
 
         /// <summary>
@@ -86,6 +86,12 @@ namespace ALM.Screens.Base
         }
 
         public virtual void Dispose() { }
+
+        public void RegTickable(IManagedTickable tickable) =>
+            _tickables.Add(tickable);
+
+        public void UnregTickable(IManagedTickable tickable) =>
+            _tickables.Remove(tickable);
 
         interface IAutoRegister
         {
