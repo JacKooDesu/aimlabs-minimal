@@ -1,4 +1,4 @@
-name: Build Windows
+name: Auto Release
 
 on:
   push:
@@ -70,17 +70,6 @@ jobs:
           UNITY_PASSWORD: ${{ fromJson(secrets.SETTING).password }}
         with:
           targetPlatform: StandaloneWindows64
-
-    # Pro build
-    #   - name: Pro Build project
-    #     if: ${{ inputs.proBuild }}
-    #     uses: game-ci/unity-builder@v4
-    #     env:
-    #       UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-    #       UNITY_EMAIL: ${{ fromJson(secrets.SETTING).email }}
-    #       UNITY_PASSWORD: ${{ fromJson(secrets.SETTING).password }}
-    #     with:
-    #       targetPlatform: StandaloneWindows64
 
       # 自動編譯並匯入預設任務
       - name: Ts Mission Compile Job

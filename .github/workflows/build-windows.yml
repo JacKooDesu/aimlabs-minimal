@@ -10,10 +10,6 @@ on:
         required: false
         type: boolean
 
-  push:
-    tags:
-      - '**'
-
 jobs:
   build:
     name: Build Project
@@ -116,15 +112,3 @@ jobs:
           name: Build
           path: build
           retention-days: 1
-
-      - name: Zip File
-        run: |
-          cd build
-          zip -r build.zip *
-          mv build.zip ../build.zip
-
-      - name: Release
-        if: github.event_name == 'push'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build.zip
