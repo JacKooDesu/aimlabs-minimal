@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace ALM.Data
 {
@@ -19,5 +20,18 @@ namespace ALM.Data
 
         [JsonProperty("time_seconds")]
         public int Time { get; private set; }
+
+        [JsonProperty("type")]
+        public MissionType Type { get; private set; }
+
+        public enum MissionType
+        {
+            [EnumMember(Value = "")]
+            None,
+            [EnumMember(Value = "flicking")]
+            Flicking,
+            [EnumMember(Value = "tracking")]
+            Tracking,
+        }
     }
 }

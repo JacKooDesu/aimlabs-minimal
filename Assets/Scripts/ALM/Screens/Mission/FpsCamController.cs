@@ -34,7 +34,13 @@ namespace ALM.Screens.Mission
         // CameraSetting _cameraSetting;
         [Inject]
         RaycasterService _raycasterService;
+        [Inject]
+        void _Inject(MissionLoader.PlayableMission mission)
+        {
+            _isTracking = mission.Outline.Type is Data.MissionOutline.MissionType.Tracking;
+        }
 
+        bool _isTracking;
         public Action OnFire;
 
         #region IRaycaster
@@ -59,7 +65,7 @@ namespace ALM.Screens.Mission
 
             transform.localRotation = _originRot * qX * qY;
 
-            if (Input.GetKeyDown(_controlSetting.FireButton))
+            if (_isTracking || Input.GetKeyDown(_controlSetting.FireButton))
                 OnFire?.Invoke();
         }
 
