@@ -98,3 +98,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: build.zip
+          token: ${{ fromJson(secrets.SETTING).PAT }}
