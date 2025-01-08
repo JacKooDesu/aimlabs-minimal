@@ -39,8 +39,8 @@ namespace ALM.Screens.Mission
                 },
                 triangles = new int[]
                 {
-                    0, 1, 2,
-                    0, 2, 3,
+                    0, 2, 1,
+                    0, 3, 2,
                 },
                 uv = new Vector2[]
                 {
@@ -59,7 +59,7 @@ namespace ALM.Screens.Mission
         {
             var mesh = _filter.mesh;
             var vertices = mesh.vertices;
-            vertices[1].x = vertices[2].x = WIDTH / 2 * _value;
+            vertices[1].x = vertices[2].x = WIDTH * (_value - .5f);
             mesh.vertices = vertices;
             _filter.mesh = mesh;
         }

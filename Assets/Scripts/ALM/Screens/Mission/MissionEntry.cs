@@ -54,7 +54,7 @@ namespace ALM.Screens.Mission
 
             foreach (var script in _mission.Scripts)
             {
-                // _jsEnv.UsingAction<JsConfigureDel>();
+                _jsEnv.UsingAction<JsConfigureDel>();
                 var module = _jsEnv.ExecuteModule(script);
 
                 var configure = module.Get<JsConfigureDel>("configure");
