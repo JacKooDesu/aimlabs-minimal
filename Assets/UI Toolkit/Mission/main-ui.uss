@@ -6,6 +6,20 @@
     position: absolute;
 }
 
+.upper-group {
+    flex-direction: row;
+    max-height: 100px;
+    background-color: rgb(33, 33, 33);
+    flex-grow: 1;
+    max-width: 1000px;
+    position: absolute;
+    height: 100px;
+    width: 800px;
+    left: 520px;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+}
+
 .timer-panel {
     background-color: rgba(177, 177, 177, 0.5);
     width: 200px;
@@ -13,11 +27,12 @@
     align-items: center;
     align-self: center;
     justify-content: space-evenly;
-    top: 20px;
     border-top-left-radius: 42px;
     border-top-right-radius: 42px;
     border-bottom-right-radius: 42px;
     border-bottom-left-radius: 42px;
+    max-width: 200px;
+    flex-grow: 1;
 }
 
 .timer-text {
@@ -34,9 +49,21 @@
     font-size: 106px;
     -unity-text-align: middle-center;
     -unity-font-style: bold;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(213, 213, 213);
 }
 
 .hide {
+}
+
+.score-panel {
+    justify-content: center;
+    align-self: center;
+    color: rgb(217, 217, 217);
+    -unity-text-align: middle-center;
+    font-size: 28px;
+    flex-grow: 1;
+    width: 200px;
 }
 
 .inactive {

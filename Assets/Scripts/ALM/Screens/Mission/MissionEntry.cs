@@ -24,6 +24,7 @@ namespace ALM.Screens.Mission
         readonly BallPoolService _ballPoolService;
         readonly RaycasterService _raycasterService;
         readonly PauseHandleService _pauseHandleService;
+        readonly MissionScoreData _score;
         readonly Timer _timer;
         readonly Room _room;
 
@@ -33,6 +34,7 @@ namespace ALM.Screens.Mission
             BallPoolService ballPoolService,
             RaycasterService raycasterService,
             PauseHandleService pauseHandleService,
+            MissionScoreData score,
             Room room,
             Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
@@ -42,6 +44,7 @@ namespace ALM.Screens.Mission
             _ballPoolService = ballPoolService;
             _raycasterService = raycasterService;
             _pauseHandleService = pauseHandleService;
+            _score = score;
             _room = room;
 
             if (_mission.Outline.Time > 0)
@@ -77,7 +80,9 @@ namespace ALM.Screens.Mission
             UIStackHandler.PushUI(((uint)UIIndex.Base), _timer);
             if (_timer is not null)
             {
-                _timer.OnComplete += () => Menu.MenuLifetimeScope.Load().Forget();
+                _timer.OnComplete += () => Result.ResultLifetimeScope.Load(
+                    new Result.ResultLifetimeScope.Payload(
+                        _mission.Outline, _score)).Forget();
                 _timer.Reset();
             }
             _pauseHandleService.CountDown();
