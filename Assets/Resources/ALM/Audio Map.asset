@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb7bd30b15dcd741b3413021da5ae30, type: 3}
+  m_Name: Audio Map
+  m_EditorClassIdentifier: 
+  <AudioDatas>k__BackingField:
+  - Key: hit-sound
+    Clip: {fileID: 8300000, guid: fdf55e83db5c5e24e9accf0a2a46f194, type: 3}
+  - Key: fire-sound
+    Clip: {fileID: 0}
+  - Key: button-hover-snd
+    Clip: {fileID: 8300000, guid: e57621fed5c51a24eacdfd255470dd43, type: 3}
+  - Key: button-click-snd
+    Clip: {fileID: 8300000, guid: 26fa83e38c4d66744b974b2b004a095a, type: 3}

@@ -56,5 +56,40 @@ namespace ALM.Util.UIToolkitExtend
                     ui.Add(element);
                 })).ToArray();
         }
+
+        public static Bindable[] Dictionary<TParent, B, BElement, BType>(TParent parent, string baseLabel, string memberName)
+            where B : Bindable, new()
+            where BElement : BindableElement, INotifyValueChanged<BType>, new()
+        {
+            var dictObj = typeof(TParent)
+                .GetMember(memberName, (BindingFlags)int.MaxValue)[0] switch
+            {
+                FieldInfo field => field.GetValue(parent),
+                PropertyInfo property => property.GetValue(parent),
+                _ => throw new NotImplementedException()
+            } is not IDictionary dict
+                    ? throw new ArgumentException("The target object is not a dictionary.")
+                    : dict;
+
+            return dict.Keys.Cast<object>().Select((k, i) =>
+                new AbstractBindable((b, ui, obj) =>
+                {
+                    var key = k;
+
+                    var bindable = Bindable.Create<B>(baseLabel + ' ' + key, memberName + $".Dictionary.data[{key}]");
+                    var element = bindable.ElementBuilder<BElement>();
+
+                    b.Element = element;
+
+                    element.value = (BType)dict[key];
+                    element.dataSource = parent;
+                    element.dataSourceType = typeof(TParent);
+                    element.bindingPath = memberName + $".Dictionary.data[{key}]";
+
+                    element.RegisterValueChangedCallback<BType>(v => dict[key] = v.newValue);
+
+                    ui.Add(element);
+                })).ToArray();
+        }
     }
 }

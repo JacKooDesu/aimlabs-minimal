@@ -8,7 +8,7 @@ using System;
 
 namespace ALM.Util
 {
-    public static class FileIO
+    public static partial class FileIO
     {
         readonly static string SAVE_PATH =
 #if UNITY_EDITOR

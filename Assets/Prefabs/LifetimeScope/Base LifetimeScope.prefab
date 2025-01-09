@@ -53,6 +53,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 6690373791887084582}
+  _audioMap: {fileID: 11400000, guid: dd14818878b77ba4ba9674c8b0774b0b, type: 2}
 --- !u!1001 &1738461569560789848
 PrefabInstance:
   m_ObjectHideFlags: 0
