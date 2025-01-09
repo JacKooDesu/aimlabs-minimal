@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Networking;
 using UnityEngine.Pool;
-using UnityEngine.TextCore.Text;
 
 namespace ALM.Screens.Base
 {

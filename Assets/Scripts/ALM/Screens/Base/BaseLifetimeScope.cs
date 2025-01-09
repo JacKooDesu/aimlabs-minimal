@@ -10,6 +10,9 @@ namespace ALM.Screens.Base
     using Setting;
     public class BaseLifetimeScope : LifetimeScope
     {
+        [UnityEngine.SerializeField]
+        AudioMapSO _audioMap;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<BaseEntry>();
@@ -28,6 +31,10 @@ namespace ALM.Screens.Base
                 _ => ObjectSetting.Load(),
                 Lifetime.Singleton);
 
+            builder.Register<AudioSetting>(
+                _ => AudioSetting.Load(),
+                Lifetime.Singleton);
+
             builder.Register<MissionLoader>(
                 _ => new(),
                 Lifetime.Singleton);
@@ -38,6 +45,8 @@ namespace ALM.Screens.Base
             builder.RegisterComponentInHierarchy<Room>();
             builder.RegisterComponentInHierarchy<ColorPickerUI>();
             builder.RegisterComponentInHierarchy<QuickHint>();
+
+            builder.RegisterInstance(_audioMap);
         }
     }
 }

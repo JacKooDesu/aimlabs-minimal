@@ -24,6 +24,8 @@ namespace ALM.Screens.Base
         DataBinder _objectSettingBinder;
         [SerializeField]
         DataBinder _graphicSettingBinder;
+        [SerializeField]
+        DataBinder _audioSettingBinder;
 
         [Inject]
         public GameplaySetting _gameplaySetting;
@@ -31,6 +33,8 @@ namespace ALM.Screens.Base
         public ControlSetting _controlSetting;
         [Inject]
         public ObjectSetting _objectSetting;
+        [Inject]
+        public AudioSetting _audioSetting;
 
         [Inject]
         ColorPickerUI ColorPickerUI;
@@ -99,6 +103,10 @@ namespace ALM.Screens.Base
                     };
                 });
 
+            _audioSettingBinder.ManualBuild(
+                _audioSetting.GetBindable(),
+                _audioSetting);
+
             SetActive(false, true);
         }
 
@@ -130,6 +138,7 @@ namespace ALM.Screens.Base
                 _gameplaySetting.Save();
                 _controlSetting.Save();
                 _objectSetting.Save();
+                _audioSetting.Save();
             }
         }
 
