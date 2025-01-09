@@ -16,23 +16,29 @@ namespace ALM.Screens.Base
         protected IEnumerable<UIBase> _uis;
         protected List<IManagedTickable> _tickables;
         protected GameStatusHandler _handler;
+        protected AudioService _audioService;
 
         protected readonly UIDocument _rootUi;
 
         [Inject]
         void _Inject(
             GameStatusHandler handler,
+            AudioService audioService,
             IEnumerable<UIBase> uis,
             IEnumerable<IAutoRegister> autoRegisters,
             IEnumerable<IManagedTickable> tickables)
         {
             var type = typeof(TEntry);
             _handler = handler;
+            _audioService = audioService;
             _tickables = new(tickables);
             _handler.AddEntry(type);
 
             _handler.Register(type, GameStatus.Paused, () => _paused = true);
             _handler.Register(type, GameStatus.Playing, () => _paused = false);
+
+            _handler.Register(type, GameStatus.Paused, () => _audioService.Pause());
+            _handler.Register(type, GameStatus.Playing, () => _audioService.Resume());
 
             foreach (var r in autoRegisters)
                 _handler.Register(type, r.OnStatus, r.Action);

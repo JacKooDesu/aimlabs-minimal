@@ -14,6 +14,7 @@ namespace ALM.Screens.Base
         {
             builder.RegisterEntryPoint<BaseEntry>();
             builder.Register<GameStatusHandler>(Lifetime.Singleton);
+            builder.Register<AudioService>(Lifetime.Singleton);
 
             builder.Register<GameplaySetting>(
                 _ => GameplaySetting.Load(),

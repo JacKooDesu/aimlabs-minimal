@@ -11,7 +11,9 @@ namespace ALM.Screens.Mission
     public class BallPoolService
     {
         readonly MissionLifetimeScope _scope;
+        readonly AudioService _audioService;
         readonly ObjectSetting _objectSetting;
+        readonly AudioClip _hitSound;
         public ObjectPool<Ball> Pool { get; private set; }
 
         readonly Material _material;
@@ -22,10 +24,15 @@ namespace ALM.Screens.Mission
             MissionLifetimeScope scope,
             MissionScoreData missionScoreData,
             ObjectSetting objectSetting,
+            AudioService audioService,
             MissionLoader.PlayableMission mission)
         {
             _scope = scope;
+            _audioService = audioService;
             _objectSetting = objectSetting;
+
+            _hitSound = Resources.Load<AudioClip>("Audio/dot");
+
             Pool = new ObjectPool<Ball>(
                 () => CreateBall(missionScoreData, mission),
                 GetBall,
@@ -42,9 +49,12 @@ namespace ALM.Screens.Mission
             var ball = GameObject
                 .CreatePrimitive(PrimitiveType.Sphere);
             ball.GetComponent<MeshRenderer>().material = _material;
-            var component = ball.AddComponent<Ball>();
-            component.OnHit += 
-                () => OnBallHit?.Invoke(component);
+            var component  = ball.AddComponent<Ball>();
+            component.OnHit += () => OnBallHit?.Invoke(component);
+            component.OnHit += () =>
+                _audioService.PlaySoundAtPos(
+                    _hitSound,
+                    ball.transform.position);
             return component;
         }
 
