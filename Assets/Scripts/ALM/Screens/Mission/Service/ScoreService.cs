@@ -47,6 +47,7 @@ namespace ALM.Screens.Mission
                 if (_reactionTimeCal)
                 {
                     Data.Score += (int)(_scale * (-math.log(_reactionTime)));
+                    UpdateReactionTime();
                     _reactionTime = 0;
                 }
                 else
@@ -56,6 +57,11 @@ namespace ALM.Screens.Mission
             }
 
             UpdateAccuracy();
+        }
+
+        void UpdateReactionTime()
+        {
+            Data.ReactionTime = (_reactionTime + Data.ReactionTime) * .5f;
         }
 
         void UpdateAccuracy()

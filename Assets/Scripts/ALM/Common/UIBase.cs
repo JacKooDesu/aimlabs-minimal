@@ -12,7 +12,11 @@ namespace ALM.Common
 
         public UIStackHandler.UI Config(VisualElement root)
         {
-            _elementBase = root.Q(BaseElementName);
+            if (string.IsNullOrEmpty(BaseElementName))
+                _elementBase = root;
+            else
+                _elementBase = root.Q(BaseElementName);
+
 
             if (_elementBase is null)
                 throw new System.Exception($"{BaseElementName} not found");
