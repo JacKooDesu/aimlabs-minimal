@@ -1,0 +1,40 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Result/result-ui.uss?fileID=7433441132597879392&amp;guid=89fd478c3a6c00c4e84a38460d24b884&amp;type=3#result-ui" />
+    <engine:VisualElement name="Header" class="header-panel" style="flex-grow: 1;">
+        <engine:Label text="Mission Name" name="MissionName" />
+    </engine:VisualElement>
+    <engine:VisualElement name="Content" class="content-panel" style="flex-grow: 1;">
+        <engine:Label text="&lt;size=32&gt;score&lt;/size&gt;&#10;10000000" name="Score" />
+        <engine:VisualElement name="Detail" class="status-detail-panel" style="flex-grow: 1;">
+            <engine:VisualElement name="Accuracy" class="status-grid" style="flex-grow: 1;">
+                <engine:Label text="ACCURACY" name="StatusTitle" class="status-grid-title" />
+                <engine:VisualElement name="StatusContent" class="status-grid-content" style="flex-grow: 1;">
+                    <engine:Label text="100%" name="StatusValue" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="Reaction" class="status-grid" style="flex-grow: 1;">
+                <engine:Label text="REACTION TIME" name="StatusTitle" class="status-grid-title" />
+                <engine:VisualElement name="StatusContent" class="status-grid-content" style="flex-grow: 1;">
+                    <engine:Label text="10000&#10;ms" name="StatusValue" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="TempA" class="status-grid" style="flex-grow: 1;">
+                <engine:Label text="--" name="StatusTitle" class="status-grid-title" />
+                <engine:VisualElement name="StatusContent" class="status-grid-content" style="flex-grow: 1;">
+                    <engine:Label text="0" name="StatusValue" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="TempB" class="status-grid" style="flex-grow: 1;">
+                <engine:Label text="--" name="StatusTitle" class="status-grid-title" />
+                <engine:VisualElement name="StatusContent" class="status-grid-content" style="flex-grow: 1;">
+                    <engine:Label text="0" name="StatusValue" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="Footer" class="footer-panel" style="flex-grow: 1;">
+        <engine:Button text="RETRY" />
+        <engine:VisualElement style="flex-grow: 1;" />
+        <engine:Button text="EXIT" />
+    </engine:VisualElement>
+</engine:UXML>
