@@ -7,12 +7,12 @@ namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
     using Base.Setting;
+    using Unity.Mathematics;
 
     public class BallPoolService
     {
         readonly MissionLifetimeScope _scope;
         readonly AudioService _audioService;
-        readonly AudioSetting _audioSetting;
         readonly ObjectSetting _objectSetting;
         public ObjectPool<Ball> Pool { get; private set; }
 
@@ -31,7 +31,6 @@ namespace ALM.Screens.Mission
         {
             _scope = scope;
             _audioService = audioService;
-            _audioSetting = audioSetting;
             _objectSetting = objectSetting;
 
             audioSetting.GetAudioClipSync(
@@ -56,10 +55,21 @@ namespace ALM.Screens.Mission
             ball.GetComponent<MeshRenderer>().material = _material;
             var component = ball.AddComponent<Ball>();
             component.OnHit += () => OnBallHit?.Invoke(component);
-            component.OnHit += () =>
-                _audioService.PlaySoundAtPos(
-                    _hitSound,
-                    ball.transform.position);
+            if (mission.Outline.Type is Data.MissionOutline.MissionType.Tracking)
+            {
+                var s = _audioService.BindTo(ball.transform);
+                s.clip = _hitSound;
+                component.OnHit += () =>
+                {
+                    s.pitch = math.lerp(1.5f, 1f, component.Hp);
+                    s.Play();
+                };
+            }
+            else
+                component.OnHit += () =>
+                    _audioService.PlaySoundAtPos(
+                        _hitSound,
+                        ball.transform.position);
             return component;
         }
 

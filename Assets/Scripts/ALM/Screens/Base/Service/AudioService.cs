@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -55,21 +56,26 @@ namespace ALM.Screens.Base
 
             void Destroy(AudioSource source)
             {
-                Object.Destroy(source.gameObject);
+                UnityEngine.Object.Destroy(source.gameObject);
             }
         }
 
-        public void PlaySoundAtPos(AudioClip clip, Vector3 pos) =>
-            PlaySoundAtPosAsync(clip, pos).Forget();
-        public async UniTask PlaySoundAtPosAsync(AudioClip clip, Vector3 pos)
+        public void PlaySoundAtPos(
+            AudioClip clip, Vector3 pos,
+            Action<AudioSource> addtionSetting = null) =>
+            PlaySoundAtPosAsync(clip, pos, addtionSetting).Forget();
+        public async UniTask PlaySoundAtPosAsync(
+            AudioClip clip, Vector3 pos,
+            Action<AudioSource> addtionSetting = null)
         {
             var source = Pool.Get();
             source.clip = clip;
             source.transform.position = pos;
+            addtionSetting?.Invoke(source);
             source.Play();
             await UniTask.WaitUntil(() =>
                 !source.isPlaying &&
-                source.time == clip.length,
+                source.time >= clip.length,
                 cancellationToken: source.GetCancellationTokenOnDestroy());
 
             if (source is null)
@@ -82,6 +88,19 @@ namespace ALM.Screens.Base
             _activeSources.Add(source);
             source.GetCancellationTokenOnDestroy()
                 .Register(() => _activeSources.Remove(source));
+        }
+
+        public AudioSource BindTo(Transform parent)
+        {
+            var source = Pool.Get();
+            source.transform.SetParent(parent, false);
+            source.transform.localPosition = Vector3.zero;
+            parent.gameObject.GetCancellationTokenOnDestroy()
+                .ToUniTask()
+                .Item1
+                .GetAwaiter()
+                .OnCompleted(() => Pool.Release(source));
+            return source;
         }
 
         public void Pause()
