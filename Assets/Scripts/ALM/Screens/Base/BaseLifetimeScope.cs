@@ -32,7 +32,12 @@ namespace ALM.Screens.Base
                 Lifetime.Singleton);
 
             builder.Register<AudioSetting>(
-                _ => AudioSetting.Load(),
+                r =>
+                {
+                    var setting = AudioSetting.Load();
+                    r.Inject(setting);
+                    return setting;
+                },
                 Lifetime.Singleton);
 
             builder.Register<MissionLoader>(

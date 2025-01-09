@@ -12,26 +12,31 @@ namespace ALM.Screens.Mission
     {
         readonly MissionLifetimeScope _scope;
         readonly AudioService _audioService;
+        readonly AudioSetting _audioSetting;
         readonly ObjectSetting _objectSetting;
-        readonly AudioClip _hitSound;
         public ObjectPool<Ball> Pool { get; private set; }
 
         readonly Material _material;
 
         public event Action<Ball> OnBallHit;
+        AudioClip _hitSound;
 
         public BallPoolService(
             MissionLifetimeScope scope,
             MissionScoreData missionScoreData,
             ObjectSetting objectSetting,
             AudioService audioService,
+            AudioSetting audioSetting,
             MissionLoader.PlayableMission mission)
         {
             _scope = scope;
             _audioService = audioService;
+            _audioSetting = audioSetting;
             _objectSetting = objectSetting;
 
-            _hitSound = Resources.Load<AudioClip>("Audio/dot");
+            audioSetting.GetAudioClipSync(
+                Constants.Audio.HIT_SOUND,
+                clip => _hitSound = clip);
 
             Pool = new ObjectPool<Ball>(
                 () => CreateBall(missionScoreData, mission),
@@ -49,7 +54,7 @@ namespace ALM.Screens.Mission
             var ball = GameObject
                 .CreatePrimitive(PrimitiveType.Sphere);
             ball.GetComponent<MeshRenderer>().material = _material;
-            var component  = ball.AddComponent<Ball>();
+            var component = ball.AddComponent<Ball>();
             component.OnHit += () => OnBallHit?.Invoke(component);
             component.OnHit += () =>
                 _audioService.PlaySoundAtPos(

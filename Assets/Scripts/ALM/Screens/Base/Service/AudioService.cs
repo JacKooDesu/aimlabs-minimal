@@ -14,7 +14,7 @@ namespace ALM.Screens.Base
         public ObjectPool<AudioSource> Pool { get; private set; }
         public List<AudioSource> _activeSources = new();
 
-        public AudioService()
+        public AudioService(AudioSetting audioSetting)
         {
             var mixer = Resources.Load<AudioMixer>("Audio/Mixer");
 
@@ -91,33 +91,6 @@ namespace ALM.Screens.Base
         public void Resume()
         {
             _activeSources.ForEach(s => s.UnPause());
-        }
-
-        public async UniTask<AudioClip> LoadExternalSoundAsync(string path, CancellationToken ct)
-        {
-            var type = Path.GetExtension(path) switch
-            {
-                "mp3" => AudioType.MPEG,
-                "ogg" => AudioType.OGGVORBIS,
-                "wav" => AudioType.WAV,
-                _ => AudioType.UNKNOWN
-            };
-
-            AudioClip clip = null;
-
-            using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path, type))
-            {
-                clip = await www.SendWebRequest()
-                    .ToUniTask(cancellationToken: ct)
-                    .ContinueWith(r => r.result switch
-                    {
-                        UnityWebRequest.Result.Success =>
-                           DownloadHandlerAudioClip.GetContent(r),
-                        _ => throw new System.Exception("Failed to load audio!")
-                    });
-            }
-
-            return clip;
         }
     }
 }
