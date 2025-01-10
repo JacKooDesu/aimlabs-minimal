@@ -84,6 +84,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 _b.value = value.b;
 
                 _colorBlock.style.backgroundColor = value;
+
+                (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
             }
         }
 
@@ -91,7 +93,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
         {
             public override T ElementBuilder<T>() =>
                 new ColorBindElement(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<ColorBindElement, Color>(ui, obj);
         }
     }

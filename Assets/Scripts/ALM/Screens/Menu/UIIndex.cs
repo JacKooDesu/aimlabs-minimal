@@ -6,5 +6,7 @@ namespace ALM.Screens.Menu
         SelectMission,
         MissionInfo,
         ImportMission,
+        ManageAssets,
+        AssetsList,
     }
 }

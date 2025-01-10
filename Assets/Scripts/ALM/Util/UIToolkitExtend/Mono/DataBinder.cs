@@ -22,7 +22,7 @@ namespace ALM.Util.UIToolkitExtend
             _ui ??= GetComponent<UIDocument>().rootVisualElement;
         }
 
-        public void ManualBuild(Bindable[] bindables, object obj)
+        public void ManualBuild(Bindable[] bindables, IDataTarget obj)
         {
             _ui ??= GetComponent<UIDocument>().rootVisualElement;
             var targetUI = _ui.Q(Target);
@@ -53,13 +53,13 @@ namespace ALM.Util.UIToolkitExtend
                 return bind;
             }
 
-            public abstract void Bind(VisualElement ui, object obj);
+            public abstract void Bind(VisualElement ui, IDataTarget obj);
 
             public virtual T ElementBuilder<T>()
                 where T : BindableElement, new() =>
                 new T();
 
-            protected void CommonBind<T, N>(VisualElement ui, object obj)
+            protected void CommonBind<T, N>(VisualElement ui, IDataTarget obj)
                 where T : BindableElement, INotifyValueChanged<N>, new()
             {
                 var info = obj.GetType().GetMember(DataPath, (BindingFlags)int.MaxValue)[0];
@@ -79,10 +79,10 @@ namespace ALM.Util.UIToolkitExtend
                 element.bindingPath = info.Name;
                 element.RegisterValueChangedCallback<N>(CommonCallback<N>(obj, info));
             }
-            protected EventCallback<ChangeEvent<T>> CommonCallback<T>(object obj, MemberInfo info) =>
+            protected EventCallback<ChangeEvent<T>> CommonCallback<T>(IDataTarget obj, MemberInfo info) =>
                 value =>
                 {
-                    Action<object, object> action = info switch
+                    Action<IDataTarget, object> action = info switch
                     {
                         FieldInfo field => field.SetValue,
                         PropertyInfo property => property.SetValue,
@@ -91,6 +91,7 @@ namespace ALM.Util.UIToolkitExtend
                     };
 
                     action(obj, value.newValue);
+                    obj.IsDirty(info.Name);
                 };
         }
 
@@ -99,7 +100,7 @@ namespace ALM.Util.UIToolkitExtend
             where B : Bindable, new()
             where BElement : BindableElement, INotifyValueChanged<BType>, new()
         {
-            public override void Bind(VisualElement ui, object obj)
+            public override void Bind(VisualElement ui, IDataTarget obj)
             {
                 var bindable = Create<B>(Label, DataPath);
                 var element = bindable.ElementBuilder<BElement>();
@@ -112,5 +113,11 @@ namespace ALM.Util.UIToolkitExtend
                 this.Element = element;
             }
         }
+    }
+
+    public interface IDataTarget
+    {
+        event Action<string> OnChange;
+        void IsDirty(string path);
     }
 }

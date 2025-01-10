@@ -1,14 +1,15 @@
+using System;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using ALM.Util.UIToolkitExtend;
 
 namespace ALM.Screens.Base.Setting
 {
     using Util;
+    using Util.UIToolkitExtend;
     using static Util.UIToolkitExtend.DataBinder;
 
-    public class ControlSetting
+    public class ControlSetting : IDataTarget
     {
         const string NAME = "control_setting.json";
 
@@ -28,6 +29,8 @@ namespace ALM.Screens.Base.Setting
         [JsonProperty("right_button")]
         public KeyCode RightButton { get; private set; } = KeyCode.D;
 
+        public event Action<string> OnChange;
+
         public static Bindable[] GetBindable()
         {
             return new Bindable[]
@@ -46,5 +49,10 @@ namespace ALM.Screens.Base.Setting
             FileIO.JLoad<ControlSetting>(Constants.SETTING_PATH, NAME, true);
         public void Save() =>
             FileIO.JSave(this, Constants.SETTING_PATH, NAME);
+
+        public void IsDirty(string path)
+        {
+            OnChange?.Invoke(path);
+        }
     }
 }

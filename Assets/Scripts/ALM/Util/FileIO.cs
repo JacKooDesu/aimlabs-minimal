@@ -1,10 +1,11 @@
+using System;
+using System.Linq;
 using System.IO;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using System.Linq;
-using System;
 
 namespace ALM.Util
 {
@@ -118,5 +119,12 @@ namespace ALM.Util
                 CopyDirectory(folder, destFolder);
             }
         }
+
+        public static void OpenFolder(string path, bool absolutePath = false) =>
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = absolutePath ? path : GetPath(path),
+                UseShellExecute = true
+            });
     }
 }

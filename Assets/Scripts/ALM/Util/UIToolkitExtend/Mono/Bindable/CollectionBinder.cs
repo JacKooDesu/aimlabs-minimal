@@ -12,11 +12,11 @@ namespace ALM.Util.UIToolkitExtend
 
     public class AbstractBindable : Bindable
     {
-        public delegate void __BindDel(Bindable b, VisualElement ui, object obj);
+        public delegate void __BindDel(Bindable b, VisualElement ui, IDataTarget obj);
         __BindDel _binder;
         public AbstractBindable(__BindDel binder) =>
             this._binder = binder;
-        public override void Bind(VisualElement ui, object obj) =>
+        public override void Bind(VisualElement ui, IDataTarget obj) =>
             _binder?.Invoke(this, ui, obj);
     }
 
@@ -49,7 +49,9 @@ namespace ALM.Util.UIToolkitExtend
                     element.value = (BType)arr.GetValue(index);
                     element.dataSource = parent;
                     element.dataSourceType = typeof(TParent);
-                    element.bindingPath = memberName + $".Array.data[{index}]";
+                    // FIXME: unity 無法對於陣列物品進行 binding
+                    // element.bindingPath = memberName + $".Array.data[{index}]";
+                    element.bindingPath = memberName + $"[{index}]";
 
                     element.RegisterValueChangedCallback<BType>(v => arr.SetValue(v.newValue, index));
 
@@ -84,7 +86,8 @@ namespace ALM.Util.UIToolkitExtend
                     element.value = (BType)dict[key];
                     element.dataSource = parent;
                     element.dataSourceType = typeof(TParent);
-                    element.bindingPath = memberName + $".Dictionary.data[{key}]";
+                    // element.bindingPath = memberName + $".Dictionary.data[{key}]";
+                    element.bindingPath = memberName + $"[{key}]";
 
                     element.RegisterValueChangedCallback<BType>(v => dict[key] = v.newValue);
 

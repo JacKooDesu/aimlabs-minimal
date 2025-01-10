@@ -14,11 +14,18 @@ namespace ALM.Screens.Base
 
         MeshRenderer _renderer;
         MeshFilter _filter;
+        float _size;
 
         void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
             _filter = GetComponent<MeshFilter>();
+
+            _objectSetting.OnChange += nm =>
+            {
+                if (nm == nameof(ObjectSetting.RoomTextureScale))
+                    SetSize(_size);
+            };
         }
 
         public void SetTexture(Texture2D texture)
@@ -28,6 +35,7 @@ namespace ALM.Screens.Base
 
         public void SetSize(float size)
         {
+            _size = size;
             transform.localScale = Vector3.one * size;
             _renderer.material.SetTextureScale("_BaseMap",
                 Vector2.one * size / (_objectSetting?.RoomTextureScale ?? DEFAULT_TEXTURE_SCALER));

@@ -13,15 +13,19 @@ namespace ALM.Screens.Base
     using Cysharp.Threading.Tasks;
     using static Util.UIToolkitExtend.DataBinder;
 
+    using AUDIO_FILE = Util.FileIO.File<Util.FileIO.OGG>;
+
     [JsonObject]
-    public class AudioSetting
+    public class AudioSetting : IDataTarget
     {
         const string NAME = "audio_setting.json";
 
         [JsonProperty("audio_clips")]
-        Dictionary<string, string> _AudioClips { get; set; } = Constants.Audio
+        Dictionary<string, AUDIO_FILE> _AudioClips { get; set; } = Constants.Audio
             .AudioKeys()
-            .ToDictionary(x => x, _ => string.Empty);
+            .ToDictionary(x => x, _ => new AUDIO_FILE(""));
+        public static string GetAudioClipPath(string key) =>
+            nameof(_AudioClips) + $"[{key}]";
 
         [JsonIgnore]
         string[] _valueDirtyCheck;
@@ -32,6 +36,8 @@ namespace ALM.Screens.Base
         [Inject]
         readonly AudioMapSO _audioMapSO;
 
+        public event Action<string> OnChange;
+
         public void GetAudioClipSync(string key, Action<AudioClip> cb) =>
             GetAudioClipAsync(key)
                 .ContinueWith(r => cb?.Invoke(r))
@@ -40,9 +46,11 @@ namespace ALM.Screens.Base
         public async UniTask<AudioClip> GetAudioClipAsync(string key)
         {
             AudioClip clip;
-            if (_AudioClips.TryGetValue(key, out string path) &&
-                !string.IsNullOrEmpty(path))
+            if (_AudioClips.TryGetValue(key, out var file) &&
+                !string.IsNullOrEmpty(file.path))
             {
+                var path = file.path;
+
                 if (_OverrideClips.TryGetValue(key, out clip))
                     return clip;
 
@@ -61,14 +69,16 @@ namespace ALM.Screens.Base
         public static AudioSetting Load()
         {
             var s = FileIO.JLoad<AudioSetting>(Constants.SETTING_PATH, NAME, true);
-            s._valueDirtyCheck = s._AudioClips.Values.ToArray();
+            s._valueDirtyCheck = s._AudioClips.Values
+                .Select(x => x.path).ToArray();
             return s;
         }
         public void Save()
         {
             FileIO.JSave(this, Constants.SETTING_PATH, NAME);
 
-            var newValues = _AudioClips.Values.ToArray();
+            var newValues = _AudioClips.Values
+                .Select(x => x.path).ToArray();
             for (int i = 0; i < _valueDirtyCheck.Length; i++)
             {
                 if (_valueDirtyCheck[i] != newValues[i])
@@ -83,11 +93,16 @@ namespace ALM.Screens.Base
 
             list.AddRange(
                 CollectionBinder.Dictionary<
-                    AudioSetting, TextField,
-                    UnityEngine.UIElements.TextField, string>(
+                    AudioSetting, FileInputElement.Bindable,
+                    FileInputElement, Util.FileIO._File>(
                         this, "", nameof(_AudioClips)));
 
             return list.ToArray();
+        }
+
+        public void IsDirty(string path)
+        {
+            OnChange?.Invoke(path);
         }
     }
 }
