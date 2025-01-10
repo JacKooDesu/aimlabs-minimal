@@ -128,5 +128,8 @@ namespace ALM.Util
                 FileName = absolutePath ? path : GetPath(path),
                 UseShellExecute = true
             });
+
+        public static string GetMissionFolder(string missionName) =>
+            GetPath(Constants.MISSION_PATH, missionName);
     }
 }

@@ -2596,6 +2596,22 @@
         {
             protected [__keep_incompatibility]: never;
         }
+        class AudioBehaviour extends UnityEngine.Behaviour
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** A representation of audio sources in 3D.
+        */
+        class AudioSource extends UnityEngine.AudioBehaviour
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** A container for audio data.
+        */
+        class AudioClip extends UnityEngine.Audio.AudioResource
+        {
+            protected [__keep_incompatibility]: never;
+        }
     }
     namespace System.Collections.Generic {
         interface IEnumerable$1<T> extends System.Collections.IEnumerable
@@ -3269,6 +3285,103 @@
         { None = 0, Read = 1, Write = 2, ReadWrite = 3, Delete = 4, Inheritable = 16 }
         enum FileAttributes
         { ReadOnly = 1, Hidden = 2, System = 4, Directory = 16, Archive = 32, Device = 64, Normal = 128, Temporary = 256, SparseFile = 512, ReparsePoint = 1024, Compressed = 2048, Offline = 4096, NotContentIndexed = 8192, Encrypted = 16384, IntegrityStream = 32768, NoScrubData = 131072 }
+        class Path extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static AltDirectorySeparatorChar : number
+            public static DirectorySeparatorChar : number
+            public static PathSeparator : number
+            public static VolumeSeparatorChar : number
+            public static ChangeExtension ($path: string, $extension: string) : string
+            public static Combine ($path1: string, $path2: string) : string
+            public static GetDirectoryName ($path: string) : string
+            public static GetExtension ($path: string) : string
+            public static GetFileName ($path: string) : string
+            public static GetFileNameWithoutExtension ($path: string) : string
+            public static GetFullPath ($path: string) : string
+            public static GetPathRoot ($path: string) : string
+            public static GetTempFileName () : string
+            public static GetTempPath () : string
+            public static HasExtension ($path: string) : boolean
+            public static IsPathRooted ($path: string) : boolean
+            public static GetInvalidFileNameChars () : System.Array$1<number>
+            public static GetInvalidPathChars () : System.Array$1<number>
+            public static GetRandomFileName () : string
+            public static Combine (...paths: string[]) : string
+            public static Combine ($path1: string, $path2: string, $path3: string) : string
+            public static Combine ($path1: string, $path2: string, $path3: string, $path4: string) : string
+            public static GetRelativePath ($relativeTo: string, $path: string) : string
+            public static IsPathFullyQualified ($path: string) : boolean
+            public static GetFullPath ($path: string, $basePath: string) : string
+        }
+        class Directory extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static GetParent ($path: string) : System.IO.DirectoryInfo
+            public static CreateDirectory ($path: string) : System.IO.DirectoryInfo
+            public static Exists ($path: string) : boolean
+            public static SetCreationTime ($path: string, $creationTime: System.DateTime) : void
+            public static SetCreationTimeUtc ($path: string, $creationTimeUtc: System.DateTime) : void
+            public static GetCreationTime ($path: string) : System.DateTime
+            public static GetCreationTimeUtc ($path: string) : System.DateTime
+            public static SetLastWriteTime ($path: string, $lastWriteTime: System.DateTime) : void
+            public static SetLastWriteTimeUtc ($path: string, $lastWriteTimeUtc: System.DateTime) : void
+            public static GetLastWriteTime ($path: string) : System.DateTime
+            public static GetLastWriteTimeUtc ($path: string) : System.DateTime
+            public static SetLastAccessTime ($path: string, $lastAccessTime: System.DateTime) : void
+            public static SetLastAccessTimeUtc ($path: string, $lastAccessTimeUtc: System.DateTime) : void
+            public static GetLastAccessTime ($path: string) : System.DateTime
+            public static GetLastAccessTimeUtc ($path: string) : System.DateTime
+            public static GetFiles ($path: string) : System.Array$1<string>
+            public static GetFiles ($path: string, $searchPattern: string) : System.Array$1<string>
+            public static GetFiles ($path: string, $searchPattern: string, $searchOption: System.IO.SearchOption) : System.Array$1<string>
+            public static GetFiles ($path: string, $searchPattern: string, $enumerationOptions: System.IO.EnumerationOptions) : System.Array$1<string>
+            public static GetDirectories ($path: string) : System.Array$1<string>
+            public static GetDirectories ($path: string, $searchPattern: string) : System.Array$1<string>
+            public static GetDirectories ($path: string, $searchPattern: string, $searchOption: System.IO.SearchOption) : System.Array$1<string>
+            public static GetDirectories ($path: string, $searchPattern: string, $enumerationOptions: System.IO.EnumerationOptions) : System.Array$1<string>
+            public static GetFileSystemEntries ($path: string) : System.Array$1<string>
+            public static GetFileSystemEntries ($path: string, $searchPattern: string) : System.Array$1<string>
+            public static GetFileSystemEntries ($path: string, $searchPattern: string, $searchOption: System.IO.SearchOption) : System.Array$1<string>
+            public static GetFileSystemEntries ($path: string, $searchPattern: string, $enumerationOptions: System.IO.EnumerationOptions) : System.Array$1<string>
+            public static EnumerateDirectories ($path: string) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateDirectories ($path: string, $searchPattern: string) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateDirectories ($path: string, $searchPattern: string, $searchOption: System.IO.SearchOption) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateDirectories ($path: string, $searchPattern: string, $enumerationOptions: System.IO.EnumerationOptions) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFiles ($path: string) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFiles ($path: string, $searchPattern: string) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFiles ($path: string, $searchPattern: string, $searchOption: System.IO.SearchOption) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFiles ($path: string, $searchPattern: string, $enumerationOptions: System.IO.EnumerationOptions) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFileSystemEntries ($path: string) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFileSystemEntries ($path: string, $searchPattern: string) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFileSystemEntries ($path: string, $searchPattern: string, $searchOption: System.IO.SearchOption) : System.Collections.Generic.IEnumerable$1<string>
+            public static EnumerateFileSystemEntries ($path: string, $searchPattern: string, $enumerationOptions: System.IO.EnumerationOptions) : System.Collections.Generic.IEnumerable$1<string>
+            public static GetDirectoryRoot ($path: string) : string
+            public static GetCurrentDirectory () : string
+            public static SetCurrentDirectory ($path: string) : void
+            public static Move ($sourceDirName: string, $destDirName: string) : void
+            public static Delete ($path: string) : void
+            public static Delete ($path: string, $recursive: boolean) : void
+            public static GetLogicalDrives () : System.Array$1<string>
+            public static CreateDirectory ($path: string, $directorySecurity: System.Security.AccessControl.DirectorySecurity) : System.IO.DirectoryInfo
+            public static GetAccessControl ($path: string, $includeSections: System.Security.AccessControl.AccessControlSections) : System.Security.AccessControl.DirectorySecurity
+            public static GetAccessControl ($path: string) : System.Security.AccessControl.DirectorySecurity
+            public static SetAccessControl ($path: string, $directorySecurity: System.Security.AccessControl.DirectorySecurity) : void
+        }
+        class FileSystemInfo extends System.MarshalByRefObject implements System.Runtime.Serialization.ISerializable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class DirectoryInfo extends System.IO.FileSystemInfo implements System.Runtime.Serialization.ISerializable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        enum SearchOption
+        { TopDirectoryOnly = 0, AllDirectories = 1 }
+        class EnumerationOptions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
     }
     namespace System.Text {
         class Encoding extends System.Object implements System.ICloneable
@@ -3309,6 +3422,10 @@
         }
         enum AccessControlSections
         { None = 0, Audit = 1, Access = 2, Owner = 4, Group = 8, All = 15 }
+        class DirectorySecurity extends System.Security.AccessControl.FileSystemSecurity
+        {
+            protected [__keep_incompatibility]: never;
+        }
     }
     namespace UnityEngine.Networking {
         /** Provides methods to communicate with web servers.
@@ -4042,6 +4159,16 @@
         class AudioService extends System.Object
         {
             protected [__keep_incompatibility]: never;
+            public _activeSources : System.Collections.Generic.List$1<UnityEngine.AudioSource>
+            public get Pool(): UnityEngine.Pool.ObjectPool$1<UnityEngine.AudioSource>;
+            public PlaySoundAtPos ($clip: UnityEngine.AudioClip, $pos: UnityEngine.Vector3, $addtionSetting?: System.Action$1<UnityEngine.AudioSource>) : void
+            public PlaySoundAtPosAsync ($clip: UnityEngine.AudioClip, $pos: UnityEngine.Vector3, $addtionSetting?: System.Action$1<UnityEngine.AudioSource>) : Cysharp.Threading.Tasks.UniTask
+            public RegisterSource ($source: UnityEngine.AudioSource) : void
+            public BindTo ($parent: UnityEngine.Transform) : UnityEngine.AudioSource
+            public Pause () : void
+            public Resume () : void
+            public constructor ($audioSetting: ALM.Screens.Base.AudioSetting)
+            public constructor ()
         }
         class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
         {
@@ -4097,6 +4224,60 @@
         class PlayableMission extends System.Object implements System.IEquatable$1<ALM.Screens.Base.MissionLoader.PlayableMission>
         {
             protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace UnityEngine.Audio {
+        /** Represents an audio resource asset that you can play through an AudioSource.
+        */
+        class AudioResource extends UnityEngine.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace Cysharp.Threading.Tasks {
+        class UniTask extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class UniTask$1<T> extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace ALM.Util {
+        class FileIO extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static LoadExternalSoundSync ($path: string, $cb: System.Action$1<UnityEngine.AudioClip>, $ct?: System.Threading.CancellationToken) : void
+            public static LoadExternalSoundAsync ($path: string, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<UnityEngine.AudioClip>
+            public static GetPath ($subPath: string, $name?: string) : string
+            public static CopyDirectory ($source: string, $dest: string) : void
+            public static OpenFolder ($path: string, $absolutePath?: boolean) : void
+            public static GetMissionFolder ($missionName: string) : string
+            public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
+        }
+    }
+    namespace Newtonsoft.Json {
+        /** Converts an object to and from JSON.
+        */
+        class JsonConverter extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace SFB {
+        class ExtensionFilter extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace ALM.Util.FileIO {
+        class Extension extends System.Object implements System.IEquatable$1<ALM.Util.FileIO.Extension>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface Extension {
+            ParseExtension () : System.Array$1<SFB.ExtensionFilter>;
         }
     }
 }

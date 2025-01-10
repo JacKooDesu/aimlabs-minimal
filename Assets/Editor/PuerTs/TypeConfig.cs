@@ -41,6 +41,8 @@ public class TypeConfig
                 typeof(Behaviour),
                 typeof(MonoBehaviour),
                 typeof(System.IO.File),
+                typeof(System.IO.Path),
+                typeof(System.IO.Directory),
                 typeof(System.Action<,>),
 
                 typeof(UnityEngine.Networking.UnityWebRequest),
@@ -62,6 +64,8 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.RaycasterService),
                 typeof(ALM.Screens.Mission.IRaycastTarget),
                 typeof(ALM.Screens.Mission.Ball),
+                typeof(ALM.Screens.Base.AudioService),
+                typeof(ALM.Util.FileIO),
             };
         }
     }
