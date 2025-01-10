@@ -39,6 +39,9 @@ namespace ALM.Util.Debugger
         Vector2 _scrollPos = default;
         bool _isShow = false;
         int _currentExpandIndex = -1;
+        (bool Info, bool Warning, bool Error) _msgFilter = (true, true, true);
+
+        readonly GUILayoutOption _toggleLayougOption = GUILayout.Width(50);
 
         Queue<Log> _logs = new();
         void OnGUI()
@@ -51,6 +54,7 @@ namespace ALM.Util.Debugger
 
         void WindowFunc(int id)
         {
+
             GUILayout.BeginHorizontal();
             {
                 if (GUILayout.Button(_isShow ? "Hide" : "Open"))
@@ -58,6 +62,15 @@ namespace ALM.Util.Debugger
 
                 if (_isShow && GUILayout.Button("Clear"))
                     _logs.Clear();
+
+                var style = GUI.skin.button;
+                if (_isShow)
+                    _msgFilter =
+                    (
+                        GUILayout.Toggle(_msgFilter.Info, "<color=white>●</color>", style, _toggleLayougOption),
+                        GUILayout.Toggle(_msgFilter.Warning, "<color=yellow>●</color>", style, _toggleLayougOption),
+                        GUILayout.Toggle(_msgFilter.Error, "<color=red>●</color>", style, _toggleLayougOption)
+                    );
             }
             GUILayout.EndHorizontal();
 
@@ -91,6 +104,11 @@ namespace ALM.Util.Debugger
 
         void DrawLog(Log log, int iter)
         {
+            if ((log is Error && !_msgFilter.Error) ||
+                (log is Warning && !_msgFilter.Warning) ||
+                (log is Info && !_msgFilter.Info))
+                return;
+
             GUILayout.BeginHorizontal();
             {
                 var color = log switch

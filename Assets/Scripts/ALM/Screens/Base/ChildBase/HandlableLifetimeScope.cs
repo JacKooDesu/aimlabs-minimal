@@ -9,6 +9,7 @@ using VContainer.Unity;
 namespace ALM.Screens.Base
 {
     using ALM.Common;
+    using ALM.Screens.Menu;
 
     public abstract class HandlableLifetimeScope<TScope, TEntry> : LifetimeScope
         where TScope : HandlableLifetimeScope<TScope, TEntry>
@@ -52,6 +53,14 @@ namespace ALM.Screens.Base
                 FindObjectsByType<Component>(FindObjectsSortMode.None)
                     .Where(x => x is IManagedTickable))
                 builder.RegisterComponent(x).AsImplementedInterfaces();
+
+            builder.RegisterEntryPointExceptionHandler(ExcpetionHandler);
+        }
+
+        void ExcpetionHandler(Exception e)
+        {
+            Debug.LogError(e);
+            MenuLifetimeScope.Load().Forget();
         }
     }
 }
