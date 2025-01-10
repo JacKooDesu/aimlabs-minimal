@@ -14,17 +14,19 @@ namespace ALM.Screens.Base
     {
         public ObjectPool<AudioSource> Pool { get; private set; }
         public List<AudioSource> _activeSources = new();
+        Transform _poolHolder;
 
         public AudioService(AudioSetting audioSetting)
         {
             var mixer = Resources.Load<AudioMixer>("Audio/Mixer");
+            _poolHolder = new GameObject("AudioPool").transform;
+            UnityEngine.Object.DontDestroyOnLoad(_poolHolder.gameObject);
 
             Pool = new ObjectPool<AudioSource>(
                 Create,
                 Get,
                 Release,
                 Destroy);
-
 
             AudioSource Create()
             {
@@ -39,6 +41,7 @@ namespace ALM.Screens.Base
                 source.gameObject.SetActive(false);
                 source.GetCancellationTokenOnDestroy()
                     .Register(() => _activeSources.Remove(source));
+                go.transform.SetParent(_poolHolder, false);
                 return source;
             }
 
@@ -96,10 +99,11 @@ namespace ALM.Screens.Base
             source.transform.SetParent(parent, false);
             source.transform.localPosition = Vector3.zero;
             parent.gameObject.GetCancellationTokenOnDestroy()
-                .ToUniTask()
-                .Item1
-                .GetAwaiter()
-                .OnCompleted(() => Pool.Release(source));
+                .Register(() =>
+                {
+                    source.transform.SetParent(_poolHolder);
+                    Pool.Release(source);
+                });
             return source;
         }
 

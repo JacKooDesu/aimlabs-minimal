@@ -46,5 +46,6 @@ So here comes AimLabs Minimal aka ALM!!
 
 - The api you can use are generated in [index.d.ts](./Assets/Gen/Typing/csharp/index.d.ts)
 - [The mission template](./docs/template/mission/)
+- Debugger mode can be opened with argument `-debugger` added
 
 ## TODO
