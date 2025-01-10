@@ -25,6 +25,8 @@ namespace ALM.Util
         {
             Directory.CreateDirectory(SAVE_PATH);
             Directory.CreateDirectory(Constants.SETTING_PATH);
+            Directory.CreateDirectory(Constants.CUSTOMIZE_PATH);
+            Directory.CreateDirectory(Constants.MISSION_PATH);
         }
 
         public static void JSave<T>(
