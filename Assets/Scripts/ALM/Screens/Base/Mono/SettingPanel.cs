@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,6 +11,7 @@ namespace ALM.Screens.Base
     using ALM.Common;
     using ALM.Util.UIToolkitExtend.Elements;
     using Screens.Base.Setting;
+    using Util;
     using Util.UIToolkitExtend;
 
     public class SettingPanel : MonoBehaviour
@@ -107,7 +109,33 @@ namespace ALM.Screens.Base
                 _audioSetting.GetBindable(),
                 _audioSetting);
 
+            // setup file input
+            _objectSettingBinder.Bindings
+                .Concat(_audioSettingBinder.Bindings)
+                .ToList()
+                .ForEach(b =>
+                {
+                    if (b.Element is not FileInputElement element)
+                        return;
+
+                    element.FileProcessor = f => FileProcessor(element.value, f);
+                });
+
             SetActive(false, true);
+
+            FileIO._File FileProcessor(FileIO._File origin, string file)
+            {
+                if (!File.Exists(file))
+                    return origin;
+
+                var name = Path.GetFileName(file);
+                var dest = FileIO.GetPath(Constants.CUSTOMIZE_PATH,name);
+                File.Copy(file, dest, true);
+
+                origin.path = name;
+
+                return origin;
+            }
         }
 
         async UniTask<KeyCode?> SetKeybind()

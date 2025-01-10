@@ -1,17 +1,18 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
 namespace ALM.Screens.Base.Setting
 {
-    using System.Linq;
     using ALM.Util.Serialization;
     using ALM.Util.UIToolkitExtend;
     using ALM.Util.UIToolkitExtend.Elements;
     using Util;
     using static Util.UIToolkitExtend.DataBinder;
 
+    using IMAGE_FILE = Util.FileIO.File<Util.FileIO.PNG>;
 
     [JsonObject]
     public class ObjectSetting
@@ -27,7 +28,7 @@ namespace ALM.Screens.Base.Setting
         };
 
         [JsonProperty("room_texture")]
-        public string RommTextureName { get; private set; } = "";
+        public IMAGE_FILE RoomTextureName { get; private set; } = new("");
         [JsonProperty("room_texture_scaler")]
         public float RoomTextureScale { get; private set; } =
             Room.DEFAULT_TEXTURE_SCALER;
@@ -36,7 +37,7 @@ namespace ALM.Screens.Base.Setting
             BallColors[index];
 
         public Texture2D GetRoomTexture() =>
-            FileIO.LoadTexture(RommTextureName);
+            FileIO.LoadTexture(RoomTextureName.path);
 
         public static ObjectSetting Load() =>
             FileIO.JLoad<ObjectSetting>(Constants.SETTING_PATH, NAME, true, new UColorJsonConverter());
@@ -47,7 +48,7 @@ namespace ALM.Screens.Base.Setting
         {
             List<Bindable> list = new()
             {
-                Bindable.Create<TextField>("Room Texture Name", nameof(RommTextureName)),
+                Bindable.Create<FileInputElement.Bindable>("Room Texture Name", nameof(RoomTextureName)),
                 Bindable.Create<FloatField>("Room Texture Scaler", nameof(RoomTextureScale)),
             };
 
