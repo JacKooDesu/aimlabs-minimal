@@ -18,6 +18,8 @@ namespace ALM.Screens.Menu
             typeof(SelectMission),
             typeof(MissionInfo),
             typeof(ImportMission),
+            typeof(ManageAssets),
+            typeof(AssetsList),
         };
 
         protected override void Configure(IContainerBuilder builder)

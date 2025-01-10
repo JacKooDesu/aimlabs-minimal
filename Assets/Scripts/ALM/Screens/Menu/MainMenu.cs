@@ -33,6 +33,12 @@ namespace ALM.Screens.Menu
 
             _elementBase.Q<Button>("ImportMission").RegisterCallback<ClickEvent>(
                 _ => UIStackHandler.PushUI((uint)UIIndex.ImportMission));
+
+            _elementBase.Q<Button>("ManageAssets").RegisterCallback<ClickEvent>(
+                _ => UIStackHandler.PushUI((uint)UIIndex.ManageAssets));
+
+            _elementBase.parent.Q<Button>("ExitButton").RegisterCallback<ClickEvent>(
+                _ => Application.Quit());
         }
 
         void OpenSetting(ClickEvent _)
