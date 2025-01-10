@@ -1,0 +1,7 @@
+{
+  "name": "sound-direction",
+  "description": "This is a simple sound direction mission",
+  "map": "10m",
+  "map_size": 25,
+  "time_seconds": 90
+}
