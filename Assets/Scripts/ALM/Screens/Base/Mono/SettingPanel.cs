@@ -118,6 +118,7 @@ namespace ALM.Screens.Base
                     if (b.Element is not FileInputElement element)
                         return;
 
+                    element.DefaultRootPath = FileIO.GetPath(Constants.CUSTOMIZE_PATH);
                     element.FileProcessor = f => FileProcessor(element.value, f);
                 });
 

@@ -15,6 +15,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
         public event Action<ClickEvent> OnClickBrowseBtn;
         public Func<string, FileIO._File> FileProcessor;
         // public Func<string, string> PathProcessor;
+        public string DefaultRootPath { get; set; }
 
         public override FileIO._File value
         {
@@ -59,7 +60,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
         {
             SFB.StandaloneFileBrowser.OpenFilePanelAsync(
                 label,
-                "",
+                DefaultRootPath,
                 value.extension.ParseExtension(),
                 false,
                 OnSelectFile);
