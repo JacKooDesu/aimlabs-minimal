@@ -13,9 +13,9 @@ namespace ALM.Util
     {
         readonly static string SAVE_PATH =
 #if UNITY_EDITOR
-            Application.dataPath + "/../";
+            Application.dataPath + "/../v" + Application.version;
 #else
-            Application.persistentDataPath;
+            Application.persistentDataPath + '/v' + Application.version;
 #endif
 
         readonly static DirectoryInfo _saveDirInfo = new(SAVE_PATH);
