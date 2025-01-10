@@ -86,7 +86,8 @@ namespace ALM.Util.UIToolkitExtend
                     element.value = (BType)dict[key];
                     element.dataSource = parent;
                     element.dataSourceType = typeof(TParent);
-                    element.bindingPath = memberName + $".Dictionary.data[{key}]";
+                    // element.bindingPath = memberName + $".Dictionary.data[{key}]";
+                    element.bindingPath = memberName + $"[{key}]";
 
                     element.RegisterValueChangedCallback<BType>(v => dict[key] = v.newValue);
 

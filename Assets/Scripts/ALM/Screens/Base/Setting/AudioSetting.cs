@@ -24,6 +24,8 @@ namespace ALM.Screens.Base
         Dictionary<string, AUDIO_FILE> _AudioClips { get; set; } = Constants.Audio
             .AudioKeys()
             .ToDictionary(x => x, _ => new AUDIO_FILE(""));
+        public static string GetAudioClipPath(string key) =>
+            nameof(_AudioClips) + $"[{key}]";
 
         [JsonIgnore]
         string[] _valueDirtyCheck;

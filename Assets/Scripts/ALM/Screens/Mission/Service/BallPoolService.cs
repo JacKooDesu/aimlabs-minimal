@@ -15,6 +15,8 @@ namespace ALM.Screens.Mission
         readonly MissionLifetimeScope _scope;
         readonly AudioService _audioService;
         readonly ObjectSetting _objectSetting;
+        readonly AudioSetting _audioSetting;
+
         public ObjectPool<Ball> Pool { get; private set; }
         /// <summary>
         /// All balls in pool
@@ -37,6 +39,7 @@ namespace ALM.Screens.Mission
             _scope = scope;
             _audioService = audioService;
             _objectSetting = objectSetting;
+            _audioSetting = audioSetting;
 
             audioSetting.GetAudioClipSync(
                 Constants.Audio.HIT_SOUND,
@@ -51,6 +54,20 @@ namespace ALM.Screens.Mission
             _material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 
             _objectSetting.OnChange += UpdateBallColor;
+            _audioSetting.OnChange += OnAudioChange;
+        }
+
+        void OnAudioChange(string path)
+        {
+            if (path != AudioSetting.GetAudioClipPath(Constants.Audio.HIT_SOUND))
+                return;
+
+            _audioSetting.GetAudioClipSync(
+                Constants.Audio.HIT_SOUND,
+                clip => _hitSound = clip);
+
+            // TODO: Tracking type is not handlable
+            // _balls.ForEach(b =>{})
         }
 
         void UpdateBallColor(string path)
@@ -130,6 +147,7 @@ namespace ALM.Screens.Mission
         public void Dispose()
         {
             _objectSetting.OnChange -= UpdateBallColor;
+            _audioSetting.OnChange -= OnAudioChange;
         }
     }
 }
