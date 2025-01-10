@@ -49,7 +49,9 @@ namespace ALM.Util.UIToolkitExtend
                     element.value = (BType)arr.GetValue(index);
                     element.dataSource = parent;
                     element.dataSourceType = typeof(TParent);
-                    element.bindingPath = memberName + $".Array.data[{index}]";
+                    // FIXME: unity 無法對於陣列物品進行 binding
+                    // element.bindingPath = memberName + $".Array.data[{index}]";
+                    element.bindingPath = memberName + $"[{index}]";
 
                     element.RegisterValueChangedCallback<BType>(v => arr.SetValue(v.newValue, index));
 

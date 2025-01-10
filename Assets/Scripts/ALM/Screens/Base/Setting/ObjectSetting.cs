@@ -26,6 +26,8 @@ namespace ALM.Screens.Base.Setting
             Color.green,
             Color.blue
         };
+        public string GetBallColorPath(int index) =>
+            nameof(BallColors) + $"[{index}]";
 
         [JsonProperty("room_texture")]
         public IMAGE_FILE RoomTextureName { get; private set; } = new("");

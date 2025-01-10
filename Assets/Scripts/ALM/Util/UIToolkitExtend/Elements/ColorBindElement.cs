@@ -84,6 +84,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 _b.value = value.b;
 
                 _colorBlock.style.backgroundColor = value;
+
+                (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
             }
         }
 
