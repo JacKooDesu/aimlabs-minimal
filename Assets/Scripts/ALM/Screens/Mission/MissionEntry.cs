@@ -13,7 +13,8 @@ namespace ALM.Screens.Mission
 
     public record JsConfigure(
         RaycasterService Raycaster,
-        BallPoolService BallPool);
+        BallPoolService BallPool,
+        AudioService Audio);
     // this is delegate to configure service required by js env
     public delegate void JsConfigureDel(JsConfigure configure);
 
@@ -63,7 +64,8 @@ namespace ALM.Screens.Mission
                 var configure = module.Get<JsConfigureDel>("configure");
                 configure?.Invoke(new(
                     _raycasterService,
-                    _ballPoolService));
+                    _ballPoolService,
+                    _audioService));
 
                 var entry = module.Get<Action>("entry");
                 entry?.Invoke();

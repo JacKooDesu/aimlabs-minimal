@@ -3958,28 +3958,37 @@
             public set Raycaster(value: ALM.Screens.Mission.RaycasterService);
             public get BallPool(): ALM.Screens.Mission.BallPoolService;
             public set BallPool(value: ALM.Screens.Mission.BallPoolService);
+            public get Audio(): ALM.Screens.Base.AudioService;
+            public set Audio(value: ALM.Screens.Base.AudioService);
             public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
         class RaycasterService extends System.Object
         {
             protected [__keep_incompatibility]: never;
+            public add_OnCastBegin ($value: System.Action) : void
+            public remove_OnCastBegin ($value: System.Action) : void
+            public add_OnCastFinished ($value: System.Action$1<ALM.Screens.Mission.IRaycastTarget>) : void
+            public remove_OnCastFinished ($value: System.Action$1<ALM.Screens.Mission.IRaycastTarget>) : void
             public Cast ($raycaster: ALM.Screens.Mission.IRaycaster) : void
             public constructor ()
         }
-        class BallPoolService extends System.Object
+        class BallPoolService extends System.Object implements System.IDisposable
         {
             protected [__keep_incompatibility]: never;
             public get Pool(): UnityEngine.Pool.ObjectPool$1<ALM.Screens.Mission.Ball>;
+            public add_OnBallHit ($value: System.Action$1<ALM.Screens.Mission.Ball>) : void
+            public remove_OnBallHit ($value: System.Action$1<ALM.Screens.Mission.Ball>) : void
             public Ball ($typeIndex?: number) : ALM.Screens.Mission.Ball
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
-            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting)
+            public Dispose () : void
+            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Screens.Mission.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
         interface JsConfigureDel
@@ -3988,9 +3997,11 @@
         Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
         }
         var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
-        class Ball extends UnityEngine.MonoBehaviour implements ALM.Screens.Mission.IRaycastTarget, ALM.Common.IManagedTickable
+        class Ball extends UnityEngine.MonoBehaviour implements ALM.Common.IManagedTickable, ALM.Screens.Mission.IRaycastTarget
         {
             protected [__keep_incompatibility]: never;
+            public get TypeIndex(): number;
+            public set TypeIndex(value: number);
             public set Color(value: UnityEngine.Color);
             public get Hp(): number;
             public set Hp(value: number);
@@ -4019,8 +4030,30 @@
         {
             protected [__keep_incompatibility]: never;
         }
+        class MissionScoreData extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
         interface IRaycaster
         {
+        }
+    }
+    namespace ALM.Screens.Base {
+        class AudioService extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class HandlableLifetimeScope$2<TScope, TEntry> extends VContainer.Unity.LifetimeScope implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AudioSetting extends System.Object implements ALM.Util.UIToolkitExtend.IDataTarget
+        {
+            protected [__keep_incompatibility]: never;
         }
     }
     namespace ALM.Common {
@@ -4049,18 +4082,19 @@
         {
         }
     }
-    namespace ALM.Screens.Base {
-        class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        class HandlableLifetimeScope$2<TScope, TEntry> extends VContainer.Unity.LifetimeScope implements System.IDisposable
+    namespace ALM.Screens.Base.Setting {
+        class ObjectSetting extends System.Object implements ALM.Util.UIToolkitExtend.IDataTarget
         {
             protected [__keep_incompatibility]: never;
         }
     }
-    namespace ALM.Screens.Base.Setting {
-        class ObjectSetting extends System.Object
+    namespace ALM.Util.UIToolkitExtend {
+        interface IDataTarget
+        {
+        }
+    }
+    namespace ALM.Screens.Base.MissionLoader {
+        class PlayableMission extends System.Object implements System.IEquatable$1<ALM.Screens.Base.MissionLoader.PlayableMission>
         {
             protected [__keep_incompatibility]: never;
         }
