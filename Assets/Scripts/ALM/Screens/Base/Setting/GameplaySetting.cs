@@ -1,13 +1,15 @@
+using System;
 using UnityEngine;
 using Newtonsoft.Json;
 
 namespace ALM.Screens.Base.Setting
 {
+    using Util.UIToolkitExtend;
     using Util;
     using static Util.UIToolkitExtend.DataBinder;
 
     [JsonObject]
-    public class GameplaySetting
+    public class GameplaySetting : IDataTarget
     {
         const string NAME = "gameplay_setting.json";
 
@@ -18,6 +20,8 @@ namespace ALM.Screens.Base.Setting
         public bool InvertY { get; private set; } = false;
         [JsonProperty("invertX")]
         public bool InvertX { get; private set; } = false;
+
+        public event Action<string> OnChange;
 
         public static Bindable[] GetBindable()
         {
@@ -31,7 +35,12 @@ namespace ALM.Screens.Base.Setting
 
         public static GameplaySetting Load() =>
             FileIO.JLoad<GameplaySetting>(Constants.SETTING_PATH, NAME, true);
-        public void Save() => 
+        public void Save() =>
             FileIO.JSave(this, Constants.SETTING_PATH, NAME);
+
+        public void IsDirty(string path)
+        {
+            OnChange?.Invoke(path);
+        }
     }
 }

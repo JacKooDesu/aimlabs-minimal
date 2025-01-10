@@ -17,7 +17,7 @@ namespace ALM.Util.UIToolkitExtend
         where B : Bindable, new()
         where BElement : BindableElement, INotifyValueChanged<BType>, new()
     {
-        public override void Bind(VisualElement ui, object obj)
+        public override void Bind(VisualElement ui, IDataTarget obj)
         {
             var info = obj.GetType().GetMember(DataPath, (BindingFlags)int.MaxValue)[0];
 

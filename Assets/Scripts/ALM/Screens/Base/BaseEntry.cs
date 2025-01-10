@@ -22,6 +22,16 @@ namespace ALM.Screens.Base
 
         public void Start()
         {
+            UpdateRoomTexture();
+            _objectSetting.OnChange += nm =>
+            {
+                if (nm == nameof(ObjectSetting.RoomTextureName))
+                    UpdateRoomTexture();
+            };
+        }
+
+        void UpdateRoomTexture()
+        {
             if (_objectSetting?.GetRoomTexture() is Texture2D tex)
                 _room?.SetTexture(tex);
         }

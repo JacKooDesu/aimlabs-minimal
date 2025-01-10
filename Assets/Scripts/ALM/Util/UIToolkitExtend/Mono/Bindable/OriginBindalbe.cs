@@ -12,7 +12,7 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.Slider(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<UIElements.Slider, float>(ui, obj);
         }
 
@@ -21,7 +21,7 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.TextField(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<UIElements.TextField, string>(ui, obj);
         }
 
@@ -30,7 +30,7 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.Toggle(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<UIElements.Toggle, bool>(ui, obj);
         }
 
@@ -39,7 +39,7 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.FloatField(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<UIElements.FloatField, float>(ui, obj);
         }
 
@@ -48,7 +48,7 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new UIElements.IntegerField(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<UIElements.IntegerField, int>(ui, obj);
         }
     }

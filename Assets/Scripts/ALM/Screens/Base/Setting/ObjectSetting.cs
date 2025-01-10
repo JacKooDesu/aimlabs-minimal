@@ -15,7 +15,7 @@ namespace ALM.Screens.Base.Setting
     using IMAGE_FILE = Util.FileIO.File<Util.FileIO.PNG>;
 
     [JsonObject]
-    public class ObjectSetting
+    public class ObjectSetting : IDataTarget
     {
         const string NAME = "object_setting.json";
 
@@ -32,6 +32,8 @@ namespace ALM.Screens.Base.Setting
         [JsonProperty("room_texture_scaler")]
         public float RoomTextureScale { get; private set; } =
             Room.DEFAULT_TEXTURE_SCALER;
+
+        public event Action<string> OnChange;
 
         public Color GetBallColor(int index) =>
             BallColors[index];
@@ -58,6 +60,11 @@ namespace ALM.Screens.Base.Setting
                     this, "Ball Colors", nameof(BallColors)));
 
             return list.ToArray();
+        }
+
+        public void IsDirty(string path)
+        {
+            OnChange?.Invoke(path);
         }
     }
 }

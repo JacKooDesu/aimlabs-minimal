@@ -12,11 +12,11 @@ namespace ALM.Util.UIToolkitExtend
 
     public class AbstractBindable : Bindable
     {
-        public delegate void __BindDel(Bindable b, VisualElement ui, object obj);
+        public delegate void __BindDel(Bindable b, VisualElement ui, IDataTarget obj);
         __BindDel _binder;
         public AbstractBindable(__BindDel binder) =>
             this._binder = binder;
-        public override void Bind(VisualElement ui, object obj) =>
+        public override void Bind(VisualElement ui, IDataTarget obj) =>
             _binder?.Invoke(this, ui, obj);
     }
 

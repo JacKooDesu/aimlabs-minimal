@@ -30,7 +30,7 @@ namespace ALM.Util.UIToolkitExtend
         {
             public override T ElementBuilder<T>() =>
                 new KeybindElement(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<KeybindElement, KeyCode>(ui, obj);
         }
     }

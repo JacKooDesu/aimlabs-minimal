@@ -16,7 +16,7 @@ namespace ALM.Screens.Base
     using AUDIO_FILE = Util.FileIO.File<Util.FileIO.OGG>;
 
     [JsonObject]
-    public class AudioSetting
+    public class AudioSetting : IDataTarget
     {
         const string NAME = "audio_setting.json";
 
@@ -33,6 +33,8 @@ namespace ALM.Screens.Base
 
         [Inject]
         readonly AudioMapSO _audioMapSO;
+
+        public event Action<string> OnChange;
 
         public void GetAudioClipSync(string key, Action<AudioClip> cb) =>
             GetAudioClipAsync(key)
@@ -94,6 +96,11 @@ namespace ALM.Screens.Base
                         this, "", nameof(_AudioClips)));
 
             return list.ToArray();
+        }
+
+        public void IsDirty(string path)
+        {
+            OnChange?.Invoke(path);
         }
     }
 }

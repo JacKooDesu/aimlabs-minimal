@@ -76,13 +76,15 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 value = FileProcessor(path);
             else
                 value.path = path;
+
+            (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
         }
 
         public class Bindable : DataBinder.Bindable
         {
             public override T ElementBuilder<T>() =>
                 new FileInputElement(Label) as T;
-            public override void Bind(VisualElement ui, object obj) =>
+            public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<FileInputElement, FileIO._File>(ui, obj);
         }
     }

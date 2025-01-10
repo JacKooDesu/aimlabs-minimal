@@ -128,10 +128,17 @@ namespace ALM.Screens.Base
             {
                 if (!File.Exists(file))
                     return origin;
-                if (file.Contains(FileIO.GetPath(Constants.CUSTOMIZE_PATH)))
-                    return origin;
 
                 var name = Path.GetFileName(file);
+
+                if (Path.GetRelativePath(
+                        Path.GetDirectoryName(file),
+                        FileIO.GetPath(Constants.CUSTOMIZE_PATH)) == ".")
+                {
+                    origin.path = name;
+                    return origin;
+                }
+
                 var dest = FileIO.GetPath(Constants.CUSTOMIZE_PATH, name);
                 File.Copy(file, dest, true);
 
