@@ -66,7 +66,7 @@ namespace ALM.Util
                     ext = _extensions[c.Types[i]];
                     arr[i + 1] = new ExtensionFilter(ext, ext);
                 }
-                arr[0] = new ExtensionFilter("All available files",
+                arr[0] = new ExtensionFilter("All",
                     arr[1..].SelectMany(x => x.Extensions).ToArray());
 
                 return arr;
