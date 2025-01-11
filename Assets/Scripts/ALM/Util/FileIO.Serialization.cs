@@ -21,7 +21,7 @@ namespace ALM.Util
             public string path;
             [JsonProperty("type")]
             public PathType type;
-            
+
             [JsonIgnore]
             public readonly Extension extension;
 
@@ -50,6 +50,9 @@ namespace ALM.Util
             { typeof(JSON), "json" },
             { typeof(OGG), "ogg" },
             { typeof(PNG), "png" },
+            { typeof(JPG), "jpg" },
+            { typeof(WAV), "wav" },
+            { typeof(MP3), "mp3" }
         };
         public static ExtensionFilter[] ParseExtension(this Extension extension)
         {
@@ -83,6 +86,9 @@ namespace ALM.Util
         public record ALL() : Extension();
         public record JSON() : Extension();
         public record OGG() : Extension();
+        public record WAV() : Extension();
+        public record MP3() : Extension();
         public record PNG() : Extension();
+        public record JPG() : Extension();
     }
 }
