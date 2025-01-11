@@ -47,6 +47,7 @@ namespace ALM.Util
 
         static Dictionary<Type, string> _extensions = new()
         {
+            { typeof(ALL), "*" },
             { typeof(JSON), "json" },
             { typeof(OGG), "ogg" },
             { typeof(PNG), "png" },
@@ -68,13 +69,17 @@ namespace ALM.Util
         }
 
         public abstract record Extension();
-        public abstract record ComposeExtension(Type[] Types) : Extension
+        public record ComposeExtension(Type[] Types) : Extension
         {
+            public static ComposeExtension Create(params Type[] types)
+            {
+                if (types.Any(x => x.BaseType != typeof(Extension)))
+                    throw new ArgumentException("Invalid type");
 
+                return new ComposeExtension(types);
+            }
         }
 
-        public record Compose<T>() : ComposeExtension(new[] { typeof(T) })
-            where T : Extension;
         public record Compose<T1, T2>() : ComposeExtension(new[] { typeof(T1), typeof(T2) })
             where T1 : Extension
             where T2 : Extension;
@@ -82,6 +87,11 @@ namespace ALM.Util
             where T1 : Extension
             where T2 : Extension
             where T3 : Extension;
+        public record Compose<T1, T2, T3, T4>() : ComposeExtension(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) })
+            where T1 : Extension
+            where T2 : Extension
+            where T3 : Extension
+            where T4 : Extension;
 
         public record ALL() : Extension();
         public record JSON() : Extension();

@@ -12,7 +12,10 @@ namespace ALM.Screens.Base.Setting
     using Util;
     using static Util.UIToolkitExtend.DataBinder;
 
-    using IMAGE_FILE = Util.FileIO.File<Util.FileIO.PNG>;
+    using IMAGE_FILE = Util.FileIO.File<
+        Util.FileIO.Compose<
+            Util.FileIO.PNG,
+            Util.FileIO.JPG>>;
 
     [JsonObject]
     public class ObjectSetting : IDataTarget
