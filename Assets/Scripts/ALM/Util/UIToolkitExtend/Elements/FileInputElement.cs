@@ -8,9 +8,11 @@ namespace ALM.Util.UIToolkitExtend.Elements
     public partial class FileInputElement : BaseField<FileIO._File>
     {
         const string BROWSE_BTN = "BrowseBtn";
+        const string RESET_BTN = "ResetBtn";
         const string FILE_NAME_FIELD = "FileName";
 
-        Button _button;
+        Button _browseBtn;
+        Button _resetBtn;
         Button _fileNameField;
         public event Action<ClickEvent> OnClickBrowseBtn;
         public Func<string, FileIO._File> FileProcessor;
@@ -30,11 +32,13 @@ namespace ALM.Util.UIToolkitExtend.Elements
         public FileInputElement() : base("File", Container()) => new FileInputElement("File");
         public FileInputElement(string label) : base(label, Container())
         {
-            _button = this.Q<Button>(BROWSE_BTN);
+            _browseBtn = this.Q<Button>(BROWSE_BTN);
+            _resetBtn = this.Q<Button>(RESET_BTN);
             _fileNameField = this.Q<Button>(FILE_NAME_FIELD);
 
-            _button.RegisterCallback<ClickEvent>(_ => OpenFileBrowser());
-            _button.RegisterCallback<ClickEvent>(e => OnClickBrowseBtn?.Invoke(e));
+            _browseBtn.RegisterCallback<ClickEvent>(_ => OpenFileBrowser());
+            _resetBtn.RegisterCallback<ClickEvent>(_ => ResetValue());
+            _browseBtn.RegisterCallback<ClickEvent>(e => OnClickBrowseBtn?.Invoke(e));
         }
 
         static VisualElement Container()
@@ -47,6 +51,11 @@ namespace ALM.Util.UIToolkitExtend.Elements
             fileNameField.pickingMode = PickingMode.Ignore;
             fileNameField.AddToClassList("unity-base-field__input");
             container.Add(fileNameField);
+
+            var resetBtn = new Button();
+            resetBtn.name = RESET_BTN;
+            resetBtn.text = "<color=red>X</color>";
+            container.Add(resetBtn);
 
             var btn = new Button();
             btn.name = BROWSE_BTN;
@@ -66,7 +75,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 OnSelectFile);
         }
 
-        void OnSelectFile(string[] paths)
+        void OnSelectFile(params string[] paths)
         {
             if (paths.Length is 0 or > 1)
                 return;
@@ -78,6 +87,11 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 value.path = path;
 
             (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
+        }
+
+        void ResetValue()
+        {
+            OnSelectFile("");
         }
 
         public class Bindable : DataBinder.Bindable

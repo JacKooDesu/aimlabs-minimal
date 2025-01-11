@@ -126,11 +126,18 @@ namespace ALM.Screens.Base
 
             FileIO._File FileProcessor(FileIO._File origin, string file)
             {
+                if (string.IsNullOrEmpty(file))
+                {
+                    origin.path = "";
+                    return origin;
+                }
+
                 if (!File.Exists(file))
                     return origin;
 
                 var name = Path.GetFileName(file);
 
+                // Select file from customize folder
                 if (Path.GetRelativePath(
                         Path.GetDirectoryName(file),
                         FileIO.GetPath(Constants.CUSTOMIZE_PATH)) == ".")
