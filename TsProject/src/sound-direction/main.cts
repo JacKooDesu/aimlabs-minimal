@@ -36,7 +36,7 @@ function cast(target) {
   ball.gameObject.SetActive(true);
   setTimeout(next, showTime * 1000);
 }
-CS.System.IO.File;
+
 function next() {
   ball.gameObject.SetActive(false);
 
