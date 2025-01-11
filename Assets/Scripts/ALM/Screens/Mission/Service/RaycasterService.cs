@@ -6,7 +6,7 @@ namespace ALM.Screens.Mission
     public class RaycasterService
     {
         public event Action OnCastBegin;
-        public event Action<IRaycastTarget> OnCastFinished;
+        public event Action<IRaycaster, IRaycastTarget> OnCastFinished;
         public void Cast(IRaycaster raycaster)
         {
             OnCastBegin?.Invoke();
@@ -22,7 +22,7 @@ namespace ALM.Screens.Mission
                     target.HitBy(0);
                 }
             }
-            OnCastFinished?.Invoke(target);
+            OnCastFinished?.Invoke(raycaster, target);
         }
     }
 }

@@ -11,18 +11,11 @@ namespace ALM.Screens.Mission
     using ALM.Common;
     using ALM.Screens.Base;
 
-    public record JsConfigure(
-        RaycasterService Raycaster,
-        BallPoolService BallPool);
-    // this is delegate to configure service required by js env
-    public delegate void JsConfigureDel(JsConfigure configure);
-
     public class MissionEntry : HandlableEntry<MissionEntry>
     {
         readonly JsEnv _jsEnv;
+        readonly JsConfigure _jsConfigure;
         readonly MissionLoader.PlayableMission _mission;
-        readonly BallPoolService _ballPoolService;
-        readonly RaycasterService _raycasterService;
         readonly PauseHandleService _pauseHandleService;
         readonly MissionScoreData _score;
         readonly Timer _timer;
@@ -30,9 +23,8 @@ namespace ALM.Screens.Mission
 
         public MissionEntry(
             JsEnv jsEnv,
+            JsConfigure jsConfigure,
             MissionLoader.PlayableMission mission,
-            BallPoolService ballPoolService,
-            RaycasterService raycasterService,
             PauseHandleService pauseHandleService,
             MissionScoreData score,
             Room room,
@@ -40,9 +32,9 @@ namespace ALM.Screens.Mission
             UIDocument rootUi) : base(rootUi)
         {
             _jsEnv = jsEnv;
+            _jsConfigure = jsConfigure;
+
             _mission = mission;
-            _ballPoolService = ballPoolService;
-            _raycasterService = raycasterService;
             _pauseHandleService = pauseHandleService;
             _score = score;
             _room = room;
@@ -58,13 +50,9 @@ namespace ALM.Screens.Mission
             foreach (var script in _mission.Scripts)
             {
                 _jsEnv.UsingAction<JsConfigureDel>();
+                _jsEnv.UsingAction<JsScoreCalculator.CastedAction>();
                 var module = _jsEnv.ExecuteModule(script);
-
-                var configure = module.Get<JsConfigureDel>("configure");
-                configure?.Invoke(new(
-                    _raycasterService,
-                    _ballPoolService));
-
+                _jsConfigure.Config(module);
                 var entry = module.Get<Action>("entry");
                 entry?.Invoke();
             }
