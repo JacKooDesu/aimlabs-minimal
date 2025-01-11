@@ -65,6 +65,7 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.IRaycastTarget),
                 typeof(ALM.Screens.Mission.Ball),
                 typeof(ALM.Screens.Base.AudioService),
+                typeof(ALM.Screens.Mission.MissionScoreData),
                 typeof(ALM.Util.FileIO),
             };
         }

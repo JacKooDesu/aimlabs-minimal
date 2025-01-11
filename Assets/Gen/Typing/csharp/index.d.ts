@@ -4077,12 +4077,14 @@
             public set BallPool(value: ALM.Screens.Mission.BallPoolService);
             public get Audio(): ALM.Screens.Base.AudioService;
             public set Audio(value: ALM.Screens.Base.AudioService);
+            public get Score(): ALM.Screens.Mission.MissionScoreData;
+            public set Score(value: ALM.Screens.Mission.MissionScoreData);
             public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.MissionScoreData>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.MissionScoreData)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4106,6 +4108,23 @@
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
             public Dispose () : void
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Screens.Mission.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
+            public constructor ()
+        }
+        class MissionScoreData extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get Score(): number;
+            public set Score(value: number);
+            public get Accuracy(): number;
+            public set Accuracy(value: number);
+            public get ReactionTime(): number;
+            public set ReactionTime(value: number);
+            public add_OnScoreChanged ($value: System.Action$1<number>) : void
+            public remove_OnScoreChanged ($value: System.Action$1<number>) : void
+            public add_OnAccuracyChange ($value: System.Action$1<number>) : void
+            public remove_OnAccuracyChange ($value: System.Action$1<number>) : void
+            public add_OnReactionTimeChange ($value: System.Action$1<number>) : void
+            public remove_OnReactionTimeChange ($value: System.Action$1<number>) : void
             public constructor ()
         }
         interface JsConfigureDel
@@ -4144,10 +4163,6 @@
             protected [__keep_incompatibility]: never;
         }
         class MissionLifetimeScope extends ALM.Screens.Base.HandlableLifetimeScope$2<ALM.Screens.Mission.MissionLifetimeScope, ALM.Screens.Mission.MissionEntry> implements System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        class MissionScoreData extends System.Object
         {
             protected [__keep_incompatibility]: never;
         }
