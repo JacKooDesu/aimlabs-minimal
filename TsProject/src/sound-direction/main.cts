@@ -1,3 +1,5 @@
+import { OnCasted } from "./actions/calculator.cjs";
+
 const V3 = CS.UnityEngine.Vector3;
 const Path = CS.System.IO.Path;
 const FileIO = CS.ALM.Util.FileIO;
@@ -11,27 +13,32 @@ export function configure(s: CS.ALM.Screens.Mission.JsConfigure) {
   return (service = s);
 }
 
-let ball: CS.ALM.Screens.Mission.Ball;
+export let ball: CS.ALM.Screens.Mission.Ball;
 let showing = false;
 let clip: CS.UnityEngine.AudioClip;
 
 export function entry() {
   ball = service.BallPool.Ball(0);
-  ball.gameObject.SetActive(false);
-  service.Raycaster.add_OnCastFinished(cast);
+  service.Score.OverrideCalculator(
+    new CS.ALM.Screens.Mission.JsScoreCalculator((caster, _) =>
+      OnCasted(ball, service, caster, _)
+    )
+  );
 
   let path = Path.Combine(
     FileIO.GetMissionFolder("sound-direction"),
     "snd.wav"
   );
-  FileIO.LoadExternalSoundSync(path, (r) => (clip = r));
+  service.Raycaster.add_OnCastFinished(casted);
 
-  next();
+  FileIO.LoadExternalSoundSync(path, (r) => {
+    clip = r;
+    next();
+  });
 }
 
-function cast(target) {
+function casted(caster: CS.ALM.Screens.Mission.IRaycaster, _: any) {
   if (showing) return;
-
   showing = true;
   ball.gameObject.SetActive(true);
   setTimeout(next, showTime * 1000);

@@ -50,6 +50,7 @@ namespace ALM.Screens.Mission
             foreach (var script in _mission.Scripts)
             {
                 _jsEnv.UsingAction<JsConfigureDel>();
+                _jsEnv.UsingAction<JsScoreCalculator.CastedAction>();
                 var module = _jsEnv.ExecuteModule(script);
                 _jsConfigure.Config(module);
                 var entry = module.Get<Action>("entry");

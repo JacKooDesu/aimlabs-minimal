@@ -4120,10 +4120,7 @@
         class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
-            public _scale : number
-            public _reactionTimeCal : boolean
-            public get Data(): ALM.Screens.Mission.MissionScoreData;
-            public OverrideCasted ($onCasted: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
+            public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
             public Tick () : void
             public Dispose () : void
             public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
@@ -4189,6 +4186,19 @@
         {
             Origin : UnityEngine.Vector3
             Direction : UnityEngine.Vector3
+        }
+        interface IScoreCalculator
+        {
+            OnCasted ($caster: ALM.Screens.Mission.IRaycaster, $target: ALM.Screens.Mission.IRaycastTarget) : void
+            Tick ($deltaTime: number) : void
+        }
+        class JsScoreCalculator extends System.Object implements ALM.Screens.Mission.IScoreCalculator
+        {
+            protected [__keep_incompatibility]: never;
+            public OnCasted ($caster: ALM.Screens.Mission.IRaycaster, $target: ALM.Screens.Mission.IRaycastTarget) : void
+            public Tick ($deltaTime: number) : void
+            public constructor ($onCasted: ALM.Screens.Mission.JsScoreCalculator.CastedAction)
+            public constructor ()
         }
     }
     namespace ALM.Screens.Base {
@@ -4283,6 +4293,14 @@
         {
             protected [__keep_incompatibility]: never;
         }
+    }
+    namespace ALM.Screens.Mission.JsScoreCalculator {
+        interface CastedAction
+        { 
+        (caster: ALM.Screens.Mission.IRaycaster, target: ALM.Screens.Mission.IRaycastTarget) : void; 
+        Invoke?: (caster: ALM.Screens.Mission.IRaycaster, target: ALM.Screens.Mission.IRaycastTarget) => void;
+        }
+        var CastedAction: { new (func: (caster: ALM.Screens.Mission.IRaycaster, target: ALM.Screens.Mission.IRaycastTarget) => void): CastedAction; }
     }
     namespace ALM.Util {
         class FileIO extends System.Object
