@@ -14,6 +14,8 @@ namespace ALM.Screens.Menu
         {
             base.AfterConfig();
 
+            _elementBase.Q<Button>("Versions").RegisterCallback<ClickEvent>(ManageVersion);
+
             _elementBase.Q<Button>("Missions").RegisterCallback<ClickEvent>(
                 _ => UIStackHandler.PushUI((uint)UIIndex.AssetsList, AssetsList.EType.Missions));
 
@@ -22,6 +24,12 @@ namespace ALM.Screens.Menu
 
             _elementBase.Q<Button>("OpenRoot").RegisterCallback<ClickEvent>(
                 _ => FileIO.OpenFolder(""));
+        }
+
+        void ManageVersion(ClickEvent _)
+        {
+            UIStackHandler.PushUI((uint)UIIndex.AssetsList, AssetsList.EType.Versions);
+            // (UIStackHandler.Current().ui as AssetsList).
         }
     }
 }
