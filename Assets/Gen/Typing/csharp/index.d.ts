@@ -412,6 +412,11 @@
         {
             protected [__keep_incompatibility]: never;
         }
+        interface Action$2<T1, T2>
+        { 
+        (arg1: T1, arg2: T2) : void; 
+        Invoke?: (arg1: T1, arg2: T2) => void;
+        }
     }
     namespace UnityEngine {
         /** Provides access to application runtime data.
@@ -4077,14 +4082,16 @@
             public set BallPool(value: ALM.Screens.Mission.BallPoolService);
             public get Audio(): ALM.Screens.Base.AudioService;
             public set Audio(value: ALM.Screens.Base.AudioService);
-            public get Score(): ALM.Screens.Mission.MissionScoreData;
-            public set Score(value: ALM.Screens.Mission.MissionScoreData);
+            public get Score(): ALM.Screens.Mission.ScoreService;
+            public set Score(value: ALM.Screens.Mission.ScoreService);
+            public get ScoreData(): ALM.Screens.Mission.MissionScoreData;
+            public set ScoreData(value: ALM.Screens.Mission.MissionScoreData);
             public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.MissionScoreData>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.MissionScoreData)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Screens.Mission.MissionScoreData>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Screens.Mission.MissionScoreData)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4093,8 +4100,8 @@
             protected [__keep_incompatibility]: never;
             public add_OnCastBegin ($value: System.Action) : void
             public remove_OnCastBegin ($value: System.Action) : void
-            public add_OnCastFinished ($value: System.Action$1<ALM.Screens.Mission.IRaycastTarget>) : void
-            public remove_OnCastFinished ($value: System.Action$1<ALM.Screens.Mission.IRaycastTarget>) : void
+            public add_OnCastFinished ($value: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
+            public remove_OnCastFinished ($value: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
             public Cast ($raycaster: ALM.Screens.Mission.IRaycaster) : void
             public constructor ()
         }
@@ -4108,6 +4115,18 @@
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
             public Dispose () : void
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Screens.Mission.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
+            public constructor ()
+        }
+        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+            public _scale : number
+            public _reactionTimeCal : boolean
+            public get Data(): ALM.Screens.Mission.MissionScoreData;
+            public OverrideCasted ($onCasted: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
+            public Tick () : void
+            public Dispose () : void
+            public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
             public constructor ()
         }
         class MissionScoreData extends System.Object
@@ -4168,6 +4187,8 @@
         }
         interface IRaycaster
         {
+            Origin : UnityEngine.Vector3
+            Direction : UnityEngine.Vector3
         }
     }
     namespace ALM.Screens.Base {
@@ -4194,6 +4215,10 @@
             protected [__keep_incompatibility]: never;
         }
         class AudioSetting extends System.Object implements ALM.Util.UIToolkitExtend.IDataTarget
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Timer extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
         }

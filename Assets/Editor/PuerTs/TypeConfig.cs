@@ -62,9 +62,11 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.JsConfigureDel),
                 typeof(ALM.Screens.Mission.BallPoolService),
                 typeof(ALM.Screens.Mission.RaycasterService),
+                typeof(ALM.Screens.Mission.IRaycaster),
                 typeof(ALM.Screens.Mission.IRaycastTarget),
                 typeof(ALM.Screens.Mission.Ball),
                 typeof(ALM.Screens.Base.AudioService),
+                typeof(ALM.Screens.Mission.ScoreService),
                 typeof(ALM.Screens.Mission.MissionScoreData),
                 typeof(ALM.Util.FileIO),
             };

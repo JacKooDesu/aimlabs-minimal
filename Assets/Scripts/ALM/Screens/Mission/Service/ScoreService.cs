@@ -8,21 +8,24 @@ namespace ALM.Screens.Mission
     using ALM.Screens.Base;
     using Unity.Mathematics;
 
-    public class ScoreService : IManagedTickable
+    public class ScoreService : IManagedTickable, IDisposable
     {
         [Inject]
         public MissionScoreData Data { get; private set; }
+        readonly RaycasterService _raycaster;
 
-        readonly int _scale;
-        readonly bool _reactionTimeCal;
+        public readonly int _scale;
+        public readonly bool _reactionTimeCal;
 
         float _reactionTime;
         float _totalShot;
         float _totalHit;
 
+        Action<IRaycaster, IRaycastTarget> _onCasted;
+
         public ScoreService(
             MissionLoader.PlayableMission mission,
-            RaycasterService raycasterService,
+            RaycasterService raycaster,
             Func<float, Timer> timerFactory)
         {
             _scale = mission.Outline.Type switch
@@ -35,10 +38,15 @@ namespace ALM.Screens.Mission
             if (mission.Outline.Type == MissionOutline.MissionType.Reaction)
                 _reactionTimeCal = true;
 
-            raycasterService.OnCastFinished += OnCasted;
+            _raycaster = raycaster;
+            raycaster.OnCastFinished += _onCasted;
+            _onCasted = OnCasted;
         }
 
-        void OnCasted(IRaycastTarget target)
+        public void OverrideCasted(Action<IRaycaster, IRaycastTarget> onCasted) =>
+            _onCasted = onCasted;
+
+        void OnCasted(IRaycaster _, IRaycastTarget target)
         {
             _totalShot += 1;
 
@@ -78,6 +86,11 @@ namespace ALM.Screens.Mission
                 return;
 
             _reactionTime += UnityEngine.Time.deltaTime;
+        }
+
+        public void Dispose()
+        {
+            _raycaster.OnCastFinished -= _onCasted;
         }
     }
 }

@@ -37,6 +37,7 @@ namespace ALM.Screens.Mission
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
+            builder.Register<JsConfigure>(Lifetime.Scoped);
 
             var missionLoader = Parent.Container.Resolve<MissionLoader>();
             var mission = missionLoader.GetMission(_missionName);
