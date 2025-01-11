@@ -57,15 +57,23 @@ namespace ALM.Util
         };
         public static ExtensionFilter[] ParseExtension(this Extension extension)
         {
-            return extension switch
+            string ext;
+            if (extension is ComposeExtension c)
             {
-                ComposeExtension c => c.Types
-                    .Select(x => _extensions[x])
-                    .Select(x => new ExtensionFilter(x, x))
-                    .ToArray(),
-                _ => new[] { new ExtensionFilter(
-                    _extensions[extension.GetType()], _extensions[extension.GetType()]) }
-            };
+                ExtensionFilter[] arr = new ExtensionFilter[c.Types.Length + 1];
+                for (int i = 0; i < c.Types.Length; ++i)
+                {
+                    ext = _extensions[c.Types[i]];
+                    arr[i + 1] = new ExtensionFilter(ext, ext);
+                }
+                arr[0] = new ExtensionFilter("All available files",
+                    arr[1..].SelectMany(x => x.Extensions).ToArray());
+
+                return arr;
+            }
+
+            ext = _extensions[extension.GetType()];
+            return new[] { new ExtensionFilter(ext, ext) };
         }
 
         public abstract record Extension();
