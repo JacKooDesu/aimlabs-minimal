@@ -18,7 +18,7 @@ So here comes AimLabs Minimal aka ALM!!
 
 ## Download
 
->Release is not availiable now tho, Game-CI action added but cannot auth properly...
+Can download it from release page
 
 ### Windows
 
