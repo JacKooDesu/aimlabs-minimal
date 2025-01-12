@@ -25,7 +25,7 @@ namespace ALM.Screens.Result
 
         public record Payload(
             MissionOutline Mission,
-            MissionScoreData ScoreData) : LoadPayload;
+            PlayHistory PlayHistory) : LoadPayload;
         public override void AfterLoad(LoadPayload payload)
         {
             if (payload is not Payload p)
@@ -38,7 +38,8 @@ namespace ALM.Screens.Result
         {
             base.Configure(builder);
 
-            builder.Register(_ => _payload.ScoreData, Lifetime.Scoped);
+            builder.Register(_ => _payload.PlayHistory, Lifetime.Scoped);
+            builder.Register(_ => _payload.PlayHistory.ScoreData, Lifetime.Scoped);
             builder.Register(_ => _payload.Mission, Lifetime.Scoped);
             builder.RegisterComponent<UIDocument>(_rootUi);
         }
