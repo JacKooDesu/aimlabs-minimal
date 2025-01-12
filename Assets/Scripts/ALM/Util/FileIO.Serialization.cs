@@ -53,7 +53,10 @@ namespace ALM.Util
             { typeof(PNG), "png" },
             { typeof(JPG), "jpg" },
             { typeof(WAV), "wav" },
-            { typeof(MP3), "mp3" }
+            { typeof(MP3), "mp3" },
+            { typeof(ZIP), "zip" },
+            { typeof(CJS), "cjs" },
+            { typeof(TXT), "txt" },
         };
         public static ExtensionFilter[] ParseExtension(this Extension extension)
         {
@@ -108,5 +111,8 @@ namespace ALM.Util
         public record MP3() : Extension();
         public record PNG() : Extension();
         public record JPG() : Extension();
+        public record ZIP() : Extension();
+        public record CJS() : Extension();
+        public record TXT() : Extension();
     }
 }
