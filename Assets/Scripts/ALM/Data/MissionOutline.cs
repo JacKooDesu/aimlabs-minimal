@@ -1,3 +1,4 @@
+using ALM.Util;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
@@ -23,6 +24,10 @@ namespace ALM.Data
 
         [JsonProperty("type")]
         public MissionType Type { get; private set; }
+
+        [JsonProperty("version")]
+        public string Version { get; private set; }
+        public int VersionInt => VersionChecker.VersionToInt(Version);
 
         public enum MissionType
         {

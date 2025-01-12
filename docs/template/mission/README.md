@@ -35,3 +35,4 @@ mission
     - `flicking`
     - `reaction`
     - `tracking`
+  - `version` 版本，新 API 可能不能兼容

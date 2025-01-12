@@ -26,7 +26,7 @@ namespace ALM.Util
         static List<(int From, int To, string Script)> _updateScripts { get; } = new();
         static Dictionary<string, UpgradeType> _upgradeTypeDict { get; } = new();
 
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void _Init()
         {
             Directory.CreateDirectory(UPDATER_PATH);
@@ -114,7 +114,7 @@ namespace ALM.Util
             return new UpgradeDirectly();
         }
 
-        static int VersionToInt(string version, char splitChar = '.')
+        public static int VersionToInt(string version, char splitChar = '.')
         {
             if (version.StartsWith('v'))
                 version = version.Substring(1);
