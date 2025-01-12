@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Realms;
 using VContainer;
 
-namespace ALM.Screens.Base.Service
+namespace ALM.Screens.Base
 {
     public class PlayHistoryService : IDisposable
     {
@@ -21,6 +21,9 @@ namespace ALM.Screens.Base.Service
 
         public void AddPlayHistory(PlayHistory history) =>
             _realm.Write(() => _realm.Add(history));
+
+        public IQueryable<PlayHistory> GetPlayHistories(string mission) =>
+            _realm.Find<MissionData>(mission).PlayHistories;
 
         public void Dispose() { }
     }

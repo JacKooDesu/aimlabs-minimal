@@ -44,11 +44,16 @@
             <engine:Label text="Mission Desc" name="MissionDescription" class="credit-content" />
             <engine:Label text="Mission Desc" name="MissionAuthor" class="credit-content" />
             <engine:Button text="Play" name="Play" />
+            <engine:Button text="History" name="History" />
         </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="AssetsList" class="selection-parent inactive 3rd" style="height: auto; top: 10%; bottom: 10%;">
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
+        <engine:Button name="ReturnButton" class="return-button" />
+    </engine:VisualElement>
+    <engine:VisualElement name="HistoryPanel" class="selection-parent 4th inactive" style="height: auto; top: 10%; bottom: 10%;">
+        <engine:ScrollView name="SelectionInner" class="selection-inner" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:Instance template="MenuBase" />

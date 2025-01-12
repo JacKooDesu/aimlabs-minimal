@@ -28,6 +28,10 @@ namespace ALM.Screens.Menu
                 _ => MissionLifetimeScope.Load(new MissionLifetimeScope.Payload(
                     (UIStackHandler.Current().data as MissionLoader.PlayableMission)
                         .Outline.Name)).Forget());
+
+            _elementBase.Q<Button>("History").RegisterCallback<ClickEvent>(
+                _ => UIStackHandler.PushUI((uint)UIIndex.HistoryPanel,
+                    (UIStackHandler.Current().data as MissionLoader.PlayableMission).Outline.Name));
         }
 
         public override void Push()

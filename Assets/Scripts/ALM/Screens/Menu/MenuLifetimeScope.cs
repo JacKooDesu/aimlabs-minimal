@@ -20,6 +20,7 @@ namespace ALM.Screens.Menu
             typeof(ImportMission),
             typeof(ManageAssets),
             typeof(AssetsList),
+            typeof(HistoryPanel),
         };
 
         protected override void Configure(IContainerBuilder builder)

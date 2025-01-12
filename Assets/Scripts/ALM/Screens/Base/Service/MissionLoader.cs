@@ -79,6 +79,8 @@ namespace ALM.Screens.Base
 
             ("Mission loaded: " + data.Name).Dbg();
 
+            data.Outline = outline;
+
             return new(
                 outline,
                 fullPath,

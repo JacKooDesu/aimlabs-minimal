@@ -9,5 +9,8 @@ namespace ALM.Data
         public string Name { get; set; }
         [Backlink(nameof(PlayHistory.Mission))]
         public IQueryable<PlayHistory> PlayHistories { get; }
+
+        [Ignored]
+        public MissionOutline Outline { get; set; }
     }
 }

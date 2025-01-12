@@ -8,5 +8,6 @@ namespace ALM.Screens.Menu
         ImportMission,
         ManageAssets,
         AssetsList,
+        HistoryPanel,
     }
 }

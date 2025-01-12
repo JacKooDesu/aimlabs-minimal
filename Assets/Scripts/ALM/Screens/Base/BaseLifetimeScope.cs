@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 namespace ALM.Screens.Base
 {
     using ALM.Common;
+    using ALM.Screens.Base;
     using ALM.Screens.Menu;
     using ALM.Screens.Mission;
     using ALM.Util;
@@ -57,6 +58,8 @@ namespace ALM.Screens.Base
             builder.Register<MissionLoader>(Lifetime.Singleton);
 
             builder.Register<MissionImporter>(Lifetime.Singleton);
+
+            builder.Register<PlayHistoryService>(Lifetime.Singleton);
 
             builder.RegisterComponentInHierarchy<SettingPanel>();
             builder.RegisterComponentInHierarchy<Room>();

@@ -19,16 +19,18 @@ namespace ALM.Screens.Mission
         readonly JsConfigure _jsConfigure;
         readonly MissionLoader.PlayableMission _mission;
         readonly PauseHandleService _pauseHandleService;
+        readonly PlayHistoryService _playHistoryService;
+
         readonly PlayHistory _playHistory;
         readonly Timer _timer;
         readonly Room _room;
-        readonly Realm _realm;
 
         public MissionEntry(
             JsEnv jsEnv,
             JsConfigure jsConfigure,
             MissionLoader.PlayableMission mission,
             PauseHandleService pauseHandleService,
+            PlayHistoryService playHistoryService,
             PlayHistory playHistory,
             Room room,
             Realm realm,
@@ -40,9 +42,10 @@ namespace ALM.Screens.Mission
 
             _mission = mission;
             _pauseHandleService = pauseHandleService;
+            _playHistoryService = playHistoryService;
+
             _playHistory = playHistory;
             _room = room;
-            _realm = realm;
 
             if (_mission.Outline.Time > 0)
                 _timer = timerFactory(_mission.Outline.Time);
@@ -81,8 +84,7 @@ namespace ALM.Screens.Mission
 
         private void OnFinishedMission()
         {
-            _realm.Write(() =>
-                _realm.Add(_playHistory));
+            _playHistoryService.AddPlayHistory(_playHistory);
 
             Result.ResultLifetimeScope.Load(
                    new Result.ResultLifetimeScope.Payload(
