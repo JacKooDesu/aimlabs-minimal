@@ -1,8 +1,8 @@
 var copyfiles = require("copyfiles");
 
 const destMap = {
-  win: "../build/AimLabs-Minimal_Win64/mission-import",
-  linux: "../build/AimLabs-Minimal_Linux64/mission-import",
+  win: "../build/StandaloneWindows64/mission-import",
+  linux: "../build/StandaloneLinux64/mission-import",
 };
 const dest = destMap[process.argv[2]] || "./output/";
 
