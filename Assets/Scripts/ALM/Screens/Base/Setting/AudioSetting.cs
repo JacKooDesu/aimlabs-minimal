@@ -13,7 +13,11 @@ namespace ALM.Screens.Base
     using Cysharp.Threading.Tasks;
     using static Util.UIToolkitExtend.DataBinder;
 
-    using AUDIO_FILE = Util.FileIO.File<Util.FileIO.OGG>;
+    using AUDIO_FILE = Util.FileIO.File<
+        Util.FileIO.Compose<
+            Util.FileIO.OGG,
+            Util.FileIO.WAV,
+            Util.FileIO.MP3>>;
 
     [JsonObject]
     public class AudioSetting : IDataTarget

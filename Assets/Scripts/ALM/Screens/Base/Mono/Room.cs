@@ -16,6 +16,8 @@ namespace ALM.Screens.Base
         MeshFilter _filter;
         float _size;
 
+        Texture _fallbackTexture;
+
         void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -26,11 +28,21 @@ namespace ALM.Screens.Base
                 if (nm == nameof(ObjectSetting.RoomTextureScale))
                     SetSize(_size);
             };
+
+            _fallbackTexture = _renderer.material.mainTexture;
         }
 
-        public void SetTexture(Texture2D texture)
+        public void SetTexture(Texture texture)
         {
             _renderer.material.mainTexture = texture;
+        }
+
+        public void SetTextureSafe(Texture texture)
+        {
+            if (texture == null)
+                texture = _fallbackTexture;
+
+            SetTexture(texture);
         }
 
         public void SetSize(float size)

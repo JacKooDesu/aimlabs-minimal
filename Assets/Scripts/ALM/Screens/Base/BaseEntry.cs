@@ -32,8 +32,7 @@ namespace ALM.Screens.Base
 
         void UpdateRoomTexture()
         {
-            if (_objectSetting?.GetRoomTexture() is Texture2D tex)
-                _room?.SetTexture(tex);
+            _room?.SetTextureSafe(_objectSetting?.GetRoomTexture());
         }
     }
 }
