@@ -78,6 +78,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           buildName: AimLabs-Minimal_Win64
+          versioning: None
 
       # Pro build
       - name: Pro Build project

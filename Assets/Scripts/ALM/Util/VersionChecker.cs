@@ -43,17 +43,16 @@ namespace ALM.Util
                 return;
 
             var maxOldVersion = oldVersions
-                .Select(version => (version, vInt: VersionToInt(version)))
-                .OrderByDescending(v => v.vInt)
+                .OrderByDescending(v => VersionToInt(v))
                 .FirstOrDefault();
 
-            if (maxOldVersion.vInt < MinCapableVersionInt)
+            if (!CheckCanConvert(maxOldVersion))
             {
-                Debug.LogWarning($"Old versions are not converte.");
+                Debug.LogWarning($"Max version `{maxOldVersion}` uncompatible.");
                 return;
             }
 
-            var oldVersionRoot = FileIO.GetPath("../" + maxOldVersion.version);
+            var oldVersionRoot = FileIO.GetPath("../" + maxOldVersion);
             var newSavePath = FileIO.SAVE_PATH;
 
             Directory.Move(oldVersionRoot, newSavePath);
