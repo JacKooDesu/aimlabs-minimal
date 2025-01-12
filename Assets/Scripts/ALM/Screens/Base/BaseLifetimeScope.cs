@@ -1,13 +1,18 @@
 using VContainer;
 using VContainer.Unity;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 namespace ALM.Screens.Base
 {
     using ALM.Common;
+    using ALM.Screens.Menu;
     using ALM.Screens.Mission;
     using ALM.Util;
     using ALM.Util.UIToolkitExtend;
     using Setting;
+
     public class BaseLifetimeScope : LifetimeScope
     {
         [UnityEngine.SerializeField]
@@ -52,6 +57,33 @@ namespace ALM.Screens.Base
             builder.RegisterComponentInHierarchy<QuickHint>();
 
             builder.RegisterInstance(_audioMap);
+        }
+
+#if UNITY_EDITOR
+        [UnityEditor.MenuItem("ALM/Reload Game")]
+#endif
+        // TODO: Implement ReloadGame method
+        public static void ReloadGame()
+        { }
+
+        public static void Restart()
+        {
+#if UNITY_EDITOR
+            Debug.LogWarning("Restarting is not supported in the editor.");
+            return;
+#else
+            System.Diagnostics.Process.Start(
+                Application.dataPath + "/../" +
+#if UNITY_STANDALONE_WIN
+                Application.productName + "_Win64.exe"
+#elif UNITY_STANDALONE_LINUX
+                // FIXME: Linux build path
+                Application.productName
+#endif
+                );
+
+            Application.Quit();
+#endif
         }
     }
 }
