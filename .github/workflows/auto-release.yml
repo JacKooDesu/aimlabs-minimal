@@ -73,6 +73,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           buildName: AimLabs-Minimal_Win64
+          versioning: None
 
       # 自動編譯並匯入預設任務
       - name: Ts Mission Compile Job
