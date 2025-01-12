@@ -28,5 +28,10 @@ namespace ALM
                     .Select(x => x.GetValue(null) as string)
                     .ToArray();
         }
+
+        public static class Url
+        {
+            public const string GITHUB_REPO = "https://github.com/JacKooDesu/aimlabs-minimal";
+        }
     }
 }

@@ -31,6 +31,7 @@
     </engine:VisualElement>
     <engine:VisualElement name="ManageAssetsPanel" class="selection-parent 2nd inactive" style="height: auto; top: 10%; bottom: 10%;">
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
+            <engine:Button text="Versions" name="Versions" />
             <engine:Button text="Missions" name="Missions" />
             <engine:Button text="Customize" name="Customize" />
             <engine:Button text="Open Root Folder" name="OpenRoot" />

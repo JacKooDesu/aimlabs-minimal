@@ -1,6 +1,7 @@
 using System;
 using ALM.Common;
 using ALM.Screens.Base;
+using ALM.Util;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,6 +22,9 @@ namespace ALM.Screens.Menu
         [Inject]
         MissionLoader _missionLoader;
 
+        [Inject]
+        QuickHint _quickHint;
+
         protected override void AfterConfig()
         {
             base.AfterConfig();
@@ -34,6 +38,9 @@ namespace ALM.Screens.Menu
             _elementBase.Q<Button>("ImportMission").RegisterCallback<ClickEvent>(
                 _ => UIStackHandler.PushUI((uint)UIIndex.ImportMission));
 
+            _elementBase.Q<Button>("CheckUpdate").RegisterCallback<ClickEvent>(
+                CheckAppVersion);
+
             _elementBase.Q<Button>("ManageAssets").RegisterCallback<ClickEvent>(
                 _ => UIStackHandler.PushUI((uint)UIIndex.ManageAssets));
 
@@ -44,6 +51,29 @@ namespace ALM.Screens.Menu
         void OpenSetting(ClickEvent _)
         {
             _settingPanel.ActiveAsync().Forget();
+        }
+
+        void CheckAppVersion(ClickEvent _)
+        {
+            VersionChecker.CheckAppVersion()
+                .ContinueWith(Result)
+                .Forget(Catch);
+
+            void Result(string s)
+            {
+                if (string.IsNullOrEmpty(s))
+                {
+                    _quickHint.Show("Already the latest version", 1.5f).Forget();
+                    return;
+                }
+
+                Application.OpenURL(s);
+            }
+            void Catch(Exception e)
+            {
+                Debug.LogError(e);
+                _quickHint.Show(e.Message, 1.5f).Forget();
+            }
         }
     }
 }

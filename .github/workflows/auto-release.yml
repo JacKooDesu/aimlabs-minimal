@@ -72,6 +72,7 @@ jobs:
           UNITY_PASSWORD: ${{ fromJson(secrets.SETTING).password }}
         with:
           targetPlatform: StandaloneWindows64
+          buildName: AimLabs-Minimal_Win64
 
       # 自動編譯並匯入預設任務
       - name: Ts Mission Compile Job

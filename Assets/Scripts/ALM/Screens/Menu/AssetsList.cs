@@ -32,6 +32,7 @@ namespace ALM.Screens.Menu
 
             var path = FileIO.GetPath(t switch
             {
+                EType.Versions => "../",
                 EType.Missions => Constants.MISSION_PATH,
                 EType.Customize => Constants.CUSTOMIZE_PATH,
                 _ => ""
@@ -40,6 +41,7 @@ namespace ALM.Screens.Menu
             // FIXME: 之後需要有 Asset Database 管理
             (t switch
             {
+                EType.Versions => System.IO.Directory.GetDirectories(path, "v*.*.*"),
                 EType.Missions => System.IO.Directory.GetDirectories(path),
                 EType.Customize => System.IO.Directory.GetFiles(path),
                 _ => Enumerable.Empty<string>()
@@ -59,7 +61,8 @@ namespace ALM.Screens.Menu
         public enum EType
         {
             Missions,
-            Customize
+            Customize,
+            Versions
         }
     }
 }
