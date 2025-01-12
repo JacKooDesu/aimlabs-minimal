@@ -34,7 +34,35 @@ namespace ALM.Util
             MinCapableVersionInt = VersionToInt(Resources
                 .Load<TextAsset>(VERSION_SUPPORT_FILE)
                 .ToString());
+
+            if (Directory.Exists(FileIO.SAVE_PATH))
+                return;
+
+            var oldVersions = ScanOldVersions();
+            if (oldVersions.Length <= 0)
+                return;
+
+            var maxOldVersion = oldVersions
+                .Select(version => (version, vInt: VersionToInt(version)))
+                .OrderByDescending(v => v.vInt)
+                .FirstOrDefault();
+
+            if (maxOldVersion.vInt < MinCapableVersionInt)
+            {
+                Debug.LogWarning($"Old versions are not converte.");
+                return;
+            }
+
+            var oldVersionRoot = FileIO.GetPath("../" + maxOldVersion.version);
+            var newSavePath = FileIO.SAVE_PATH;
+
+            Directory.Move(oldVersionRoot, newSavePath);
         }
+
+        public static string[] ScanOldVersions() =>
+            Directory.GetDirectories(FileIO.GetPath("../"), "v*.*.*")
+                .Select(p => Path.GetFileName(p))
+                .ToArray();
 
         static void ScanUpdateScripts()
         {

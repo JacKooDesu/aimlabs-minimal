@@ -11,7 +11,7 @@ namespace ALM.Util
 {
     public static partial class FileIO
     {
-        readonly static string SAVE_PATH =
+        public readonly static string SAVE_PATH =
 #if UNITY_EDITOR
             Application.dataPath + "/../v" + Application.version;
 #else

@@ -26,7 +26,7 @@ namespace ALM.Data
         public MissionType Type { get; private set; }
 
         [JsonProperty("version")]
-        public string Version { get; private set; }
+        public string Version { get; private set; } = "v0.0.0";
         public int VersionInt => VersionChecker.VersionToInt(Version);
 
         public enum MissionType
