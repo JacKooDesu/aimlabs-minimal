@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 using VContainer;
 using VContainer.Unity;
 using Puerts;
@@ -8,9 +10,8 @@ using TsEnvCore;
 
 namespace ALM.Screens.Mission
 {
-    using System;
     using ALM.Screens.Base;
-    using UnityEngine.UIElements;
+    using Data;
 
     [HandlabeScene("Mission")]
     public class MissionLifetimeScope : HandlableLifetimeScope<MissionLifetimeScope, MissionEntry>

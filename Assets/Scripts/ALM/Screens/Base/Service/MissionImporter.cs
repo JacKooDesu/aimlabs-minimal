@@ -1,14 +1,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using ALM.Util;
-using NUnit.Framework;
-using UnityEngine.TextCore.Text;
+using Realms;
+using VContainer;
 
 namespace ALM.Screens.Base
 {
+    using ALM.Data;
+    using ALM.Util;
+
     public class MissionImporter
     {
+        [Inject]
+        readonly Realm _realm;
         readonly string DEFAULT_PATH =
             UnityEngine.Application.dataPath +
                 "/../" +
@@ -46,6 +50,8 @@ namespace ALM.Screens.Base
                 Directory.Delete(folder, true);
 
                 result.Add(outline.Name);
+
+                WriteToRealm(outline.Name);
             }
 
             foreach (var file in Directory.GetFiles(DEFAULT_PATH, "*.zip"))
@@ -57,6 +63,8 @@ namespace ALM.Screens.Base
                 File.Delete(file);
 
                 result.Add(missionName);
+
+                WriteToRealm(missionName);
             }
 
             return result.ToArray();
@@ -91,8 +99,21 @@ namespace ALM.Screens.Base
                     e.ExtractToFile(dest, true);
                 }
 
+                WriteToRealm(missionName);
+
                 return missionName;
             }
+        }
+
+        void WriteToRealm(string missionName)
+        {
+            _realm.Write(() =>
+            {
+                _realm.Add(new MissionData()
+                {
+                    Name = missionName,
+                }, update: true);
+            });
         }
     }
 }

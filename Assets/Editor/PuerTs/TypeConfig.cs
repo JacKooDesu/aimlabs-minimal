@@ -69,7 +69,7 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.ScoreService),
                 typeof(ALM.Screens.Mission.IScoreCalculator),
                 typeof(ALM.Screens.Mission.JsScoreCalculator),
-                typeof(ALM.Screens.Mission.MissionScoreData),
+                typeof(ALM.Data.MissionScoreData),
                 typeof(ALM.Util.FileIO),
             };
         }

@@ -40,7 +40,6 @@ namespace ALM.Screens.Menu
                 return;
 
             DisplayResult(result);
-            _missionLoader.Reload();
         }
 
         void SelectFile(ClickEvent _)
@@ -60,8 +59,6 @@ namespace ALM.Screens.Menu
 
             var result = paths.Where(p => !string.IsNullOrEmpty(_missionImporter.ImportZip(p)));
             DisplayResult(result);
-
-            _missionLoader.Reload();
         }
 
         void DisplayResult(IEnumerable<string> missions)

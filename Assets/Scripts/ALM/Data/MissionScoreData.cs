@@ -1,9 +1,10 @@
 using System;
+using Realms;
 using UnityEngine;
 
-namespace ALM.Screens.Mission
+namespace ALM.Data
 {
-    public class MissionScoreData
+    public class MissionScoreData : RealmObject
     {
         public int Score
         {
@@ -14,7 +15,7 @@ namespace ALM.Screens.Mission
                 OnScoreChanged?.Invoke(_score);
             }
         }
-        int _score;
+        int _score { get; set; }
         public float Accuracy
         {
             get => _acc;
@@ -24,7 +25,7 @@ namespace ALM.Screens.Mission
                 OnAccuracyChange?.Invoke(_acc);
             }
         }
-        float _acc;
+        float _acc { get; set; }
 
         public float ReactionTime
         {
@@ -35,7 +36,7 @@ namespace ALM.Screens.Mission
                 OnReactionTimeChange?.Invoke(_reactionTime);
             }
         }
-        float _reactionTime;
+        float _reactionTime { get; set; }
 
         public event Action<int> OnScoreChanged;
         public event Action<float> OnAccuracyChange;

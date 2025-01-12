@@ -11,6 +11,7 @@ namespace ALM.Screens.Base
     using ALM.Screens.Mission;
     using ALM.Util;
     using ALM.Util.UIToolkitExtend;
+    using Realms;
     using Setting;
 
     public class BaseLifetimeScope : LifetimeScope
@@ -23,6 +24,14 @@ namespace ALM.Screens.Base
             builder.RegisterEntryPoint<BaseEntry>();
             builder.Register<GameStatusHandler>(Lifetime.Singleton);
             builder.Register<AudioService>(Lifetime.Singleton);
+            builder.Register<Realm>(
+                _ => Realm.GetInstance(
+                    new RealmConfiguration(FileIO.GetPath(Constants.DB_PATH))
+                    {
+                        SchemaVersion = (ulong)VersionChecker.CurrentVersionInt,
+                        MigrationCallback = VersionChecker.DbMigration
+                    }),
+                Lifetime.Singleton);
 
             builder.Register<GameplaySetting>(
                 _ => GameplaySetting.Load(),
@@ -45,9 +54,7 @@ namespace ALM.Screens.Base
                 },
                 Lifetime.Singleton);
 
-            builder.Register<MissionLoader>(
-                _ => new(),
-                Lifetime.Singleton);
+            builder.Register<MissionLoader>(Lifetime.Singleton);
 
             builder.Register<MissionImporter>(Lifetime.Singleton);
 

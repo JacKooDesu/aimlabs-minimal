@@ -6,6 +6,7 @@ namespace ALM.Screens.Mission
 {
     using ALM.Common;
     using ALM.Screens.Base;
+    using Data;
 
     public class BaseUi : UIBase
     {

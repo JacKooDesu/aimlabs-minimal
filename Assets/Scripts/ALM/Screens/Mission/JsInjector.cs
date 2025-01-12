@@ -5,6 +5,7 @@ using Puerts;
 namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
+    using Data;
 
     public record JsConfigure(
         RaycasterService Raycaster,

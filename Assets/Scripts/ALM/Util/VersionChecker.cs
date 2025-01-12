@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Realms;
 
 namespace ALM.Util
 {
@@ -187,6 +188,11 @@ namespace ALM.Util
             }
 
             return string.Empty;
+        }
+
+        public static void DbMigration(Migration migration, ulong oldVersion)
+        {
+            // TODO: implement by js env codes...
         }
 
         public abstract record UpgradeType();
