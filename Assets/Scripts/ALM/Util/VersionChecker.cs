@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Realms;
+using TsEnvCore;
 
 namespace ALM.Util
 {
@@ -31,6 +32,7 @@ namespace ALM.Util
         static void _Init()
         {
             Directory.CreateDirectory(UPDATER_PATH);
+            ScanUpdateScripts();
 
             MinCapableVersionInt = VersionToInt(Resources
                 .Load<TextAsset>(VERSION_SUPPORT_FILE)
@@ -77,7 +79,8 @@ namespace ALM.Util
 
             foreach (var updater in updaters)
             {
-                var arr = updater.Split('~');
+                // a-b-c~x-y-z.cjs
+                var arr = updater[..^4].Split('~');
                 _updateScripts.Add((
                     VersionToInt(arr[0], '-'),
                     VersionToInt(arr[1], '-'),
@@ -113,20 +116,20 @@ namespace ALM.Util
 
         static UpgradeType _GetUpgradeType(string version)
         {
-            var targetVersionInt = VersionToInt(version);
+            var oldVersionInt = VersionToInt(version);
 
             // TODO: should downgrade
-            if (CurrentVersionInt <= targetVersionInt)
+            if (CurrentVersionInt <= oldVersionInt)
                 return new CannotUpgrade();
 
-            if (targetVersionInt < MinCapableVersionInt)
+            if (oldVersionInt < MinCapableVersionInt)
             {
                 List<int> indexList = new();
                 for (int i = 0; i < _updateScripts.Count; i++)
                 {
                     var current = _updateScripts[i];
-                    if (current.From > targetVersionInt ||
-                        current.To < targetVersionInt ||
+                    if (current.From > oldVersionInt ||
+                        current.To <= oldVersionInt ||
                         current.To > MinCapableVersionInt)
                         continue;
 
@@ -157,6 +160,26 @@ namespace ALM.Util
             return version.Split(splitChar)
                 .Select((v, i) => int.Parse(v) * (int)math.pow(100, 3 - i))
                 .Sum() + subNum;
+        }
+
+        public static string IntToVersion(int versionInt, char splitChar = '.')
+        {
+            var subNum = versionInt % 100;
+            versionInt /= 100;
+
+            var parts = new List<int>();
+            for (int i = 0; i < 3; i++)
+            {
+                parts.Add(versionInt % 100);
+                versionInt /= 100;
+            }
+            parts.Reverse();
+
+            var version = string.Join(splitChar, parts);
+            if (subNum > 0)
+                version += (char)('a' + subNum - 1);
+
+            return version;
         }
 
         public static async UniTask<string> CheckAppVersion()
@@ -192,7 +215,24 @@ namespace ALM.Util
 
         public static void DbMigration(Migration migration, ulong oldVersion)
         {
-            // TODO: implement by js env codes...
+            var old = (int)oldVersion;
+
+            var loader = new LoaderCollection();
+            loader.AddLoader(new Puerts.DefaultLoader());
+            loader.AddLoader(new TsEnvCore.RootBasedLoader(UPDATER_PATH));
+            Puerts.JsEnv jsEnv = new(loader);
+            jsEnv.UsingAction<Action<Migration>>();
+            for (int i = 0; i < _updateScripts.Count; i++)
+            {
+                var (from, to, script) = _updateScripts[i];
+                if (from <= old && old < to)
+                {
+                    var module = jsEnv.ExecuteModule(_updateScripts[i].Script);
+                    module.Get<Action<Migration>>("migration")?.Invoke(migration);
+                }
+            }
+
+            jsEnv.Dispose();
         }
 
         public abstract record UpgradeType();

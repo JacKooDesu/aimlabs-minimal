@@ -76,6 +76,70 @@
         class Array extends System.Object implements System.Collections.IStructuralComparable, System.Collections.IStructuralEquatable, System.ICloneable, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList
         {
             protected [__keep_incompatibility]: never;
+            public get LongLength(): bigint;
+            public get IsFixedSize(): boolean;
+            public get IsReadOnly(): boolean;
+            public get IsSynchronized(): boolean;
+            public get SyncRoot(): any;
+            public get Length(): number;
+            public get Rank(): number;
+            public static CreateInstance ($elementType: System.Type, ...lengths: bigint[]) : System.Array
+            public CopyTo ($array: System.Array, $index: number) : void
+            public Clone () : any
+            public static BinarySearch ($array: System.Array, $value: any) : number
+            public static Copy ($sourceArray: System.Array, $destinationArray: System.Array, $length: bigint) : void
+            public static Copy ($sourceArray: System.Array, $sourceIndex: bigint, $destinationArray: System.Array, $destinationIndex: bigint, $length: bigint) : void
+            public CopyTo ($array: System.Array, $index: bigint) : void
+            public GetLongLength ($dimension: number) : bigint
+            public GetValue ($index: bigint) : any
+            public GetValue ($index1: bigint, $index2: bigint) : any
+            public GetValue ($index1: bigint, $index2: bigint, $index3: bigint) : any
+            public GetValue (...indices: bigint[]) : any
+            public static BinarySearch ($array: System.Array, $index: number, $length: number, $value: any) : number
+            public static BinarySearch ($array: System.Array, $value: any, $comparer: System.Collections.IComparer) : number
+            public static BinarySearch ($array: System.Array, $index: number, $length: number, $value: any, $comparer: System.Collections.IComparer) : number
+            public static IndexOf ($array: System.Array, $value: any) : number
+            public static IndexOf ($array: System.Array, $value: any, $startIndex: number) : number
+            public static IndexOf ($array: System.Array, $value: any, $startIndex: number, $count: number) : number
+            public static LastIndexOf ($array: System.Array, $value: any) : number
+            public static LastIndexOf ($array: System.Array, $value: any, $startIndex: number) : number
+            public static LastIndexOf ($array: System.Array, $value: any, $startIndex: number, $count: number) : number
+            public static Reverse ($array: System.Array) : void
+            public static Reverse ($array: System.Array, $index: number, $length: number) : void
+            public SetValue ($value: any, $index: bigint) : void
+            public SetValue ($value: any, $index1: bigint, $index2: bigint) : void
+            public SetValue ($value: any, $index1: bigint, $index2: bigint, $index3: bigint) : void
+            public SetValue ($value: any, ...indices: bigint[]) : void
+            public static Sort ($array: System.Array) : void
+            public static Sort ($array: System.Array, $index: number, $length: number) : void
+            public static Sort ($array: System.Array, $comparer: System.Collections.IComparer) : void
+            public static Sort ($array: System.Array, $index: number, $length: number, $comparer: System.Collections.IComparer) : void
+            public static Sort ($keys: System.Array, $items: System.Array) : void
+            public static Sort ($keys: System.Array, $items: System.Array, $comparer: System.Collections.IComparer) : void
+            public static Sort ($keys: System.Array, $items: System.Array, $index: number, $length: number) : void
+            public static Sort ($keys: System.Array, $items: System.Array, $index: number, $length: number, $comparer: System.Collections.IComparer) : void
+            public GetEnumerator () : System.Collections.IEnumerator
+            public GetLength ($dimension: number) : number
+            public GetLowerBound ($dimension: number) : number
+            public GetValue (...indices: number[]) : any
+            public SetValue ($value: any, ...indices: number[]) : void
+            public GetUpperBound ($dimension: number) : number
+            public GetValue ($index: number) : any
+            public GetValue ($index1: number, $index2: number) : any
+            public GetValue ($index1: number, $index2: number, $index3: number) : any
+            public SetValue ($value: any, $index: number) : void
+            public SetValue ($value: any, $index1: number, $index2: number) : void
+            public SetValue ($value: any, $index1: number, $index2: number, $index3: number) : void
+            public static CreateInstance ($elementType: System.Type, $length: number) : System.Array
+            public static CreateInstance ($elementType: System.Type, $length1: number, $length2: number) : System.Array
+            public static CreateInstance ($elementType: System.Type, $length1: number, $length2: number, $length3: number) : System.Array
+            public static CreateInstance ($elementType: System.Type, ...lengths: number[]) : System.Array
+            public static CreateInstance ($elementType: System.Type, $lengths: System.Array$1<number>, $lowerBounds: System.Array$1<number>) : System.Array
+            public static Clear ($array: System.Array, $index: number, $length: number) : void
+            public static Copy ($sourceArray: System.Array, $destinationArray: System.Array, $length: number) : void
+            public static Copy ($sourceArray: System.Array, $sourceIndex: number, $destinationArray: System.Array, $destinationIndex: number, $length: number) : void
+            public static ConstrainedCopy ($sourceArray: System.Array, $sourceIndex: number, $destinationArray: System.Array, $destinationIndex: number, $length: number) : void
+            public Initialize () : void
         }
         class Enum extends System.ValueType implements System.IFormattable, System.IComparable, System.IConvertible
         {
@@ -135,36 +199,6 @@
         }
         interface IFormatProvider
         {
-        }
-        interface Converter$2<TInput, TOutput>
-        { 
-        (input: TInput) : TOutput; 
-        Invoke?: (input: TInput) => TOutput;
-        }
-        interface Predicate$1<T>
-        { 
-        (obj: T) : boolean; 
-        Invoke?: (obj: T) => boolean;
-        }
-        interface IDisposable
-        {
-        }
-        interface Comparison$1<T>
-        { 
-        (x: T, y: T) : number; 
-        Invoke?: (x: T, y: T) => number;
-        }
-        class Double extends System.ValueType implements System.IFormattable, System.ISpanFormattable, System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        class ReadOnlySpan$1<T> extends System.ValueType
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        class Span$1<T> extends System.ValueType
-        {
-            protected [__keep_incompatibility]: never;
         }
         class Type extends System.Reflection.MemberInfo implements System.Runtime.InteropServices._MemberInfo, System.Runtime.InteropServices._Type, System.Reflection.ICustomAttributeProvider, System.Reflection.IReflect
         {
@@ -344,6 +378,40 @@
             public Equals ($obj: any) : boolean
             public static Equals ($objA: any, $objB: any) : boolean
         }
+        class Int64 extends System.ValueType implements System.IFormattable, System.ISpanFormattable, System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface Converter$2<TInput, TOutput>
+        { 
+        (input: TInput) : TOutput; 
+        Invoke?: (input: TInput) => TOutput;
+        }
+        interface Comparison$1<T>
+        { 
+        (x: T, y: T) : number; 
+        Invoke?: (x: T, y: T) => number;
+        }
+        interface Predicate$1<T>
+        { 
+        (obj: T) : boolean; 
+        Invoke?: (obj: T) => boolean;
+        }
+        interface IDisposable
+        {
+        }
+        class Double extends System.ValueType implements System.IFormattable, System.ISpanFormattable, System.IComparable, System.IComparable$1<number>, System.IConvertible, System.IEquatable$1<number>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class ReadOnlySpan$1<T> extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Span$1<T> extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
         class UInt64 extends System.ValueType implements System.IFormattable, System.ISpanFormattable, System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>
         {
             protected [__keep_incompatibility]: never;
@@ -398,7 +466,16 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        class Int64 extends System.ValueType implements System.IFormattable, System.ISpanFormattable, System.IComparable, System.IComparable$1<bigint>, System.IConvertible, System.IEquatable$1<bigint>
+        class EventArgs extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface EventHandler$1<TEventArgs>
+        { 
+        (sender: any, e: TEventArgs) : void; 
+        Invoke?: (sender: any, e: TEventArgs) => void;
+        }
+        class Nullable$1<T> extends System.ValueType
         {
             protected [__keep_incompatibility]: never;
         }
@@ -416,6 +493,10 @@
         { 
         (arg1: T1, arg2: T2) : void; 
         Invoke?: (arg1: T1, arg2: T2) => void;
+        }
+        class DateTimeOffset extends System.ValueType implements System.Runtime.Serialization.IDeserializationCallback, System.IFormattable, System.Runtime.Serialization.ISerializable, System.ISpanFormattable, System.IComparable, System.IComparable$1<System.DateTimeOffset>, System.IEquatable$1<System.DateTimeOffset>
+        {
+            protected [__keep_incompatibility]: never;
         }
     }
     namespace UnityEngine {
@@ -2634,6 +2715,9 @@
         interface ICollection$1<T> extends System.Collections.Generic.IEnumerable$1<T>, System.Collections.IEnumerable
         {
         }
+        interface IComparer$1<T>
+        {
+        }
         class List$1<T> extends System.Object implements System.Collections.Generic.IReadOnlyList$1<T>, System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<T>, System.Collections.IEnumerable, System.Collections.Generic.IList$1<T>, System.Collections.Generic.IReadOnlyCollection$1<T>, System.Collections.IList, System.Collections.Generic.ICollection$1<T>
         {
             protected [__keep_incompatibility]: never;
@@ -2692,9 +2776,6 @@
             public constructor ($collection: System.Collections.Generic.IEnumerable$1<T>)
             public [Symbol.iterator]() : IterableIterator<T>
         }
-        interface IComparer$1<T>
-        {
-        }
         interface IEnumerator$1<T> extends System.Collections.IEnumerator, System.IDisposable
         {
         }
@@ -2742,6 +2823,9 @@
         interface IEqualityComparer$1<T>
         {
         }
+        interface ISet$1<T> extends System.Collections.Generic.IEnumerable$1<T>, System.Collections.IEnumerable, System.Collections.Generic.ICollection$1<T>
+        {
+        }
     }
     namespace System.Collections {
         interface IEnumerable
@@ -2757,6 +2841,9 @@
         {
         }
         interface IList extends System.Collections.ICollection, System.Collections.IEnumerable
+        {
+        }
+        interface IComparer
         {
         }
         interface IEnumerator
@@ -2918,43 +3005,6 @@
             protected [__keep_incompatibility]: never;
         }
     }
-    namespace System.Collections.ObjectModel {
-        class ReadOnlyCollection$1<T> extends System.Object implements System.Collections.Generic.IReadOnlyList$1<T>, System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<T>, System.Collections.IEnumerable, System.Collections.Generic.IList$1<T>, System.Collections.Generic.IReadOnlyCollection$1<T>, System.Collections.IList, System.Collections.Generic.ICollection$1<T>
-        {
-            protected [__keep_incompatibility]: never;
-            public [Symbol.iterator]() : IterableIterator<T>
-        }
-    }
-    namespace System.Collections.Generic.List$1 {
-        class Enumerator<T> extends System.ValueType implements System.Collections.Generic.IEnumerator$1<T>, System.Collections.IEnumerator, System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
-        }
-    }
-    namespace System.Collections.Generic.Dictionary$2 {
-        class KeyCollection<TKey, TValue> extends System.Object implements System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<TKey>, System.Collections.IEnumerable, System.Collections.Generic.IReadOnlyCollection$1<TKey>, System.Collections.Generic.ICollection$1<TKey>
-        {
-            protected [__keep_incompatibility]: never;
-            public [Symbol.iterator]() : IterableIterator<TKey>
-        }
-        class ValueCollection<TKey, TValue> extends System.Object implements System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<TValue>, System.Collections.IEnumerable, System.Collections.Generic.IReadOnlyCollection$1<TValue>, System.Collections.Generic.ICollection$1<TValue>
-        {
-            protected [__keep_incompatibility]: never;
-            public [Symbol.iterator]() : IterableIterator<TValue>
-        }
-        class Enumerator<TKey, TValue> extends System.ValueType implements System.Collections.IDictionaryEnumerator, System.Collections.Generic.IEnumerator$1<System.Collections.Generic.KeyValuePair$2<TKey, TValue>>, System.Collections.IEnumerator, System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
-        }
-    }
-    namespace Unity.IntegerTime {
-        /** Data type that represents time as an integer count of a rational number.
-        */
-        class RationalTime extends System.ValueType
-        {
-            protected [__keep_incompatibility]: never;
-        }
-    }
     namespace System.Reflection {
         class MemberInfo extends System.Object implements System.Runtime.InteropServices._MemberInfo, System.Reflection.ICustomAttributeProvider
         {
@@ -3033,6 +3083,46 @@
             protected [__keep_incompatibility]: never;
         }
         class AssemblyName extends System.Object implements System.Runtime.InteropServices._AssemblyName, System.Runtime.Serialization.IDeserializationCallback, System.Runtime.Serialization.ISerializable, System.ICloneable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IReflectableType
+        {
+        }
+    }
+    namespace System.Collections.ObjectModel {
+        class ReadOnlyCollection$1<T> extends System.Object implements System.Collections.Generic.IReadOnlyList$1<T>, System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<T>, System.Collections.IEnumerable, System.Collections.Generic.IList$1<T>, System.Collections.Generic.IReadOnlyCollection$1<T>, System.Collections.IList, System.Collections.Generic.ICollection$1<T>
+        {
+            protected [__keep_incompatibility]: never;
+            public [Symbol.iterator]() : IterableIterator<T>
+        }
+    }
+    namespace System.Collections.Generic.List$1 {
+        class Enumerator<T> extends System.ValueType implements System.Collections.Generic.IEnumerator$1<T>, System.Collections.IEnumerator, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace System.Collections.Generic.Dictionary$2 {
+        class KeyCollection<TKey, TValue> extends System.Object implements System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<TKey>, System.Collections.IEnumerable, System.Collections.Generic.IReadOnlyCollection$1<TKey>, System.Collections.Generic.ICollection$1<TKey>
+        {
+            protected [__keep_incompatibility]: never;
+            public [Symbol.iterator]() : IterableIterator<TKey>
+        }
+        class ValueCollection<TKey, TValue> extends System.Object implements System.Collections.ICollection, System.Collections.Generic.IEnumerable$1<TValue>, System.Collections.IEnumerable, System.Collections.Generic.IReadOnlyCollection$1<TValue>, System.Collections.Generic.ICollection$1<TValue>
+        {
+            protected [__keep_incompatibility]: never;
+            public [Symbol.iterator]() : IterableIterator<TValue>
+        }
+        class Enumerator<TKey, TValue> extends System.ValueType implements System.Collections.IDictionaryEnumerator, System.Collections.Generic.IEnumerator$1<System.Collections.Generic.KeyValuePair$2<TKey, TValue>>, System.Collections.IEnumerator, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace Unity.IntegerTime {
+        /** Data type that represents time as an integer count of a rational number.
+        */
+        class RationalTime extends System.ValueType
         {
             protected [__keep_incompatibility]: never;
         }
@@ -4072,6 +4162,216 @@
             public constructor ()
         }
     }
+    namespace Realms {
+        class Realm extends System.Object implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+            public get DynamicApi(): Realms.Realm.Dynamic;
+            public get IsInTransaction(): boolean;
+            public get IsFrozen(): boolean;
+            public get Schema(): Realms.Schema.RealmSchema;
+            public get Config(): Realms.RealmConfigurationBase;
+            public get IsClosed(): boolean;
+            public static GetInstance ($databasePath: string) : Realms.Realm
+            public static GetInstance ($config?: Realms.RealmConfigurationBase) : Realms.Realm
+            public static GetInstanceAsync ($config?: Realms.RealmConfigurationBase, $cancellationToken?: System.Threading.CancellationToken) : System.Threading.Tasks.Task$1<Realms.Realm>
+            public static Compact ($config?: Realms.RealmConfigurationBase) : boolean
+            public static DeleteRealm ($configuration: Realms.RealmConfigurationBase) : void
+            public add_RealmChanged ($value: Realms.Realm.RealmChangedEventHandler) : void
+            public remove_RealmChanged ($value: Realms.Realm.RealmChangedEventHandler) : void
+            public add_Error ($value: System.EventHandler$1<Realms.ErrorEventArgs>) : void
+            public remove_Error ($value: System.EventHandler$1<Realms.ErrorEventArgs>) : void
+            public Dispose () : void
+            public Freeze () : Realms.Realm
+            public IsSameInstance ($other: Realms.Realm) : boolean
+            public BeginWrite () : Realms.Transaction
+            public Write ($action: System.Action) : void
+            public BeginWriteAsync ($cancellationToken?: System.Threading.CancellationToken) : System.Threading.Tasks.Task$1<Realms.Transaction>
+            public WriteAsync ($action: System.Action, $cancellationToken?: System.Threading.CancellationToken) : $Task<any>
+            public Refresh () : boolean
+            public RefreshAsync () : System.Threading.Tasks.Task$1<boolean>
+            public Remove ($obj: Realms.IRealmObjectBase) : void
+            public RemoveAll () : void
+            public WriteCopy ($config: Realms.RealmConfigurationBase) : void
+        }
+        interface Realm {
+            AddPropertyFor ($model: string, $propertyName: string, $value: Realms.RealmValue) : void;
+            AllAsArr ($model: string) : System.Array$1<Realms.IRealmObject>;
+        }
+        class RealmConfigurationBase extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class ErrorEventArgs extends System.EventArgs
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Transaction extends System.Object implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class ThreadSafeReference extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IRealmObjectBase extends Realms.ISettableManagedAccessor
+        {
+            Accessor : Realms.IRealmAccessor
+            IsManaged : boolean
+            IsValid : boolean
+            IsFrozen : boolean
+            Realm : Realms.Realm
+            ObjectSchema : Realms.Schema.ObjectSchema
+            DynamicApi : Realms.DynamicObjectApi
+            BacklinksCount : number
+        }
+        interface ISettableManagedAccessor
+        {
+        }
+        interface IEmbeddedObject extends Realms.IRealmObjectBase, Realms.ISettableManagedAccessor
+        {
+            Accessor : Realms.IRealmAccessor
+            IsManaged : boolean
+            IsValid : boolean
+            IsFrozen : boolean
+            Realm : Realms.Realm
+            ObjectSchema : Realms.Schema.ObjectSchema
+            DynamicApi : Realms.DynamicObjectApi
+            BacklinksCount : number
+        }
+        interface IRealmObject extends Realms.IRealmObjectBase, Realms.ISettableManagedAccessor
+        {
+            Accessor : Realms.IRealmAccessor
+            IsManaged : boolean
+            IsValid : boolean
+            IsFrozen : boolean
+            Realm : Realms.Realm
+            ObjectSchema : Realms.Schema.ObjectSchema
+            DynamicApi : Realms.DynamicObjectApi
+            BacklinksCount : number
+        }
+        class DynamicObjectApi extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+            public Set ($propertyName: string, $value: Realms.RealmValue) : void
+            public GetBacklinks ($propertyName: string) : System.Linq.IQueryable$1<Realms.IRealmObjectBase>
+            public GetBacklinksFromType ($fromObjectType: string, $fromPropertyName: string) : System.Linq.IQueryable$1<Realms.IRealmObjectBase>
+        }
+        class RealmValue extends System.ValueType implements System.IEquatable$1<Realms.RealmValue>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Migration extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get OldRealm(): Realms.Realm;
+            public get NewRealm(): Realms.Realm;
+            public RemoveType ($typeName: string) : boolean
+            public RenameProperty ($typeName: string, $oldPropertyName: string, $newPropertyName: string) : void
+        }
+        interface IRealmAccessor
+        {
+        }
+        class RealmObjectBase extends System.Object implements System.ComponentModel.INotifyPropertyChanged, Realms.IRealmObjectBase, Realms.ISettableManagedAccessor, System.Reflection.IReflectableType
+        {
+            protected [__keep_incompatibility]: never;
+            public get Accessor(): Realms.IRealmAccessor;
+            public get IsManaged(): boolean;
+            public get IsValid(): boolean;
+            public get IsFrozen(): boolean;
+            public get Realm(): Realms.Realm;
+            public get ObjectSchema(): Realms.Schema.ObjectSchema;
+            public get DynamicApi(): Realms.DynamicObjectApi;
+            public get BacklinksCount(): number;
+        }
+        class EmbeddedObject extends Realms.RealmObjectBase implements System.ComponentModel.INotifyPropertyChanged, Realms.IRealmObjectBase, Realms.IEmbeddedObject, Realms.ISettableManagedAccessor, System.Reflection.IReflectableType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class RealmObject extends Realms.RealmObjectBase implements System.ComponentModel.INotifyPropertyChanged, Realms.IRealmObjectBase, Realms.IRealmObject, Realms.ISettableManagedAccessor, System.Reflection.IReflectableType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace Realms.Realm {
+        class Dynamic extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+            public CreateObject ($className: string) : Realms.IRealmObjectBase
+            public CreateObject ($className: string, $primaryKey: bigint | null) : Realms.IRealmObjectBase
+            public CreateObject ($className: string, $primaryKey: string) : Realms.IRealmObjectBase
+            public CreateObject ($className: string, $primaryKey: MongoDB.Bson.ObjectId | null) : Realms.IRealmObjectBase
+            public CreateObject ($className: string, $primaryKey: System.Guid | null) : Realms.IRealmObjectBase
+            public CreateEmbeddedObjectForProperty ($parent: Realms.IRealmObjectBase, $propertyName: string) : Realms.IEmbeddedObject
+            public AddEmbeddedObjectToList ($list: any) : Realms.IEmbeddedObject
+            public InsertEmbeddedObjectInList ($list: any, $index: number) : Realms.IEmbeddedObject
+            public SetEmbeddedObjectInList ($list: any, $index: number) : Realms.IEmbeddedObject
+            public AddEmbeddedObjectToDictionary ($dictionary: any, $key: string) : Realms.IEmbeddedObject
+            public SetEmbeddedObjectInDictionary ($dictionary: any, $key: string) : Realms.IEmbeddedObject
+            public All ($className: string) : System.Linq.IQueryable$1<Realms.IRealmObject>
+            public RemoveAll ($className: string) : void
+            public Find ($className: string, $primaryKey: bigint | null) : Realms.IRealmObject
+            public Find ($className: string, $primaryKey: string) : Realms.IRealmObject
+            public Find ($className: string, $primaryKey: MongoDB.Bson.ObjectId | null) : Realms.IRealmObject
+            public Find ($className: string, $primaryKey: System.Guid | null) : Realms.IRealmObject
+        }
+        interface RealmChangedEventHandler
+        { 
+        (sender: Realms.Realm, e: System.EventArgs) : void; 
+        Invoke?: (sender: Realms.Realm, e: System.EventArgs) => void;
+        }
+        var RealmChangedEventHandler: { new (func: (sender: Realms.Realm, e: System.EventArgs) => void): RealmChangedEventHandler; }
+    }
+    namespace Realms.Schema {
+        class RealmSchema extends System.Object implements System.Collections.Generic.IEnumerable$1<Realms.Schema.ObjectSchema>, System.Collections.IEnumerable, System.Collections.Generic.IReadOnlyCollection$1<Realms.Schema.ObjectSchema>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class ObjectSchema extends System.Object implements System.Collections.Generic.IEnumerable$1<Realms.Schema.Property>, System.Collections.IEnumerable, System.Collections.Generic.IReadOnlyCollection$1<Realms.Schema.Property>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Property extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace System.Linq {
+        interface IQueryable$1<T> extends System.Linq.IQueryable, System.Collections.Generic.IEnumerable$1<T>, System.Collections.IEnumerable
+        {
+        }
+        interface IQueryable extends System.Collections.IEnumerable
+        {
+        }
+    }
+    namespace MongoDB.Bson {
+        class ObjectId extends System.ValueType implements System.IComparable$1<MongoDB.Bson.ObjectId>, System.IConvertible, System.IEquatable$1<MongoDB.Bson.ObjectId>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace Realms.ThreadSafeReference {
+        class Object$1<T> extends Realms.ThreadSafeReference
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class List$1<T> extends Realms.ThreadSafeReference
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Set$1<T> extends Realms.ThreadSafeReference
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Dictionary$1<TValue> extends Realms.ThreadSafeReference
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Query$1<T> extends Realms.ThreadSafeReference
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
     namespace ALM.Screens.Mission {
         class JsConfigure extends System.Object implements System.IEquatable$1<ALM.Screens.Mission.JsConfigure>
         {
@@ -4084,14 +4384,14 @@
             public set Audio(value: ALM.Screens.Base.AudioService);
             public get Score(): ALM.Screens.Mission.ScoreService;
             public set Score(value: ALM.Screens.Mission.ScoreService);
-            public get ScoreData(): ALM.Screens.Mission.MissionScoreData;
-            public set ScoreData(value: ALM.Screens.Mission.MissionScoreData);
+            public get ScoreData(): ALM.Data.MissionScoreData;
+            public set ScoreData(value: ALM.Data.MissionScoreData);
             public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Screens.Mission.MissionScoreData>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Screens.Mission.MissionScoreData)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4114,10 +4414,10 @@
             public Ball ($typeIndex?: number) : ALM.Screens.Mission.Ball
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
             public Dispose () : void
-            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Screens.Mission.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
+            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class ScoreService extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
@@ -4126,30 +4426,13 @@
             public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
             public constructor ()
         }
-        class MissionScoreData extends System.Object
-        {
-            protected [__keep_incompatibility]: never;
-            public get Score(): number;
-            public set Score(value: number);
-            public get Accuracy(): number;
-            public set Accuracy(value: number);
-            public get ReactionTime(): number;
-            public set ReactionTime(value: number);
-            public add_OnScoreChanged ($value: System.Action$1<number>) : void
-            public remove_OnScoreChanged ($value: System.Action$1<number>) : void
-            public add_OnAccuracyChange ($value: System.Action$1<number>) : void
-            public remove_OnAccuracyChange ($value: System.Action$1<number>) : void
-            public add_OnReactionTimeChange ($value: System.Action$1<number>) : void
-            public remove_OnReactionTimeChange ($value: System.Action$1<number>) : void
-            public constructor ()
-        }
         interface JsConfigureDel
         { 
         (configure: ALM.Screens.Mission.JsConfigure) : void; 
         Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
         }
         var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
-        class Ball extends UnityEngine.MonoBehaviour implements ALM.Common.IManagedTickable, ALM.Screens.Mission.IRaycastTarget
+        class Ball extends UnityEngine.MonoBehaviour implements ALM.Screens.Mission.IRaycastTarget, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
             public get TypeIndex(): number;
@@ -4238,6 +4521,59 @@
         {
         }
     }
+    namespace System.ComponentModel {
+        interface INotifyPropertyChanged
+        {
+        }
+    }
+    namespace ALM.Data {
+        class MissionScoreData extends Realms.EmbeddedObject implements System.ComponentModel.INotifyPropertyChanged, Realms.IRealmObjectBase, Realms.IEmbeddedObject, Realms.ISettableManagedAccessor, System.IDisposable, System.Reflection.IReflectableType
+        {
+            protected [__keep_incompatibility]: never;
+            public get Score(): number;
+            public set Score(value: number);
+            public get Accuracy(): number;
+            public set Accuracy(value: number);
+            public get ReactionTime(): number;
+            public set ReactionTime(value: number);
+            public Dispose () : void
+            public add_OnScoreChanged ($value: System.Action$1<number>) : void
+            public remove_OnScoreChanged ($value: System.Action$1<number>) : void
+            public add_OnAccuracyChange ($value: System.Action$1<number>) : void
+            public remove_OnAccuracyChange ($value: System.Action$1<number>) : void
+            public add_OnReactionTimeChange ($value: System.Action$1<number>) : void
+            public remove_OnReactionTimeChange ($value: System.Action$1<number>) : void
+            public constructor ()
+        }
+        class MissionData extends Realms.RealmObject implements System.ComponentModel.INotifyPropertyChanged, Realms.IRealmObjectBase, Realms.IRealmObject, Realms.ISettableManagedAccessor, System.Reflection.IReflectableType
+        {
+            protected [__keep_incompatibility]: never;
+            public get Name(): string;
+            public set Name(value: string);
+            public get PlayHistories(): System.Linq.IQueryable$1<ALM.Data.PlayHistory>;
+            public get Outline(): ALM.Data.MissionOutline;
+            public set Outline(value: ALM.Data.MissionOutline);
+            public constructor ()
+        }
+        class PlayHistory extends Realms.RealmObject implements System.ComponentModel.INotifyPropertyChanged, Realms.IRealmObjectBase, Realms.IRealmObject, Realms.ISettableManagedAccessor, System.Reflection.IReflectableType
+        {
+            protected [__keep_incompatibility]: never;
+            public get Id(): System.Guid;
+            public set Id(value: System.Guid);
+            public get Mission(): ALM.Data.MissionData;
+            public set Mission(value: ALM.Data.MissionData);
+            public get PlayedAt(): System.DateTimeOffset;
+            public set PlayedAt(value: System.DateTimeOffset);
+            public get ScoreData(): ALM.Data.MissionScoreData;
+            public set ScoreData(value: ALM.Data.MissionScoreData);
+            public constructor ()
+            public constructor ($mission: ALM.Data.MissionData, $scoreData: ALM.Data.MissionScoreData)
+        }
+        class MissionOutline extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
     namespace UnityEngine.Pool {
         class ObjectPool$1<T> extends System.Object implements UnityEngine.Pool.IObjectPool$1<T>, System.IDisposable
         {
@@ -4306,6 +4642,7 @@
         class FileIO extends System.Object
         {
             protected [__keep_incompatibility]: never;
+            public static SAVE_PATH : string
             public static LoadExternalSoundSync ($path: string, $cb: System.Action$1<UnityEngine.AudioClip>, $ct?: System.Threading.CancellationToken) : void
             public static LoadExternalSoundAsync ($path: string, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<UnityEngine.AudioClip>
             public static GetPath ($subPath: string, $name?: string) : string
@@ -4313,6 +4650,14 @@
             public static OpenFolder ($path: string, $absolutePath?: boolean) : void
             public static GetMissionFolder ($missionName: string) : string
             public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
+        }
+        class RealmWrapper extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static AddPropertyFor ($realm: Realms.Realm, $model: string, $propertyName: string, $value: Realms.RealmValue) : void
+            public static AllAsArr ($realm: Realms.Realm, $model: string) : System.Array$1<Realms.IRealmObject>
+            public static Object ($value: any) : Realms.RealmValue
+            public static Bool ($value: boolean) : Realms.RealmValue
         }
     }
     namespace Newtonsoft.Json {
