@@ -3,14 +3,20 @@ using System.Linq;
 using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
+using Realms;
 
 namespace ALM.Screens.Base
 {
+    using System.Diagnostics;
     using ALM.Data;
     using ALM.Util;
+    using VContainer;
 
-    public class MissionLoader
+    public class MissionLoader : IDisposable
     {
+        readonly Realm _realm;
+        readonly IDisposable realmChangeToken;
+
         public int MissionVersion { get; private set; } = Int32.MinValue;
         List<PlayableMission> _missions { get; } = new();
 
@@ -19,44 +25,115 @@ namespace ALM.Screens.Base
             string Path,
             string[] Scripts);
 
-        public MissionLoader()
+        public MissionLoader(Realm realm)
         {
-            Reload();
+            _realm = realm;
+
+            var missionDatas = _realm.All<MissionData>();
+            realmChangeToken = missionDatas.AsRealmCollection()
+                .SubscribeForNotifications(MissionDataCallback);
+
+            _missions.AddRange(missionDatas.Select(ToPlayableMission));
+
+            if (_missions.Count is 0)
+                ReScanMissions();
+            else
+                MissionVersion++;
         }
 
-        public void Reload()
+        void MissionDataCallback(IRealmCollection<MissionData> sender, ChangeSet changes)
         {
-            _missions.Clear();
+            if (changes is null)
+                return;
 
-            var missionDir = FileIO.GetPath(Constants.MISSION_PATH);
-            if (!Directory.Exists(missionDir))
-                Directory.CreateDirectory(missionDir);
-
-            foreach (var mFolder in Directory.GetDirectories(missionDir))
+            if (changes.IsCleared)
             {
-                if (!MissionValidator.Validate(
-                        mFolder,
-                        out var outline,
-                        out var scripts,
-                        out var fullPath))
-                    continue;
-
-                _missions.Add(new(
-                    outline,
-                    fullPath,
-                    scripts));
-                $"Mission loaded: {outline.Name}".Dbg();
+                _missions.Clear();
+                MissionVersion++;
+                return;
             }
 
+            foreach (var c in changes.DeletedIndices)
+                _missions.RemoveAt(c);
+
+            foreach (var c in changes.InsertedIndices)
+                _missions.Add(ToPlayableMission(sender[c]));
+
+            foreach (var c in changes.NewModifiedIndices)
+                _missions[c] = ToPlayableMission(sender[c]);
+
             MissionVersion++;
+        }
+
+        PlayableMission ToPlayableMission(MissionData data)
+        {
+            if (!MissionValidator.Validate(
+                    FileIO.GetPath(Constants.MISSION_PATH, data.Name),
+                    out var outline,
+                    out var scripts,
+                    out var fullPath))
+            {
+                UnityEngine.Debug.LogError("Missing mission folder in database: " + data.Name);
+                return null;
+            }
+
+            ("Mission loaded: " + data.Name).Dbg();
+
+            data.Outline = outline;
+
+            return new(
+                outline,
+                fullPath,
+                scripts);
+        }
+
+        public void ReScanMissions()
+        {
+            var missionDir = FileIO.GetPath(Constants.MISSION_PATH);
+
+            using (var transaction = _realm.BeginWrite())
+            {
+                foreach (var mission in Directory.GetDirectories(missionDir))
+                {
+                    if (!MissionValidator.Validate(
+                                mission,
+                                out var outline,
+                                out _,
+                                out _))
+                        continue;
+
+                    try
+                    {
+                        _realm.Add(new MissionData()
+                        {
+                            Name = outline.Name
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        UnityEngine.Debug.LogError(e);
+                        transaction.Rollback();
+                    }
+
+                    ("Mission added: " + mission).Dbg();
+                }
+
+                if (transaction.State == TransactionState.Running)
+                    transaction.Commit();
+            }
         }
 
         public PlayableMission GetMission(int index) =>
             _missions[index];
         public PlayableMission GetMission(string name) =>
-            _missions.Find(x => x.Outline.Name == name);
+            _missions.Find(x => x?.Outline.Name == name);
         public IEnumerable<PlayableMission> GetMissions() =>
-            _missions;
+            _missions.Where(x => x is not null);
+
+        public void Dispose()
+        {
+            realmChangeToken.Dispose();
+        }
     }
 
     public static class MissionValidator

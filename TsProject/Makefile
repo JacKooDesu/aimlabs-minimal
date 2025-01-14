@@ -20,3 +20,6 @@ compile:
 
 compile-dbg:
 	${CONTAINER_CMD} npm run build:dev
+
+migration:
+	${CONTAINER_CMD} npm run migration

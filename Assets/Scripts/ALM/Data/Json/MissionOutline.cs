@@ -1,9 +1,11 @@
-using ALM.Util;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace ALM.Data
 {
+    using ALM.Util;
+
     [JsonObject]
     public class MissionOutline
     {
@@ -29,7 +31,7 @@ namespace ALM.Data
         public string Version { get; private set; } = "v0.0.0";
         public int VersionInt => VersionChecker.VersionToInt(Version);
 
-        public enum MissionType
+        public enum MissionType : int
         {
             [EnumMember(Value = "")]
             None,

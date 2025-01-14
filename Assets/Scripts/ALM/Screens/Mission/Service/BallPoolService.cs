@@ -9,6 +9,7 @@ namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
     using Base.Setting;
+    using Data;
 
     public class BallPoolService : IDisposable
     {

@@ -250,6 +250,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "io.realm.unity": {
+      "version": "20.1.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://registry.npmjs.org"
+    },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.6",
       "depth": 0,

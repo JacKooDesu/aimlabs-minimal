@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 using VContainer;
 using VContainer.Unity;
 using Puerts;
@@ -8,9 +10,9 @@ using TsEnvCore;
 
 namespace ALM.Screens.Mission
 {
-    using System;
     using ALM.Screens.Base;
-    using UnityEngine.UIElements;
+    using Data;
+    using Realms;
 
     [HandlabeScene("Mission")]
     public class MissionLifetimeScope : HandlableLifetimeScope<MissionLifetimeScope, MissionEntry>
@@ -65,7 +67,14 @@ namespace ALM.Screens.Mission
 
             builder.RegisterComponent<UIDocument>(_rootUi);
 
-            builder.RegisterInstance(new MissionScoreData());
+            builder.Register(r =>
+            {
+                var missionData = r.Resolve<Realm>().Find<MissionData>(_missionName);
+                return new PlayHistory(missionData, new());
+            }, Lifetime.Scoped);
+            builder.Register(
+                r => r.Resolve<PlayHistory>().ScoreData,
+                Lifetime.Scoped);
         }
     }
 }

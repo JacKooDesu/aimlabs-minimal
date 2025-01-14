@@ -7,7 +7,7 @@
     "../Assets/Gen/Typing/",
     "./Core/Typing"
   ],
-  "exclude": [],
+  "exclude": ["./src/migration_updater/**"],
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",

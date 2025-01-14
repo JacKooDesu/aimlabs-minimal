@@ -22,6 +22,13 @@
 
 [連結]()
 
+## 問答
+
+### 關於 [更新器](../updater/)
+
+當數據庫版本過舊時（[min-version-support](../Assets/Resources/min-version-support.txt)），會需要這些遷移更新腳本來更新它
+只需下載並將它們放入 `[game-root]/updater`
+
 ## 開發
 
 > 我 TypeScript 和 JavaScript 都很菜。如果發現有什麼錯誤或寫得不好的地方，請幫助我
@@ -32,14 +39,15 @@
   - 6000.0.31f1
   - URP
 - 插件
-  - PuerTs
-  - VContainer
-  - UniTask
+  - [PuerTs](https://puerts.github.io)
+  - [VContainer](https://vcontainer.hadashikick.jp)
+  - [UniTask](https://github.com/Cysharp/UniTask)
+  - [Realms](https://github.com/realm/realm-dotnet)
 
 ### 任務開發
 
 - 可用的 API 已在 [index.d.ts](./Assets/Gen/Typing/csharp/index.d.ts) 中生成
-- [任務模板](./docs/template/mission/)
+- [任務模板](../docs/template/mission/)
 - 可透過添加 `-debugger` 參數開啟除錯模式
 
 ## TODO

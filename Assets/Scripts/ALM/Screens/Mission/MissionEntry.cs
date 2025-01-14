@@ -10,6 +10,8 @@ namespace ALM.Screens.Mission
 {
     using ALM.Common;
     using ALM.Screens.Base;
+    using Data;
+    using Realms;
 
     public class MissionEntry : HandlableEntry<MissionEntry>
     {
@@ -17,7 +19,9 @@ namespace ALM.Screens.Mission
         readonly JsConfigure _jsConfigure;
         readonly MissionLoader.PlayableMission _mission;
         readonly PauseHandleService _pauseHandleService;
-        readonly MissionScoreData _score;
+        readonly PlayHistoryService _playHistoryService;
+
+        readonly PlayHistory _playHistory;
         readonly Timer _timer;
         readonly Room _room;
 
@@ -26,8 +30,10 @@ namespace ALM.Screens.Mission
             JsConfigure jsConfigure,
             MissionLoader.PlayableMission mission,
             PauseHandleService pauseHandleService,
-            MissionScoreData score,
+            PlayHistoryService playHistoryService,
+            PlayHistory playHistory,
             Room room,
+            Realm realm,
             Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
         {
@@ -36,7 +42,9 @@ namespace ALM.Screens.Mission
 
             _mission = mission;
             _pauseHandleService = pauseHandleService;
-            _score = score;
+            _playHistoryService = playHistoryService;
+
+            _playHistory = playHistory;
             _room = room;
 
             if (_mission.Outline.Time > 0)
@@ -68,12 +76,19 @@ namespace ALM.Screens.Mission
             UIStackHandler.PushUI(((uint)UIIndex.Base), _timer);
             if (_timer is not null)
             {
-                _timer.OnComplete += () => Result.ResultLifetimeScope.Load(
-                    new Result.ResultLifetimeScope.Payload(
-                        _mission.Outline, _score)).Forget();
+                _timer.OnComplete += OnFinishedMission;
                 _timer.Reset();
             }
             _pauseHandleService.CountDown();
+        }
+
+        private void OnFinishedMission()
+        {
+            _playHistoryService.AddPlayHistory(_playHistory);
+
+            Result.ResultLifetimeScope.Load(
+                   new Result.ResultLifetimeScope.Payload(
+                       _mission.Outline, _playHistory)).Forget();
         }
 
         protected override void ConstTick()

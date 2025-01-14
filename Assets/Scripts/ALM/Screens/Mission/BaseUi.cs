@@ -4,8 +4,11 @@ using VContainer;
 
 namespace ALM.Screens.Mission
 {
+    using System;
+    using System.ComponentModel;
     using ALM.Common;
     using ALM.Screens.Base;
+    using Data;
 
     public class BaseUi : UIBase
     {
@@ -26,10 +29,16 @@ namespace ALM.Screens.Mission
             _scoreLabel = _elementBase.Q<Label>("ScoreText");
             _accLabel = _elementBase.Q<Label>("AccText");
 
-            _scoreData.OnAccuracyChange += acc =>
-                _accLabel.text = acc.ToString("P0");
-            _scoreData.OnScoreChanged += score =>
-                _scoreLabel.text = score.ToString();
+            _scoreData.PropertyChanged += OnScoreChange;
+        }
+
+        private void OnScoreChange(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is nameof(_scoreData.Score))
+                _scoreLabel.text = _scoreData.Score.ToString();
+
+            if (e.PropertyName is nameof(_scoreData.Accuracy))
+                _accLabel.text = _scoreData.Accuracy.ToString("P0");
         }
 
         public override void Overlapped() { }

@@ -25,6 +25,7 @@ public class TypeConfig
                 typeof(UnityEngine.Application),
                 typeof(Debug),
                 typeof(Vector3),
+                typeof(System.Array),
                 typeof(List<int>),
                 typeof(Dictionary<string, List<int>>),
                 typeof(Time),
@@ -44,6 +45,7 @@ public class TypeConfig
                 typeof(System.IO.Path),
                 typeof(System.IO.Directory),
                 typeof(System.Action<,>),
+                typeof(System.Linq.IQueryable<>),
 
                 typeof(UnityEngine.Networking.UnityWebRequest),
                 typeof(UnityEngine.Networking.DownloadHandler),
@@ -57,6 +59,13 @@ public class TypeConfig
                 typeof(UnityEngine.UI.Toggle.ToggleEvent),
                 typeof(UnityEngine.Events.UnityEvent<bool>),
 
+                typeof(Realms.Realm),
+                typeof(Realms.Realm.Dynamic),
+                typeof(Realms.DynamicObjectApi),
+                typeof(Realms.Migration),
+                typeof(Realms.IRealmObjectBase),
+                typeof(Realms.IRealmObject),
+
                 // ALM Domain
                 typeof(ALM.Screens.Mission.JsConfigure),
                 typeof(ALM.Screens.Mission.JsConfigureDel),
@@ -69,8 +78,15 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.ScoreService),
                 typeof(ALM.Screens.Mission.IScoreCalculator),
                 typeof(ALM.Screens.Mission.JsScoreCalculator),
-                typeof(ALM.Screens.Mission.MissionScoreData),
+
+                // ALM Datas
+                typeof(ALM.Data.MissionData),
+                typeof(ALM.Data.MissionScoreData),
+                typeof(ALM.Data.PlayHistory),
+
+                // ALM Util
                 typeof(ALM.Util.FileIO),
+                typeof(ALM.Util.RealmWrapper),
             };
         }
     }
@@ -87,22 +103,28 @@ public class TypeConfig
             };
         }
     }
-    
+
     [Filter]
     static bool FilterMethods(System.Reflection.MemberInfo mb)
     {
         // 排除 MonoBehaviour.runInEditMode, 在 Editor 环境下可用发布后不存在
-        if (mb.DeclaringType == typeof(MonoBehaviour) && mb.Name == "runInEditMode") {
+        if (mb.DeclaringType == typeof(MonoBehaviour) && mb.Name == "runInEditMode")
+        {
             return true;
         }
-        if (mb.DeclaringType == typeof(Type) && (mb.Name == "MakeGenericSignatureType" || mb.Name == "IsCollectible")) {
+        if (mb.DeclaringType == typeof(Type) && (mb.Name == "MakeGenericSignatureType" || mb.Name == "IsCollectible"))
+        {
             return true;
         }
-        if (mb.DeclaringType == typeof(System.IO.File)) {
-            if (mb.Name == "SetAccessControl" || mb.Name == "GetAccessControl") {
+        if (mb.DeclaringType == typeof(System.IO.File))
+        {
+            if (mb.Name == "SetAccessControl" || mb.Name == "GetAccessControl")
+            {
                 return true;
 
-            } else if (mb.Name == "Create") {
+            }
+            else if (mb.Name == "Create")
+            {
                 return true;
             }
         }

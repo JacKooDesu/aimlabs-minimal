@@ -2,7 +2,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node post-copy.js",
     "build-ci": "tsc -p tsconfig.ci.json && node post-copy.js win",
-    "build:dev": "tsc -watch -p tsconfig.json"
+    "build:dev": "tsc -watch -p tsconfig.json",
+    "migration": "tsc -p tsconfig.migration.json"
   },
   "dependencies": {},
   "devDependencies": {
