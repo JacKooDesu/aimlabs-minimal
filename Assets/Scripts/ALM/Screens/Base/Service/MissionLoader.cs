@@ -90,6 +90,8 @@ namespace ALM.Screens.Base
         public void ReScanMissions()
         {
             var missionDir = FileIO.GetPath(Constants.MISSION_PATH);
+            if (!Directory.Exists(missionDir))
+                return;
 
             using (var transaction = _realm.BeginWrite())
             {
