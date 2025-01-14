@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["./src/migration_updater/*"],
+  "exclude": [],
+  "compilerOptions": {
+    "rootDir": "./src/migration_updater",
+    "outDir": "../updater"
+  }
+}
