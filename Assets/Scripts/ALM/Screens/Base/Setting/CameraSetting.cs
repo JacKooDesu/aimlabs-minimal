@@ -9,8 +9,5 @@ namespace ALM.Screens.Base
 
     [JsonObject]
     public class CameraSetting
-    {
-        [JsonProperty("FOV")]
-        public ValueTrigger<float> Fov { get; private set; }
-    }
+    { }
 }

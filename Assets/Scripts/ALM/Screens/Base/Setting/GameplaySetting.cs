@@ -20,6 +20,8 @@ namespace ALM.Screens.Base.Setting
         public bool InvertY { get; private set; } = false;
         [JsonProperty("invertX")]
         public bool InvertX { get; private set; } = false;
+        [JsonProperty("fov")]
+        public float FOV { get; private set; } = 60.0f;
 
         public event Action<string> OnChange;
 
@@ -30,6 +32,7 @@ namespace ALM.Screens.Base.Setting
                 Bindable.Create<FloatField>("Sensitivity", nameof(Sensitivity)),
                 Bindable.Create<Toggle>("Invert Y", nameof(InvertY)),
                 Bindable.Create<Toggle>("Invert X", nameof(InvertX)),
+                Bindable.Create<FloatField>("FOV", nameof(FOV)),
             };
         }
 

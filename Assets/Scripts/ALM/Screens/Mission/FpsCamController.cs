@@ -26,22 +26,31 @@ namespace ALM.Screens.Mission
 
         Quaternion _originRot;
 
-        [Inject]
         ControlSetting _controlSetting;
-        [Inject]
         GameplaySetting _gameplaySetting;
-        // [Inject]
-        // CameraSetting _cameraSetting;
-        [Inject]
         RaycasterService _raycasterService;
         [Inject]
-        void _Inject(MissionLoader.PlayableMission mission)
+        void _Inject(
+            ControlSetting controlSetting,
+            GameplaySetting gameplaySetting,
+            RaycasterService raycasterService,
+            MissionLoader.PlayableMission mission)
         {
+            _controlSetting = controlSetting;
+            _gameplaySetting = gameplaySetting;
+            _raycasterService = raycasterService;
+
+            _camera = GetComponent<Camera>();
+            _camera.fieldOfView = _gameplaySetting.FOV;
+            _gameplaySetting.OnChange += OnGamePlaySettingChange;
+
             _isTracking = mission.Outline.Type is Data.MissionOutline.MissionType.Tracking;
         }
 
         bool _isTracking;
         public Action OnFire;
+
+        Camera _camera;
 
         #region IRaycaster
         public Vector3 Origin => transform.position;
@@ -75,5 +84,16 @@ namespace ALM.Screens.Mission
         }
 
         public Action UpdateOverride = null;
+
+        void OnDestroy()
+        {
+            _gameplaySetting.OnChange -= OnGamePlaySettingChange;
+        }
+
+        void OnGamePlaySettingChange(string path)
+        {
+            if (path == nameof(GameplaySetting.FOV))
+                _camera.fieldOfView = _gameplaySetting.FOV;
+        }
     }
 }
