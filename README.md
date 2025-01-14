@@ -28,6 +28,13 @@ Can download it from release page
 
 [Link]()
 
+## Q&A
+
+### About [Updater](./updater/)
+
+When the version of database on your device too old([min-version-support](./Assets/Resources/min-version-support.txt)), you'll need those migration updater script to update it.
+Simplily download and put them into `[game-root]/updater`.
+
 ## Develop
 
 >I am very new to TypeScript and JavaScript. Plz help me if figured there's something wrong or bad writing
@@ -38,9 +45,10 @@ Can download it from release page
   - 6000.0.31f1
   - URP
 - Plugins
-  - PuerTs
-  - VContainer
-  - UniTask
+  - [PuerTs](https://puerts.github.io)
+  - [VContainer](https://vcontainer.hadashikick.jp)
+  - [UniTask](https://github.com/Cysharp/UniTask)
+  - [Realms](https://github.com/realm/realm-dotnet)
 
 ### Mission Develop
 
