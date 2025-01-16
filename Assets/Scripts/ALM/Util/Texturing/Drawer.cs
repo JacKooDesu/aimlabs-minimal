@@ -9,11 +9,21 @@ namespace ALM.Util.Texturing
     public class Drawer
     {
         public Texture2D Tex { get; private set; }
+        Vector2Int _offset = Vector2Int.zero;
 
-        public Drawer(Texture2D texture, bool withOffset = false)
+        public Drawer(Texture2D texture)
         {
             Tex = texture;
             // Tex.filterMode = FilterMode.Point;
+        }
+
+        public Drawer SetOffset(int x, int y) =>
+            SetOffset(new Vector2Int(x, y));
+        public Drawer RemoveOffset() => SetOffset(Vector2Int.zero);
+        public Drawer SetOffset(Vector2Int offset)
+        {
+            _offset = offset;
+            return this;
         }
 
         public Drawer Fill(Color color)
@@ -27,6 +37,9 @@ namespace ALM.Util.Texturing
 
         public Drawer Line(Vector2Int from, Vector2Int to, Color color)
         {
+            GetPos(ref from);
+            GetPos(ref to);
+
             var dx = math.abs(to.x - from.x);
             var dy = math.abs(to.y - from.y);
 
@@ -62,6 +75,8 @@ namespace ALM.Util.Texturing
 
         public Drawer Circle(Vector2Int center, int radius, Color color)
         {
+            GetPos(ref center);
+
             int x, y;
 
             int max = (int)(radius * .707f);
@@ -111,6 +126,8 @@ namespace ALM.Util.Texturing
             Donut(new Vector2Int(x, y), outerRadius, innerRadius, color);
         public Drawer Donut(Vector2Int center, int outerRadius, int innerRadius, Color color)
         {
+            GetPos(ref center);
+
             int x, maxY, minY;
 
             int max = (int)(outerRadius * .707f);
@@ -162,9 +179,11 @@ namespace ALM.Util.Texturing
             return this;
         }
 
-        public Drawer SymmetryLeftRight(bool inverse = false)
+        public Drawer SymmetryLeftRight(int xAxis, bool inverse = false)
         {
-            var width = Tex.width / 2;
+            GetX(ref xAxis);
+            xAxis = math.clamp(xAxis, 0, Tex.width);
+            var width = math.min(Tex.width - xAxis, xAxis);
             var height = Tex.height;
 
             var from = !inverse ? 0 : width;
@@ -180,10 +199,12 @@ namespace ALM.Util.Texturing
             return this;
         }
 
-        public Drawer SymmetryTopBottom(bool inverse = false)
+        public Drawer SymmetryTopBottom(int yAxis, bool inverse = false)
         {
+            GetY(ref yAxis);
+            yAxis = math.clamp(yAxis, 0, Tex.height);
             var width = Tex.width;
-            var height = Tex.height / 2;
+            var height = math.min(Tex.height - yAxis, yAxis);
 
             // note: in viewport, y=0 is bottom
             var from = !inverse ? height : 0;
@@ -201,6 +222,8 @@ namespace ALM.Util.Texturing
 
         public Drawer Rectangle(Vector2Int p, int width, int height, Color color)
         {
+            GetPos(ref p);
+
             width = math.clamp(width, 0, Tex.width - p.x);
             height = math.clamp(height, 0, Tex.height - p.y);
 
@@ -221,5 +244,17 @@ namespace ALM.Util.Texturing
         }
 
         public void Apply() => Tex.Apply();
+
+        void GetPos(ref Vector2Int pos)
+        {
+            pos += _offset;
+        }
+        void GetPos(ref int x, ref int y)
+        {
+            x += _offset.x;
+            y += _offset.y;
+        }
+        void GetX(ref int x) => x += _offset.x;
+        void GetY(ref int y) => y += _offset.y;
     }
 }

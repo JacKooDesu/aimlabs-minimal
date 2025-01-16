@@ -5068,18 +5068,21 @@
         {
             protected [__keep_incompatibility]: never;
             public get Tex(): UnityEngine.Texture2D;
+            public SetOffset ($x: number, $y: number) : ALM.Util.Texturing.Drawer
+            public RemoveOffset () : ALM.Util.Texturing.Drawer
+            public SetOffset ($offset: UnityEngine.Vector2Int) : ALM.Util.Texturing.Drawer
             public Fill ($color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
             public Clear () : ALM.Util.Texturing.Drawer
             public Line ($from: UnityEngine.Vector2Int, $to: UnityEngine.Vector2Int, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
             public Circle ($center: UnityEngine.Vector2Int, $radius: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
             public Donut ($x: number, $y: number, $outerRadius: number, $innerRadius: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
             public Donut ($center: UnityEngine.Vector2Int, $outerRadius: number, $innerRadius: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
-            public SymmetryLeftRight ($inverse?: boolean) : ALM.Util.Texturing.Drawer
-            public SymmetryTopBottom ($inverse?: boolean) : ALM.Util.Texturing.Drawer
+            public SymmetryLeftRight ($xAxis: number, $inverse?: boolean) : ALM.Util.Texturing.Drawer
+            public SymmetryTopBottom ($yAxis: number, $inverse?: boolean) : ALM.Util.Texturing.Drawer
             public Rectangle ($p: UnityEngine.Vector2Int, $width: number, $height: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
             public Rectangle ($fromX: number, $fromY: number, $toX: number, $toY: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
             public Apply () : void
-            public constructor ($texture: UnityEngine.Texture2D, $withOffset?: boolean)
+            public constructor ($texture: UnityEngine.Texture2D)
             public constructor ()
         }
     }
