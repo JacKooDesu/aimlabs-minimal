@@ -107,6 +107,8 @@ namespace ALM.Util.Texturing
             return this;
         }
 
+        public Drawer Donut(int x, int y, int outerRadius, int innerRadius, Color color) =>
+            Donut(new Vector2Int(x, y), outerRadius, innerRadius, color);
         public Drawer Donut(Vector2Int center, int outerRadius, int innerRadius, Color color)
         {
             int x, maxY, minY;
@@ -169,8 +171,7 @@ namespace ALM.Util.Texturing
             var to = !inverse ? width : 0;
 
             Enumerable.Range(0, height)
-                .AsParallel()
-                .ForAll(y =>
+                .ToList().ForEach(y =>
                 {
                     var src = Tex.GetPixels(from, y, width, 1);
                     Tex.SetPixels(to, y, width, 1, src.Reverse().ToArray(), 0);
@@ -189,11 +190,10 @@ namespace ALM.Util.Texturing
             var to = !inverse ? 0 : height;
 
             Enumerable.Range(0, width)
-                .AsParallel()
-                .ForAll(x =>
+                .ToList().ForEach(x =>
                 {
-                    var src = Tex.GetPixels(x, from, width, 1);
-                    Tex.SetPixels(x, to, width, 1, src.Reverse().ToArray(), 0);
+                    var src = Tex.GetPixels(x, from, 1, height);
+                    Tex.SetPixels(x, to, 1, height, src.Reverse().ToArray(), 0);
                 });
 
             return this;

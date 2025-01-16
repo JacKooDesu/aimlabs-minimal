@@ -2698,6 +2698,24 @@
         {
             protected [__keep_incompatibility]: never;
         }
+        /** Base class for Texture handling.
+        */
+        class Texture extends UnityEngine.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** Class that represents textures in C# code.
+        */
+        class Texture2D extends UnityEngine.Texture
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** Representation of 2D vectors and points using integers.
+        */
+        class Vector2Int extends System.ValueType implements System.IFormattable, System.IEquatable$1<UnityEngine.Vector2Int>
+        {
+            protected [__keep_incompatibility]: never;
+        }
     }
     namespace System.Collections.Generic {
         interface IEnumerable$1<T> extends System.Collections.IEnumerable
@@ -4162,6 +4180,281 @@
             public constructor ()
         }
     }
+    namespace UnityEngine.UIElements {
+        /** 
+        Interface for classes capable of having callbacks to handle events.
+        */
+        class CallbackEventHandler extends System.Object implements UnityEngine.UIElements.IEventHandler
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IEventHandler
+        {
+        }
+        /** 
+        Base class for objects that can get the focus.
+        */
+        class Focusable extends UnityEngine.UIElements.CallbackEventHandler implements UnityEngine.UIElements.IEventHandler
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** 
+        Base class for objects that are part of the UIElements visual tree.
+        */
+        class VisualElement extends UnityEngine.UIElements.Focusable implements UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IExperimentalFeatures
+        {
+        }
+        interface IResolvedStyle
+        {
+        }
+        interface IStylePropertyAnimations
+        {
+        }
+        interface IVisualElementScheduler
+        {
+        }
+        interface ITransform
+        {
+        }
+        /** 
+        Element that can be bound to a property. For more information, refer to.
+        */
+        class BindableElement extends UnityEngine.UIElements.VisualElement implements UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IBindable
+        {
+        }
+        class BaseField$1<TValueType> extends UnityEngine.UIElements.BindableElement implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<TValueType>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IEditableElement
+        {
+        }
+        interface IMixedValueSupport
+        {
+        }
+        interface INotifyValueChanged$1<T>
+        {
+        }
+        interface IPrefixLabel
+        {
+        }
+        /** 
+        A BaseBoolField is a clickable element that represents a boolean value.
+        */
+        class BaseBoolField extends UnityEngine.UIElements.BaseField$1<boolean> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<boolean>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** 
+        A Toggle is a clickable element that represents a boolean value.
+        */
+        class Toggle extends UnityEngine.UIElements.BaseBoolField implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<boolean>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+            /** 
+            USS class name for Toggle elements.
+            */
+            public static ussClassName : string
+            /** 
+            USS class name for Labels in Toggle elements.
+            */
+            public static labelUssClassName : string
+            /** 
+            USS class name of input elements in Toggle elements.
+            */
+            public static inputUssClassName : string
+            /** 
+            USS class name of Images in Toggle elements.
+            */
+            public static checkmarkUssClassName : string
+            /** 
+            USS class name of Text elements in Toggle elements.
+            */
+            public static textUssClassName : string
+            /** 
+            USS class name of Toggle elements that have mixed values
+            */
+            public static mixedValuesUssClassName : string
+            public constructor ()
+            public constructor ($label: string)
+        }
+        class BaseSlider$1<TValueType> extends UnityEngine.UIElements.BaseField$1<TValueType> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IValueField$1<TValueType>, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<TValueType>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IValueField$1<T>
+        {
+        }
+        /** 
+        A slider containing Integer discrete values. For more information, refer to.
+        */
+        class SliderInt extends UnityEngine.UIElements.BaseSlider$1<number> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IValueField$1<number>, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<number>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+            /** 
+            USS class name of elements of this type.
+            */
+            public static ussClassName : string
+            /** 
+            USS class name of labels in elements of this type.
+            */
+            public static labelUssClassName : string
+            /** 
+            USS class name of input elements in elements of this type.
+            */
+            public static inputUssClassName : string
+            /** 
+            The value to add or remove to the SliderInt.value when it is clicked.
+            */
+            public get pageSize(): number;
+            public set pageSize(value: number);
+            public constructor ()
+            public constructor ($start: number, $end: number, $direction?: UnityEngine.UIElements.SliderDirection, $pageSize?: number)
+            public constructor ($label: string, $start?: number, $end?: number, $direction?: UnityEngine.UIElements.SliderDirection, $pageSize?: number)
+        }
+        /** 
+        Speed at which the value changes for a given input device delta.
+        */
+        enum DeltaSpeed
+        { Fast = 0, Normal = 1, Slow = 2 }
+        /** 
+        This is the direction of the Slider and SliderInt.
+        */
+        enum SliderDirection
+        { Horizontal = 0, Vertical = 1 }
+        class TextInputBaseField$1<TValueType> extends UnityEngine.UIElements.BaseField$1<TValueType> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<TValueType>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable, UnityEngine.UIElements.IDelayedField
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IDelayedField
+        {
+        }
+        class TextValueField$1<TValueType> extends UnityEngine.UIElements.TextInputBaseField$1<TValueType> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IValueField$1<TValueType>, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<TValueType>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable, UnityEngine.UIElements.IDelayedField
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        /** 
+        Makes a text field for entering a float. For more information, refer to.
+        */
+        class FloatField extends UnityEngine.UIElements.TextValueField$1<number> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IValueField$1<number>, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<number>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable, UnityEngine.UIElements.IDelayedField
+        {
+            protected [__keep_incompatibility]: never;
+            /** 
+            USS class name of elements of this type.
+            */
+            public static ussClassName : string
+            /** 
+            USS class name of labels in elements of this type.
+            */
+            public static labelUssClassName : string
+            /** 
+            USS class name of input elements in elements of this type.
+            */
+            public static inputUssClassName : string
+            public constructor ()
+            public constructor ($maxLength: number)
+            public constructor ($label: string, $maxLength?: number)
+        }
+        /** 
+        A TextField accepts and displays text input. For more information, refer to.
+        */
+        class TextField extends UnityEngine.UIElements.TextInputBaseField$1<string> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<string>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable, UnityEngine.UIElements.IDelayedField
+        {
+            protected [__keep_incompatibility]: never;
+            /** 
+            USS class name of elements of this type.
+            */
+            public static ussClassName : string
+            /** 
+            USS class name of labels in elements of this type.
+            */
+            public static labelUssClassName : string
+            /** 
+            USS class name of input elements in elements of this type.
+            */
+            public static inputUssClassName : string
+            /** 
+            Set this to true to allow multiple lines in the textfield and false if otherwise.
+            */
+            public get multiline(): boolean;
+            public set multiline(value: boolean);
+            /** 
+            The string currently being exposed by the field.
+            */
+            public get value(): string;
+            public set value(value: string);
+            public constructor ()
+            public constructor ($maxLength: number, $multiline: boolean, $isPasswordField: boolean, $maskChar: number)
+            public constructor ($label: string)
+            public constructor ($label: string, $maxLength: number, $multiline: boolean, $isPasswordField: boolean, $maskChar: number)
+        }
+        /** 
+        Makes a text field for entering an integer. For more information, refer to.
+        */
+        class IntegerField extends UnityEngine.UIElements.TextValueField$1<number> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IValueField$1<number>, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<number>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable, UnityEngine.UIElements.IDelayedField
+        {
+            protected [__keep_incompatibility]: never;
+            /** 
+            USS class name of elements of this type.
+            */
+            public static ussClassName : string
+            /** 
+            USS class name of labels in elements of this type.
+            */
+            public static labelUssClassName : string
+            /** 
+            USS class name of input elements in elements of this type.
+            */
+            public static inputUssClassName : string
+            public constructor ()
+            public constructor ($maxLength: number)
+            public constructor ($label: string, $maxLength?: number)
+        }
+        /** 
+        The base class for all UIElements events.  The class implements IDisposable to ensure proper release of the event from the pool and of any unmanaged resources, when necessary.
+        */
+        class EventBase extends System.Object implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class EventBase$1<T> extends UnityEngine.UIElements.EventBase implements System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class PointerEventBase$1<T> extends UnityEngine.UIElements.EventBase$1<T> implements UnityEngine.UIElements.IPointerEvent, UnityEngine.UIElements.IPointerEventInternal, UnityEngine.UIElements.IPointerOrMouseEvent, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IPointerEvent
+        {
+        }
+        interface IPointerEventInternal
+        {
+        }
+        interface IPointerOrMouseEvent
+        {
+        }
+        /** 
+        This event is sent when the left mouse button is clicked.
+        */
+        class ClickEvent extends UnityEngine.UIElements.PointerEventBase$1<UnityEngine.UIElements.ClickEvent> implements UnityEngine.UIElements.IPointerEvent, UnityEngine.UIElements.IPointerEventInternal, UnityEngine.UIElements.IPointerOrMouseEvent, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace UnityEngine.UIElements.Experimental {
+        interface ITransitionAnimations
+        {
+        }
+    }
     namespace Realms {
         class Realm extends System.Object implements System.IDisposable
         {
@@ -4511,7 +4804,7 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        class Timer extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class Timer extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
         }
@@ -4605,6 +4898,28 @@
         interface IDataTarget
         {
         }
+        class VirtaulDataTarget extends System.Object implements ALM.Util.UIToolkitExtend.IDataTarget
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Bindable extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public AfterBuild : System.Action$1<UnityEngine.UIElements.BindableElement>
+            public get Label(): string;
+            public set Label(value: string);
+            public get DataPath(): string;
+            public set DataPath(value: string);
+            public get Element(): UnityEngine.UIElements.BindableElement;
+            public set Element(value: UnityEngine.UIElements.BindableElement);
+            public Bind ($ui: UnityEngine.UIElements.VisualElement, $obj: ALM.Util.UIToolkitExtend.IDataTarget) : void
+        }
+        class DataBinderCS extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public constructor ($ui: UnityEngine.UIElements.VisualElement, $bindables: System.Array$1<ALM.Util.UIToolkitExtend.Bindable>, $obj: ALM.Util.UIToolkitExtend.IDataTarget)
+            public constructor ()
+        }
     }
     namespace ALM.Screens.Base.MissionLoader {
         class PlayableMission extends System.Object implements System.IEquatable$1<ALM.Screens.Base.MissionLoader.PlayableMission>
@@ -4637,6 +4952,15 @@
         Invoke?: (caster: ALM.Screens.Mission.IRaycaster, target: ALM.Screens.Mission.IRaycastTarget) => void;
         }
         var CastedAction: { new (func: (caster: ALM.Screens.Mission.IRaycaster, target: ALM.Screens.Mission.IRaycastTarget) => void): CastedAction; }
+    }
+    namespace ALM.Screens.Base.CrosshairPanel {
+        class OptionSetting extends ALM.Util.UIToolkitExtend.VirtaulDataTarget implements ALM.Util.UIToolkitExtend.IDataTarget
+        {
+            protected [__keep_incompatibility]: never;
+            public get Bindables(): System.Array$1<ALM.Util.UIToolkitExtend.Bindable>;
+            public set Bindables(value: System.Array$1<ALM.Util.UIToolkitExtend.Bindable>);
+            public constructor ()
+        }
     }
     namespace ALM.Util {
         class FileIO extends System.Object
@@ -4681,6 +5005,82 @@
         }
         interface Extension {
             ParseExtension () : System.Array$1<SFB.ExtensionFilter>;
+        }
+    }
+    namespace ALM.Util.UIToolkitExtend.OriginBindalbe {
+        class Toggle extends ALM.Util.UIToolkitExtend.Bindable
+        {
+            protected [__keep_incompatibility]: never;
+            public get Value(): boolean;
+            public constructor ()
+        }
+        class Slider extends ALM.Util.UIToolkitExtend.Bindable
+        {
+            protected [__keep_incompatibility]: never;
+            public get Value(): number;
+            public get Min(): number;
+            public set Min(value: number);
+            public get Max(): number;
+            public set Max(value: number);
+            public constructor ()
+        }
+        class SliderInt extends ALM.Util.UIToolkitExtend.Bindable
+        {
+            protected [__keep_incompatibility]: never;
+            public get Value(): number;
+            public get Min(): number;
+            public set Min(value: number);
+            public get Max(): number;
+            public set Max(value: number);
+            public constructor ($min: number, $max: number)
+            public constructor ()
+        }
+    }
+    namespace ALM.Util.UIToolkitExtend.Elements {
+        class ColorBindElement extends UnityEngine.UIElements.BaseField$1<UnityEngine.Color> implements UnityEngine.UIElements.IEditableElement, UnityEngine.UIElements.IExperimentalFeatures, UnityEngine.UIElements.IResolvedStyle, UnityEngine.UIElements.IStylePropertyAnimations, UnityEngine.UIElements.IMixedValueSupport, UnityEngine.UIElements.INotifyValueChanged$1<UnityEngine.Color>, UnityEngine.UIElements.IEventHandler, UnityEngine.UIElements.Experimental.ITransitionAnimations, UnityEngine.UIElements.IVisualElementScheduler, UnityEngine.UIElements.ITransform, UnityEngine.UIElements.IPrefixLabel, UnityEngine.UIElements.IBindable
+        {
+            protected [__keep_incompatibility]: never;
+            public get value(): UnityEngine.Color;
+            public set value(value: UnityEngine.Color);
+            public add_OnClickColorBlock ($value: System.Action$1<UnityEngine.UIElements.ClickEvent>) : void
+            public remove_OnClickColorBlock ($value: System.Action$1<UnityEngine.UIElements.ClickEvent>) : void
+            public constructor ()
+            public constructor ($label: string)
+        }
+    }
+    namespace ALM.Util.UIToolkitExtend.Elements.ColorBindElement {
+        class Bindalbe extends ALM.Util.UIToolkitExtend.Bindable
+        {
+            protected [__keep_incompatibility]: never;
+            public get Value(): UnityEngine.Color;
+            public constructor ()
+        }
+    }
+    namespace ALM.Util.Texturing {
+        class Creator extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static New ($width: number, $height: number, $baseColor?: UnityEngine.Color) : UnityEngine.Texture2D
+            public static New ($camera: UnityEngine.Camera, $size?: UnityEngine.Rect | null) : UnityEngine.Texture2D
+            public constructor ()
+        }
+        class Drawer extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get Tex(): UnityEngine.Texture2D;
+            public Fill ($color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public Clear () : ALM.Util.Texturing.Drawer
+            public Line ($from: UnityEngine.Vector2Int, $to: UnityEngine.Vector2Int, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public Circle ($center: UnityEngine.Vector2Int, $radius: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public Donut ($x: number, $y: number, $outerRadius: number, $innerRadius: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public Donut ($center: UnityEngine.Vector2Int, $outerRadius: number, $innerRadius: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public SymmetryLeftRight ($inverse?: boolean) : ALM.Util.Texturing.Drawer
+            public SymmetryTopBottom ($inverse?: boolean) : ALM.Util.Texturing.Drawer
+            public Rectangle ($p: UnityEngine.Vector2Int, $width: number, $height: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public Rectangle ($fromX: number, $fromY: number, $toX: number, $toY: number, $color: UnityEngine.Color) : ALM.Util.Texturing.Drawer
+            public Apply () : void
+            public constructor ($texture: UnityEngine.Texture2D, $withOffset?: boolean)
+            public constructor ()
         }
     }
 }

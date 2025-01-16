@@ -59,6 +59,13 @@ public class TypeConfig
                 typeof(UnityEngine.UI.Toggle.ToggleEvent),
                 typeof(UnityEngine.Events.UnityEvent<bool>),
 
+                // UI Toolkit
+                typeof(UnityEngine.UIElements.Toggle),
+                typeof(UnityEngine.UIElements.SliderInt),
+                typeof(UnityEngine.UIElements.FloatField),
+                typeof(UnityEngine.UIElements.TextField),
+                typeof(UnityEngine.UIElements.IntegerField),
+
                 typeof(Realms.Realm),
                 typeof(Realms.Realm.Dynamic),
                 typeof(Realms.DynamicObjectApi),
@@ -78,6 +85,7 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.ScoreService),
                 typeof(ALM.Screens.Mission.IScoreCalculator),
                 typeof(ALM.Screens.Mission.JsScoreCalculator),
+                typeof(ALM.Screens.Base.CrosshairPanel.OptionSetting),
 
                 // ALM Datas
                 typeof(ALM.Data.MissionData),
@@ -86,7 +94,16 @@ public class TypeConfig
 
                 // ALM Util
                 typeof(ALM.Util.FileIO),
+                typeof(ALM.Util.UIToolkitExtend.DataBinderCS),
+                typeof(ALM.Util.UIToolkitExtend.Bindable),
+                typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.Toggle),
+                typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.Slider),
+                typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.SliderInt),
+                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement),
+                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindalbe),
                 typeof(ALM.Util.RealmWrapper),
+                typeof(ALM.Util.Texturing.Creator),
+                typeof(ALM.Util.Texturing.Drawer),
             };
         }
     }

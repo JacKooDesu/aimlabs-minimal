@@ -42,6 +42,8 @@ namespace ALM.Screens.Base
         ColorPickerUI ColorPickerUI;
         [Inject]
         GameStatusHandler _gameStatusHandler;
+        [Inject]
+        CrosshairPanel _crosshairPanel;
 
         VisualElement _ui;
 
@@ -82,6 +84,14 @@ namespace ALM.Screens.Base
                         }
                     ).Forget();
                 }));
+
+            var crosshairCreatorBtn = new Button() { text = "*" };
+            crosshairCreatorBtn.RegisterCallback<ClickEvent>(
+                _ => _crosshairPanel.SetActive(true));
+            _gameplaySettingBinder.Bindings
+                .Find(x => x.DataPath == nameof(GameplaySetting.Crosshair))
+                .Element.Q(FileInputElement.CONTAINER)
+                .Insert(1, crosshairCreatorBtn);
 
             _objectSettingBinder.ManualBuild(
                 _objectSetting.GetBindable(),

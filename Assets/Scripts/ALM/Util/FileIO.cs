@@ -27,6 +27,7 @@ namespace ALM.Util
             Directory.CreateDirectory(GetPath(Constants.SETTING_PATH));
             Directory.CreateDirectory(GetPath(Constants.CUSTOMIZE_PATH));
             Directory.CreateDirectory(GetPath(Constants.MISSION_PATH));
+            Directory.CreateDirectory(GetPath(Constants.SYSTEM_SCRIPT_PATH));
         }
 
         public static void JSave<T>(
