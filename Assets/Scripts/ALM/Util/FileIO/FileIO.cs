@@ -134,7 +134,7 @@ namespace ALM.Util
         public static string GetMissionFolder(string missionName) =>
             GetPath(Constants.MISSION_PATH, missionName);
 
-        public static _File CopyFileProcessor(_File origin, string file)
+        public static _File CopyFileProcessor(_File origin, string file, string destPath)
         {
             if (string.IsNullOrEmpty(file))
             {
@@ -150,13 +150,13 @@ namespace ALM.Util
             // Select file from customize folder
             if (Path.GetRelativePath(
                     Path.GetDirectoryName(file),
-                    FileIO.GetPath(Constants.CUSTOMIZE_PATH)) == ".")
+                    destPath) == ".")
             {
                 origin.path = name;
                 return origin;
             }
 
-            var dest = FileIO.GetPath(Constants.CUSTOMIZE_PATH, name);
+            var dest = Path.Combine(destPath, name);
             File.Copy(file, dest, true);
 
             origin.path = name;

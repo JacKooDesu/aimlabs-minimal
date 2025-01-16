@@ -131,8 +131,9 @@ namespace ALM.Screens.Base
                     if (b.Element is not FileInputElement element)
                         return;
 
+                    var path = FileIO.GetPath(Constants.CUSTOMIZE_PATH);
                     element.DefaultRootPath = FileIO.GetPath(Constants.CUSTOMIZE_PATH);
-                    element.FileProcessor = f => FileIO.CopyFileProcessor(element.value, f);
+                    element.FileProcessor = f => FileIO.CopyFileProcessor(element.value, f, path);
                 });
 
             SetActive(false, true);

@@ -66,9 +66,9 @@ namespace ALM.Screens.Base.Setting
         {
             if (element is FileInputElement fe)
             {
-                fe.DefaultRootPath =
-                    FileIO.GetPath(Constants.CROSSHAIR_PATH);
-                fe.FileProcessor = f => FileIO.CopyFileProcessor(fe.value, f);
+                var path = FileIO.GetPath(Constants.CROSSHAIR_PATH);
+                fe.DefaultRootPath = path;
+                fe.FileProcessor = f => FileIO.CopyFileProcessor(fe.value, f, path);
             }
         }
 
