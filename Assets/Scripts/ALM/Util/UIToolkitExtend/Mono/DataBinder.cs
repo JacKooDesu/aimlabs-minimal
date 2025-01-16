@@ -39,4 +39,11 @@ namespace ALM.Util.UIToolkitExtend
         event Action<string> OnChange;
         void IsDirty(string path);
     }
+
+    public abstract class VirtaulDataTarget : IDataTarget
+    {
+        public event Action<string> OnChange;
+
+        public void IsDirty(string path) => OnChange?.Invoke(path);
+    }
 }

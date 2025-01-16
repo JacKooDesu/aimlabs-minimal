@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using UnityEngine.UIElements;
 using UnityEngine;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace ALM.Util.UIToolkitExtend
 {
@@ -9,11 +10,13 @@ namespace ALM.Util.UIToolkitExtend
     public abstract class Bindable
     {
         [field: SerializeField]
-        public string Label { get; private set; }
+        public string Label { get; set; }
         [field: SerializeField]
-        public string DataPath { get; private set; }
+        public string DataPath { get; set; }
 
         public BindableElement Element { get; set; }
+
+        public Action<BindableElement> AfterBuild;
 
         public static T Create<T>(
             string label, string dataPath)
@@ -31,12 +34,19 @@ namespace ALM.Util.UIToolkitExtend
             where T : BindableElement, new() =>
             new T();
 
-        protected void CommonBind<T, N>(VisualElement ui, IDataTarget obj)
+        protected virtual void CommonBind<T, N>(VisualElement ui, IDataTarget obj)
             where T : BindableElement, INotifyValueChanged<N>, new()
         {
+            if (obj is VirtaulDataTarget vObj)
+            {
+                VirtualBind<T, N>(ui, vObj);
+                return;
+            }
+
             var info = obj.GetType().GetMember(DataPath, (BindingFlags)int.MaxValue)[0];
 
             var element = ElementBuilder<T>();
+            AfterBuild?.Invoke(element);
             this.Element = element;
 
             ui.Add(element);
@@ -51,6 +61,17 @@ namespace ALM.Util.UIToolkitExtend
             element.bindingPath = info.Name;
             element.RegisterValueChangedCallback<N>(CommonCallback<N>(obj, info));
         }
+
+        void VirtualBind<T, N>(VisualElement ui, VirtaulDataTarget obj)
+            where T : BindableElement, INotifyValueChanged<N>, new()
+        {
+            var element = ElementBuilder<T>();
+            AfterBuild?.Invoke(element);
+            this.Element = element;
+            ui.Add(element);
+            element.RegisterValueChangedCallback<N>(_ => obj.IsDirty(DataPath));
+        }
+
         protected EventCallback<ChangeEvent<T>> CommonCallback<T>(IDataTarget obj, MemberInfo info) =>
             value =>
             {

@@ -56,7 +56,7 @@ namespace ALM.Screens.Base.Setting
             List<Bindable> list = new()
             {
                 Bindable.Create<FileInputElement.Bindable>("Room Texture Name", nameof(RoomTextureName)),
-                Bindable.Create<FloatField>("Room Texture Scaler", nameof(RoomTextureScale)),
+                Bindable.Create<OriginBindalbe.FloatField>("Room Texture Scaler", nameof(RoomTextureScale)),
             };
 
             list.AddRange(

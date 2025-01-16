@@ -37,10 +37,10 @@ namespace ALM.Screens.Base.Setting
         {
             return new Bindable[]
             {
-                Bindable.Create<FloatField>("Sensitivity", nameof(Sensitivity)),
-                Bindable.Create<Toggle>("Invert Y", nameof(InvertY)),
-                Bindable.Create<Toggle>("Invert X", nameof(InvertX)),
-                Bindable.Create<FloatField>("FOV", nameof(FOV)),
+                Bindable.Create<OriginBindalbe.FloatField>("Sensitivity", nameof(Sensitivity)),
+                Bindable.Create<OriginBindalbe.Toggle>("Invert Y", nameof(InvertY)),
+                Bindable.Create<OriginBindalbe.Toggle>("Invert X", nameof(InvertX)),
+                Bindable.Create<OriginBindalbe.FloatField>("FOV", nameof(FOV)),
                 Bindable.Create<FileInputElement.Bindable>("Crossfire", nameof(Crosshair)),
             };
         }
