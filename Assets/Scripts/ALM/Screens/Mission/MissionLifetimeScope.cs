@@ -11,6 +11,7 @@ using TsEnvCore;
 namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
+    using ALM.Screens.Base.Setting;
     using Data;
     using Realms;
 
@@ -21,6 +22,8 @@ namespace ALM.Screens.Mission
         string _missionName = null;
         [SerializeField]
         UIDocument _rootUi;
+        [SerializeField]
+        UnityEngine.UI.RawImage _crosshair;
 
         protected override Type[] UiTypes() => new[]
         {
@@ -64,8 +67,10 @@ namespace ALM.Screens.Mission
             builder.Register<ScoreService>(Lifetime.Scoped)
                 .AsImplementedInterfaces()
                 .AsSelf();
+            builder.Register<CrosshairService>(Lifetime.Scoped);
 
             builder.RegisterComponent<UIDocument>(_rootUi);
+            builder.RegisterComponent(_crosshair);
 
             builder.Register(r =>
             {

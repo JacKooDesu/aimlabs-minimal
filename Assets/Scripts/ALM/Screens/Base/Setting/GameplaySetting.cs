@@ -71,5 +71,8 @@ namespace ALM.Screens.Base.Setting
                 fe.FileProcessor = f => FileIO.CopyFileProcessor(fe.value, f);
             }
         }
+
+        public Texture GetCrosshairTexture() =>
+            FileIO.LoadTexture(Crosshair.path);
     }
 }
