@@ -34,7 +34,7 @@
     </engine:VisualElement>
     <engine:VisualElement name="Footer" class="footer-panel" style="flex-grow: 1;">
         <engine:Button text="RETRY" name="Retry" />
-        <engine:VisualElement style="flex-grow: 1;" />
+        <engine:VisualElement style="flex-grow: 10;" />
         <engine:Button text="EXIT" name="Exit" />
     </engine:VisualElement>
 </engine:UXML>

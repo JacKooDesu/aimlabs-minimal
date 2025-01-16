@@ -20,6 +20,7 @@ namespace ALM.Screens.Mission
         readonly MissionLoader.PlayableMission _mission;
         readonly PauseHandleService _pauseHandleService;
         readonly PlayHistoryService _playHistoryService;
+        readonly CrosshairService _crosshairService;
 
         readonly PlayHistory _playHistory;
         readonly Timer _timer;
@@ -32,6 +33,7 @@ namespace ALM.Screens.Mission
             PauseHandleService pauseHandleService,
             PlayHistoryService playHistoryService,
             PlayHistory playHistory,
+            CrosshairService crosshairService,
             Room room,
             Realm realm,
             Func<float, Timer> timerFactory,
@@ -43,6 +45,7 @@ namespace ALM.Screens.Mission
             _mission = mission;
             _pauseHandleService = pauseHandleService;
             _playHistoryService = playHistoryService;
+            _crosshairService = crosshairService;
 
             _playHistory = playHistory;
             _room = room;

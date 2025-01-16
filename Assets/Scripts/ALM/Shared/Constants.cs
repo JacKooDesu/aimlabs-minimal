@@ -7,7 +7,9 @@ namespace ALM
     {
         public const string SETTING_PATH = "settings";
         public const string CUSTOMIZE_PATH = "customize";
+        public const string CROSSHAIR_PATH = "customize/crosshair";
         public const string MISSION_PATH = "missions";
+        public const string SYSTEM_SCRIPT_PATH = "systems";
         public const string DB_PATH = "database.realm";
 
         public const string OUTLINE_EXT = ".json";

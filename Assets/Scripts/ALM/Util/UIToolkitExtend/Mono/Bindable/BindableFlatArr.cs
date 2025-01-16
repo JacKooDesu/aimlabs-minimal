@@ -4,8 +4,6 @@ using UnityEngine.UIElements;
 
 namespace ALM.Util.UIToolkitExtend
 {
-    using Bindable = DataBinder.Bindable;
-
     /// <summary>
     /// This is a bindable for binding array of data
     /// </summary>

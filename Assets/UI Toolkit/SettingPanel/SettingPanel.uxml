@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="CrosshairConfigPanel" src="project://database/Assets/UI%20Toolkit/SettingPanel/CrosshairConfigPanel.uxml?fileID=9197481963319205126&amp;guid=8816e2a5b3775944cb4b7c16c6f762c7&amp;type=3#CrosshairConfigPanel" />
     <Style src="project://database/Assets/UI%20Toolkit/SettingPanel/setting-panel.uss?fileID=7433441132597879392&amp;guid=173d37edd1d68c947b71e0fe35e13a8d&amp;type=3#setting-panel" />
     <ui:VisualElement name="BasePanel" class="panel">
         <ui:VisualElement name="UpperSelection" class="upper-selection" style="align-items: stretch;">
@@ -16,4 +17,5 @@
             <ui:VisualElement name="Audio-Page" class="content-base" style="flex-grow: 1;" />
         </ui:ScrollView>
     </ui:VisualElement>
+    <ui:Instance template="CrosshairConfigPanel" name="CrosshairConfig" class="hide" style="position: absolute; width: 100%; height: 100%;" />
 </ui:UXML>

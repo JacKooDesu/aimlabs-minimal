@@ -1,0 +1,106 @@
+.crossfire-main {
+    position: relative;
+    background-color: rgb(53, 53, 53);
+    align-self: stretch;
+    align-content: auto;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border-top-width: 12px;
+    border-right-width: 12px;
+    border-bottom-width: 12px;
+    border-left-width: 12px;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-top: 90px;
+    margin-right: 160px;
+    margin-bottom: 90px;
+    margin-left: 160px;
+}
+
+.upper {
+    flex-direction: row;
+    max-height: 85%;
+    min-height: 80%;
+}
+
+.options {
+    min-width: 50%;
+    margin-top: 40px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    max-width: 50%;
+}
+
+.preview {
+    margin-top: 40px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    margin-left: 40px;
+    background-color: rgba(0, 0, 0, 0);
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    flex-direction: row;
+    justify-content: center;
+    align-content: stretch;
+    align-self: auto;
+    align-items: stretch;
+    padding-top: 28px;
+    padding-right: 28px;
+    padding-bottom: 28px;
+    padding-left: 28px;
+}
+
+.footer .unity-button {
+    height: auto;
+    width: auto;
+    flex-grow: 1;
+    font-size: 24px;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.scene-preview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.crosshari-preview {
+}
+
+.outerclicker {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: rgba(27, 27, 27, 0);
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.unity-scroll-view .unity-base-field {
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+}
+
+.unity-scroll-view .unity-base-field .unity-base-field__input {
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    color: rgba(0,0,0,1);
+}

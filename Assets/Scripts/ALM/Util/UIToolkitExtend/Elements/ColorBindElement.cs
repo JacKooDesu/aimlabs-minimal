@@ -89,8 +89,26 @@ namespace ALM.Util.UIToolkitExtend.Elements
             }
         }
 
-        public class Bindalbe : DataBinder.Bindable
+        public class Bindable : UIToolkitExtend.Bindable
         {
+            public Color Default;
+            public Color Value
+            {
+                get => (Element as ColorBindElement)?.value ?? default;
+                private set
+                {
+                    if (Element is ColorBindElement c)
+                        c.value = value;
+                }
+            }
+
+            public Bindable() { }
+            public Bindable(Color defaultColor)
+            {
+                Default = defaultColor;
+                AfterBuild += _ => Value = Default;
+            }
+
             public override T ElementBuilder<T>() =>
                 new ColorBindElement(Label) as T;
             public override void Bind(VisualElement ui, IDataTarget obj) =>

@@ -30,17 +30,6 @@ namespace ALM.Screens.Menu
             _room.SetSize(40);
         }
 
-        protected override void ConstTick()
-        {
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                SFB.StandaloneFileBrowser.OpenFilePanelAsync("Open File", "", "zip", false,
-                    (paths) =>
-                    {
-                        foreach (var path in paths)
-                            Debug.Log(path);
-                    });
-            }
-        }
+        protected override void ConstTick() { }
     }
 }

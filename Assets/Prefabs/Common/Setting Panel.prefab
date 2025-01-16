@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1658957746504849021}
   - component: {fileID: 5387916266355503709}
   - component: {fileID: 2300667001759315932}
+  - component: {fileID: 344731018467044060}
   m_Layer: 0
   m_Name: Setting Panel
   m_TagString: Untagged
@@ -187,3 +188,15 @@ MonoBehaviour:
   _objectSettingBinder: {fileID: 1658957746504849021}
   _graphicSettingBinder: {fileID: 0}
   _audioSettingBinder: {fileID: 5387916266355503709}
+--- !u!114 &344731018467044060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332948264354272102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad059ae62614f74aafddde30df7721b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -7,6 +7,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
     [UxmlElement]
     public partial class FileInputElement : BaseField<FileIO._File>
     {
+        public const string CONTAINER = "Container";
         const string BROWSE_BTN = "BrowseBtn";
         const string RESET_BTN = "ResetBtn";
         const string FILE_NAME_FIELD = "FileName";
@@ -44,6 +45,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
         static VisualElement Container()
         {
             var container = new VisualElement();
+            container.name = CONTAINER;
             container.style.flexDirection = FlexDirection.Row;
 
             var fileNameField = new Button();
@@ -81,10 +83,18 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 return;
 
             var path = paths[0];
+            SetFile(path);
+        }
+
+        public void SetFile(string path)
+        {
             if (FileProcessor is not null)
                 value = FileProcessor(path);
             else
+            {
                 value.path = path;
+                _fileNameField.text = path;
+            }
 
             (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
         }
@@ -94,7 +104,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
             OnSelectFile("");
         }
 
-        public class Bindable : DataBinder.Bindable
+        public class Bindable : UIToolkitExtend.Bindable
         {
             public override T ElementBuilder<T>() =>
                 new FileInputElement(Label) as T;

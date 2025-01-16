@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
@@ -7,6 +8,12 @@ namespace ALM.Screens.Base.Setting
     using Util.UIToolkitExtend;
     using Util;
     using static Util.UIToolkitExtend.DataBinder;
+    using IMAGE_FILE = Util.FileIO.File<
+        Util.FileIO.Compose<
+            Util.FileIO.PNG,
+            Util.FileIO.JPG>>;
+    using ALM.Util.UIToolkitExtend.Elements;
+    using UnityEngine.UIElements;
 
     [JsonObject]
     public class GameplaySetting : IDataTarget
@@ -23,17 +30,26 @@ namespace ALM.Screens.Base.Setting
         [JsonProperty("fov")]
         public float FOV { get; private set; } = 60.0f;
 
+        [JsonProperty("crosshair")]
+        public IMAGE_FILE Crosshair { get; private set; } = new("");
+
         public event Action<string> OnChange;
 
-        public static Bindable[] GetBindable()
+        public Util.UIToolkitExtend.Bindable[] GetBindable()
         {
-            return new Bindable[]
+            List<Bindable> bindable = new()
             {
-                Bindable.Create<FloatField>("Sensitivity", nameof(Sensitivity)),
-                Bindable.Create<Toggle>("Invert Y", nameof(InvertY)),
-                Bindable.Create<Toggle>("Invert X", nameof(InvertX)),
-                Bindable.Create<FloatField>("FOV", nameof(FOV)),
+                Bindable.Create<OriginBindalbe.FloatField>("Sensitivity", nameof(Sensitivity)),
+                Bindable.Create<OriginBindalbe.Toggle>("Invert Y", nameof(InvertY)),
+                Bindable.Create<OriginBindalbe.Toggle>("Invert X", nameof(InvertX)),
+                Bindable.Create<OriginBindalbe.FloatField>("FOV", nameof(FOV)),
             };
+
+            var crosshair = Bindable.Create<FileInputElement.Bindable>("Crosshair", nameof(Crosshair));
+            crosshair.AfterBuild += SetCorsshairFileInput;
+            bindable.Add(crosshair);
+
+            return bindable.ToArray();
         }
 
         public static GameplaySetting Load() =>
@@ -45,5 +61,18 @@ namespace ALM.Screens.Base.Setting
         {
             OnChange?.Invoke(path);
         }
+
+        void SetCorsshairFileInput(BindableElement element)
+        {
+            if (element is FileInputElement fe)
+            {
+                fe.DefaultRootPath =
+                    FileIO.GetPath(Constants.CROSSHAIR_PATH);
+                fe.FileProcessor = f => FileIO.CopyFileProcessor(fe.value, f);
+            }
+        }
+
+        public Texture GetCrosshairTexture() =>
+            FileIO.LoadTexture(Crosshair.path);
     }
 }

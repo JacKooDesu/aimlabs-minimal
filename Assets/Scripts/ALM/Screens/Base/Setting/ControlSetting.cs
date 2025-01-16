@@ -7,7 +7,6 @@ namespace ALM.Screens.Base.Setting
 {
     using Util;
     using Util.UIToolkitExtend;
-    using static Util.UIToolkitExtend.DataBinder;
 
     public class ControlSetting : IDataTarget
     {
@@ -31,9 +30,9 @@ namespace ALM.Screens.Base.Setting
 
         public event Action<string> OnChange;
 
-        public static Bindable[] GetBindable()
+        public static Util.UIToolkitExtend.Bindable[] GetBindable()
         {
-            return new Bindable[]
+            return new[]
             {
                 Bindable.Create<KeybindElement.Bindalbe>("Fire Button", nameof(FireButton)),
                 Bindable.Create<KeybindElement.Bindalbe>("Jump Button", nameof(JumpButton)),

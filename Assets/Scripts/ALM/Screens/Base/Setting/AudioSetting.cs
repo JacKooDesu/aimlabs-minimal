@@ -91,9 +91,9 @@ namespace ALM.Screens.Base
             _valueDirtyCheck = newValues;
         }
 
-        internal DataBinder.Bindable[] GetBindable()
+        internal Bindable[] GetBindable()
         {
-            List<DataBinder.Bindable> list = new();
+            List<Bindable> list = new();
 
             list.AddRange(
                 CollectionBinder.Dictionary<
