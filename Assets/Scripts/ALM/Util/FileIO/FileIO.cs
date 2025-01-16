@@ -26,6 +26,7 @@ namespace ALM.Util
             Directory.CreateDirectory(SAVE_PATH);
             Directory.CreateDirectory(GetPath(Constants.SETTING_PATH));
             Directory.CreateDirectory(GetPath(Constants.CUSTOMIZE_PATH));
+            Directory.CreateDirectory(GetPath(Constants.CROSSHAIR_PATH));
             Directory.CreateDirectory(GetPath(Constants.MISSION_PATH));
             Directory.CreateDirectory(GetPath(Constants.SYSTEM_SCRIPT_PATH));
         }
@@ -132,5 +133,35 @@ namespace ALM.Util
 
         public static string GetMissionFolder(string missionName) =>
             GetPath(Constants.MISSION_PATH, missionName);
+
+        public static _File CopyFileProcessor(_File origin, string file)
+        {
+            if (string.IsNullOrEmpty(file))
+            {
+                origin.path = "";
+                return origin;
+            }
+
+            if (!File.Exists(file))
+                return origin;
+
+            var name = Path.GetFileName(file);
+
+            // Select file from customize folder
+            if (Path.GetRelativePath(
+                    Path.GetDirectoryName(file),
+                    FileIO.GetPath(Constants.CUSTOMIZE_PATH)) == ".")
+            {
+                origin.path = name;
+                return origin;
+            }
+
+            var dest = FileIO.GetPath(Constants.CUSTOMIZE_PATH, name);
+            File.Copy(file, dest, true);
+
+            origin.path = name;
+
+            return origin;
+        }
     }
 }

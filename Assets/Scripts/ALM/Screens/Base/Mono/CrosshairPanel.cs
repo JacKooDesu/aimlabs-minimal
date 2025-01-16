@@ -8,6 +8,9 @@ using ALM.Util;
 using TsEnvCore;
 using Unity.Profiling;
 using ALM.Util.UIToolkitExtend;
+using VContainer;
+using ALM.Common;
+using System.Linq;
 
 namespace ALM.Screens.Base
 {
@@ -16,6 +19,7 @@ namespace ALM.Screens.Base
         VisualElement _ui;
         VisualElement _scenePreview;
         VisualElement _crosshairPreview;
+        TextField _nameField;
         ScrollView _optionView;
         Button _applyButton;
         Button _discardButton;
@@ -24,6 +28,10 @@ namespace ALM.Screens.Base
         JsEnv _jsEnv;
         OptionSetting _setting;
         Action<Texture2D> _crosshairRenderer;
+        Action<string> _finishCallback;
+
+        [Inject]
+        readonly ColorPickerUI _colorPicker;
 
         void Awake()
         {
@@ -52,6 +60,9 @@ namespace ALM.Screens.Base
 
         void OnApply(ClickEvent evt)
         {
+            var path = _canvas.EncodeToPNG().SavePNG(
+                Constants.CROSSHAIR_PATH, _nameField.value);
+            _finishCallback?.Invoke(path);
             SetActive(false);
         }
 
@@ -74,6 +85,8 @@ namespace ALM.Screens.Base
             UniTask.Yield().ToUniTask()
                 .ContinueWith(SetPreview).Forget();
 
+            _optionView.Add(_nameField = new TextField("Name"));
+            _nameField.value = "New Crosshair";
             LoadJs();
 
             void SetPreview()
@@ -113,10 +126,25 @@ namespace ALM.Screens.Base
             SetPreviewCrosshair(_canvas);
 
             var binder = new DataBinderCS(_optionView, _setting.Bindables, _setting);
+            foreach (var x in _setting.Bindables)
+            {
+                if (x.Element is ColorBindElement cb)
+                    cb.OnClickColorBlock += e => PickColor(e, cb);
+            }
+
             _setting.OnChange += _ => _crosshairRenderer.Invoke(_canvas);
 
             var options = func?.Invoke();
+
+            void PickColor(ClickEvent e, ColorBindElement cb)
+            {
+                _colorPicker.ConfigColor(
+                    new ColorPickerUI.OpenBy(e.position),
+                    c => cb.value = c,
+                    cb.value);
+            }
         }
+
 
         public void SetPreviewBg(Texture2D texture)
         {
@@ -128,6 +156,14 @@ namespace ALM.Screens.Base
             _crosshairPreview.style.width = texture.width;
             _crosshairPreview.style.height = texture.height;
             _crosshairPreview.style.backgroundImage = new(texture);
+        }
+
+        /// <summary>
+        /// callback when apply, return the full path of the new crosshair image
+        /// </summary>
+        public void SetApplyCallback(Action<string> callback)
+        {
+            _finishCallback = callback;
         }
 
         public class OptionSetting : VirtaulDataTarget

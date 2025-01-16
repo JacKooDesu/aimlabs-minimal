@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
@@ -12,6 +13,7 @@ namespace ALM.Screens.Base.Setting
             Util.FileIO.PNG,
             Util.FileIO.JPG>>;
     using ALM.Util.UIToolkitExtend.Elements;
+    using UnityEngine.UIElements;
 
     [JsonObject]
     public class GameplaySetting : IDataTarget
@@ -33,16 +35,21 @@ namespace ALM.Screens.Base.Setting
 
         public event Action<string> OnChange;
 
-        public static Util.UIToolkitExtend.Bindable[] GetBindable()
+        public Util.UIToolkitExtend.Bindable[] GetBindable()
         {
-            return new Bindable[]
+            List<Bindable> bindable = new()
             {
                 Bindable.Create<OriginBindalbe.FloatField>("Sensitivity", nameof(Sensitivity)),
                 Bindable.Create<OriginBindalbe.Toggle>("Invert Y", nameof(InvertY)),
                 Bindable.Create<OriginBindalbe.Toggle>("Invert X", nameof(InvertX)),
                 Bindable.Create<OriginBindalbe.FloatField>("FOV", nameof(FOV)),
-                Bindable.Create<FileInputElement.Bindable>("Crossfire", nameof(Crosshair)),
             };
+
+            var crosshair = Bindable.Create<FileInputElement.Bindable>("Crosshair", nameof(Crosshair));
+            crosshair.AfterBuild += SetCorsshairFileInput;
+            bindable.Add(crosshair);
+
+            return bindable.ToArray();
         }
 
         public static GameplaySetting Load() =>
@@ -53,6 +60,16 @@ namespace ALM.Screens.Base.Setting
         public void IsDirty(string path)
         {
             OnChange?.Invoke(path);
+        }
+
+        void SetCorsshairFileInput(BindableElement element)
+        {
+            if (element is FileInputElement fe)
+            {
+                fe.DefaultRootPath =
+                    FileIO.GetPath(Constants.CROSSHAIR_PATH);
+                fe.FileProcessor = f => FileIO.CopyFileProcessor(fe.value, f);
+            }
         }
     }
 }

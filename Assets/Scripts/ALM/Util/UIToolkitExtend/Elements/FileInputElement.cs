@@ -83,10 +83,18 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 return;
 
             var path = paths[0];
+            SetFile(path);
+        }
+
+        public void SetFile(string path)
+        {
             if (FileProcessor is not null)
                 value = FileProcessor(path);
             else
+            {
                 value.path = path;
+                _fileNameField.text = path;
+            }
 
             (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
         }

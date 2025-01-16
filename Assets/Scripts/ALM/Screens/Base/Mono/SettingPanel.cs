@@ -59,7 +59,7 @@ namespace ALM.Screens.Base
         void Start()
         {
             _gameplaySettingBinder.ManualBuild(
-                GameplaySetting.GetBindable(),
+                _gameplaySetting.GetBindable(),
                 _gameplaySetting);
 
             _controlSettingBinder.ManualBuild(
@@ -88,10 +88,13 @@ namespace ALM.Screens.Base
             var crosshairCreatorBtn = new Button() { text = "*" };
             crosshairCreatorBtn.RegisterCallback<ClickEvent>(
                 _ => _crosshairPanel.SetActive(true));
-            _gameplaySettingBinder.Bindings
+            var crosshairFileInputField = _gameplaySettingBinder.Bindings
                 .Find(x => x.DataPath == nameof(GameplaySetting.Crosshair))
-                .Element.Q(FileInputElement.CONTAINER)
+                .Element as FileInputElement;
+            crosshairFileInputField
+                .Q(FileInputElement.CONTAINER)
                 .Insert(1, crosshairCreatorBtn);
+            _crosshairPanel.SetApplyCallback(file => crosshairFileInputField.SetFile(file));
 
             _objectSettingBinder.ManualBuild(
                 _objectSetting.GetBindable(),
@@ -129,40 +132,10 @@ namespace ALM.Screens.Base
                         return;
 
                     element.DefaultRootPath = FileIO.GetPath(Constants.CUSTOMIZE_PATH);
-                    element.FileProcessor = f => FileProcessor(element.value, f);
+                    element.FileProcessor = f => FileIO.CopyFileProcessor(element.value, f);
                 });
 
             SetActive(false, true);
-
-            FileIO._File FileProcessor(FileIO._File origin, string file)
-            {
-                if (string.IsNullOrEmpty(file))
-                {
-                    origin.path = "";
-                    return origin;
-                }
-
-                if (!File.Exists(file))
-                    return origin;
-
-                var name = Path.GetFileName(file);
-
-                // Select file from customize folder
-                if (Path.GetRelativePath(
-                        Path.GetDirectoryName(file),
-                        FileIO.GetPath(Constants.CUSTOMIZE_PATH)) == ".")
-                {
-                    origin.path = name;
-                    return origin;
-                }
-
-                var dest = FileIO.GetPath(Constants.CUSTOMIZE_PATH, name);
-                File.Copy(file, dest, true);
-
-                origin.path = name;
-
-                return origin;
-            }
         }
 
         async UniTask<KeyCode?> SetKeybind()

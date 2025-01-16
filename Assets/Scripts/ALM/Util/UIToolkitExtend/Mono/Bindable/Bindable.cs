@@ -16,7 +16,7 @@ namespace ALM.Util.UIToolkitExtend
 
         public BindableElement Element { get; set; }
 
-        public Action<BindableElement> AfterBuild;
+        public event Action<BindableElement> AfterBuild;
 
         public static T Create<T>(
             string label, string dataPath)

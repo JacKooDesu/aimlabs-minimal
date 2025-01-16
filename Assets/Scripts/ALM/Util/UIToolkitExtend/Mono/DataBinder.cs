@@ -22,7 +22,7 @@ namespace ALM.Util.UIToolkitExtend
             _ui ??= GetComponent<UIDocument>().rootVisualElement;
         }
 
-        public void ManualBuild(Bindable[] bindables, IDataTarget obj)
+        public void ManualBuild(IEnumerable<Bindable> bindables, IDataTarget obj)
         {
             _ui ??= GetComponent<UIDocument>().rootVisualElement;
             var targetUI = _ui.Q(Target);
