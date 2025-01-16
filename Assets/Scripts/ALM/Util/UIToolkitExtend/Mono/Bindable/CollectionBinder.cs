@@ -8,8 +8,6 @@ using UnityEngine.UIElements;
 
 namespace ALM.Util.UIToolkitExtend
 {
-    using Bindable = DataBinder.Bindable;
-
     public class AbstractBindable : Bindable
     {
         public delegate void __BindDel(Bindable b, VisualElement ui, IDataTarget obj);

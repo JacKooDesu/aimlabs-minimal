@@ -7,6 +7,11 @@ namespace ALM.Screens.Base.Setting
     using Util.UIToolkitExtend;
     using Util;
     using static Util.UIToolkitExtend.DataBinder;
+    using IMAGE_FILE = Util.FileIO.File<
+        Util.FileIO.Compose<
+            Util.FileIO.PNG,
+            Util.FileIO.JPG>>;
+    using ALM.Util.UIToolkitExtend.Elements;
 
     [JsonObject]
     public class GameplaySetting : IDataTarget
@@ -23,9 +28,12 @@ namespace ALM.Screens.Base.Setting
         [JsonProperty("fov")]
         public float FOV { get; private set; } = 60.0f;
 
+        [JsonProperty("crosshair")]
+        public IMAGE_FILE Crosshair { get; private set; } = new("");
+
         public event Action<string> OnChange;
 
-        public static Bindable[] GetBindable()
+        public static Util.UIToolkitExtend.Bindable[] GetBindable()
         {
             return new Bindable[]
             {
@@ -33,6 +41,7 @@ namespace ALM.Screens.Base.Setting
                 Bindable.Create<Toggle>("Invert Y", nameof(InvertY)),
                 Bindable.Create<Toggle>("Invert X", nameof(InvertX)),
                 Bindable.Create<FloatField>("FOV", nameof(FOV)),
+                Bindable.Create<FileInputElement.Bindable>("Crossfire", nameof(Crosshair)),
             };
         }
 

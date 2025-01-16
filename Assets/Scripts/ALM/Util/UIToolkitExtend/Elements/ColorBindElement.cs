@@ -89,7 +89,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
             }
         }
 
-        public class Bindalbe : DataBinder.Bindable
+        public class Bindalbe : Bindable
         {
             public override T ElementBuilder<T>() =>
                 new ColorBindElement(Label) as T;
