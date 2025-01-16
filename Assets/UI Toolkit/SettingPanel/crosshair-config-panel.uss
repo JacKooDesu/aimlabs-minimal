@@ -93,3 +93,14 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
 }
+
+.unity-scroll-view .unity-base-field {
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+}
+
+.unity-scroll-view .unity-base-field .unity-base-field__input {
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    color: rgba(0,0,0,1);
+}
