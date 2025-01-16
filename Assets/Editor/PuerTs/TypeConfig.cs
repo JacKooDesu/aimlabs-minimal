@@ -100,7 +100,7 @@ public class TypeConfig
                 typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.Slider),
                 typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.SliderInt),
                 typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement),
-                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindalbe),
+                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindable),
                 typeof(ALM.Util.RealmWrapper),
                 typeof(ALM.Util.Texturing.Creator),
                 typeof(ALM.Util.Texturing.Drawer),

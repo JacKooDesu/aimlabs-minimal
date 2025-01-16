@@ -61,7 +61,7 @@ namespace ALM.Screens.Base.Setting
 
             list.AddRange(
                 CollectionBinder.Array<
-                    ObjectSetting, ColorBindElement.Bindalbe, ColorBindElement, Color>(
+                    ObjectSetting, ColorBindElement.Bindable, ColorBindElement, Color>(
                     this, "Ball Colors", nameof(BallColors)));
 
             return list.ToArray();

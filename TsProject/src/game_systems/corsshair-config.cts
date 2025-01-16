@@ -9,21 +9,21 @@ const Drawer = CS.ALM.Util.Texturing.Drawer;
 const SliderIntBind = CS.ALM.Util.UIToolkitExtend.OriginBindalbe.SliderInt;
 const ToggleBind = CS.ALM.Util.UIToolkitExtend.OriginBindalbe.Toggle;
 const ColorBind =
-  CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindalbe;
+  CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindable;
 
 type ColorElement = CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement;
 type Toggle = CS.UnityEngine.UIElements.Toggle;
 type SliderInt = CS.UnityEngine.UIElements.SliderInt;
 
-var inner = new SliderIntBind(0, 10);
+var inner = new SliderIntBind(0, 50, 0);
 inner.DataPath = "inner";
 inner.Label = "Inner";
 
-var outer = new SliderIntBind(0, 10);
+var outer = new SliderIntBind(0, 50, 5);
 outer.DataPath = "outer";
 outer.Label = "Outer";
 
-var thickness = new SliderIntBind(0, 10);
+var thickness = new SliderIntBind(0, 20, 2);
 thickness.DataPath = "thickness";
 thickness.Label = "Thickness";
 
@@ -31,17 +31,19 @@ var color = new ColorBind();
 color.DataPath = "color";
 color.Label = "Color";
 
-var outerCircle = new SliderIntBind(0, 10);
+var outerCircle = new SliderIntBind(0, 120, 0);
 outerCircle.DataPath = "outer-circle";
 outerCircle.Label = "Outer Circle";
 
-var innerCircle = new SliderIntBind(0, 10);
+var innerCircle = new SliderIntBind(0, 120, 0);
 innerCircle.DataPath = "inner-circle";
 innerCircle.Label = "Inner Circle";
 
 var circleColor = new ColorBind();
 circleColor.DataPath = "circleColor";
 circleColor.Label = "circleColor";
+
+var drawer = new Drawer(CS.ALM.Util.Texturing.Creator.New(256, 256));
 
 export function binding() {
   arr.SetValue(inner, 0);
@@ -57,38 +59,24 @@ export function binding() {
 }
 
 export function create() {
-  return CS.ALM.Util.Texturing.Creator.New(256, 256);
+  return drawer.Tex;
 }
 
 export function render(texture: CS.UnityEngine.Texture2D) {
-  var drawer = new Drawer(texture);
   drawer.Clear();
-  drawer.Rectangle(
-    127 - thickness.Value,
-    127 + inner.Value,
-    127,
-    127 + outer.Value,
-    color.Value
-  );
-  drawer.Rectangle(
-    127 - inner.Value,
-    128,
-    127 - outer.Value,
-    128 + thickness.Value,
-    color.Value
-  );
+  drawer.SetOffset(128, 128);
 
-  drawer.SymmetryLeftRight();
-  drawer.SymmetryTopBottom();
+  // up
+  drawer.Rectangle(-thickness.Value, inner.Value, 0, outer.Value, color.Value);
+
+  //left
+  drawer.Rectangle(-inner.Value, 0, -outer.Value, thickness.Value, color.Value);
+
+  drawer.SymmetryLeftRight(0);
+  drawer.SymmetryTopBottom(0);
 
   if (outerCircle.Value > 0 && outerCircle.Value > innerCircle.Value) {
-    drawer.Donut(
-      128,
-      128,
-      outerCircle.Value * 10,
-      innerCircle.Value * 10,
-      circleColor.Value
-    );
+    drawer.Donut(0, 0, outerCircle.Value, innerCircle.Value, circleColor.Value);
   }
 
   drawer.Apply();

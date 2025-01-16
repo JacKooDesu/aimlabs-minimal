@@ -108,14 +108,14 @@ namespace ALM.Screens.Base
         void LoadJs()
         {
             var loader = new LoaderCollection();
-            loader.AddLoader(new TsEnvCore.RootBasedLoader(FileIO.GetPath(Constants.SYSTEM_SCRIPT_PATH)));
+            loader.AddLoader(new TsEnvCore.RootBasedLoader(FileIO.GetPath(Constants.SYSTEM_SCRIPT_PATH)), -1);
             loader.AddLoader(new Puerts.DefaultLoader());
             _jsEnv = new JsEnv(loader);
             _jsEnv.UsingFunc<Func<OptionSetting>>();
             _jsEnv.UsingFunc<Func<Texture2D>>();
             _jsEnv.UsingFunc<Action<Texture2D>>();
 
-            var module = _jsEnv.ExecuteModule(FileIO.GetPath(Constants.SYSTEM_SCRIPT_PATH, "crosshair-config.cjs"));
+            var module = _jsEnv.ExecuteModule("crosshair-config.cjs");
             var func = module.Get<Func<OptionSetting>>("binding");
             var createFunc = module.Get<Func<Texture2D>>("create");
 
@@ -135,6 +135,8 @@ namespace ALM.Screens.Base
             _setting.OnChange += _ => _crosshairRenderer.Invoke(_canvas);
 
             var options = func?.Invoke();
+
+            _crosshairRenderer?.Invoke(_canvas);
 
             void PickColor(ClickEvent e, ColorBindElement cb)
             {

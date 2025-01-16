@@ -4710,7 +4710,7 @@
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
+        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
@@ -4804,7 +4804,7 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        class Timer extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
+        class Timer extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
         }
@@ -4905,13 +4905,14 @@
         class Bindable extends System.Object
         {
             protected [__keep_incompatibility]: never;
-            public AfterBuild : System.Action$1<UnityEngine.UIElements.BindableElement>
             public get Label(): string;
             public set Label(value: string);
             public get DataPath(): string;
             public set DataPath(value: string);
             public get Element(): UnityEngine.UIElements.BindableElement;
             public set Element(value: UnityEngine.UIElements.BindableElement);
+            public add_AfterBuild ($value: System.Action$1<UnityEngine.UIElements.BindableElement>) : void
+            public remove_AfterBuild ($value: System.Action$1<UnityEngine.UIElements.BindableElement>) : void
             public Bind ($ui: UnityEngine.UIElements.VisualElement, $obj: ALM.Util.UIToolkitExtend.IDataTarget) : void
         }
         class DataBinderCS extends System.Object
@@ -4973,6 +4974,8 @@
             public static CopyDirectory ($source: string, $dest: string) : void
             public static OpenFolder ($path: string, $absolutePath?: boolean) : void
             public static GetMissionFolder ($missionName: string) : string
+            public static CopyFileProcessor ($origin: ALM.Util.FileIO._File, $file: string) : ALM.Util.FileIO._File
+            public static SavePNG ($bytes: System.Array$1<number>, $path: string, $name: string) : string
             public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
         }
         class RealmWrapper extends System.Object
@@ -4992,13 +4995,11 @@
             protected [__keep_incompatibility]: never;
         }
     }
-    namespace SFB {
-        class ExtensionFilter extends System.ValueType
+    namespace ALM.Util.FileIO {
+        class _File extends System.Object
         {
             protected [__keep_incompatibility]: never;
         }
-    }
-    namespace ALM.Util.FileIO {
         class Extension extends System.Object implements System.IEquatable$1<ALM.Util.FileIO.Extension>
         {
             protected [__keep_incompatibility]: never;
@@ -5007,33 +5008,48 @@
             ParseExtension () : System.Array$1<SFB.ExtensionFilter>;
         }
     }
+    namespace SFB {
+        class ExtensionFilter extends System.ValueType
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
     namespace ALM.Util.UIToolkitExtend.OriginBindalbe {
         class Toggle extends ALM.Util.UIToolkitExtend.Bindable
         {
             protected [__keep_incompatibility]: never;
+            public get Default(): boolean;
+            public set Default(value: boolean);
             public get Value(): boolean;
             public constructor ()
+            public constructor ($defaultValue?: boolean)
         }
         class Slider extends ALM.Util.UIToolkitExtend.Bindable
         {
             protected [__keep_incompatibility]: never;
+            public get Default(): number;
+            public set Default(value: number);
             public get Value(): number;
+            public set Value(value: number);
             public get Min(): number;
             public set Min(value: number);
             public get Max(): number;
             public set Max(value: number);
             public constructor ()
+            public constructor ($min: number, $max: number, $defaultValue?: number)
         }
         class SliderInt extends ALM.Util.UIToolkitExtend.Bindable
         {
             protected [__keep_incompatibility]: never;
+            public get Default(): number;
+            public set Default(value: number);
             public get Value(): number;
             public get Min(): number;
             public set Min(value: number);
             public get Max(): number;
             public set Max(value: number);
-            public constructor ($min: number, $max: number)
             public constructor ()
+            public constructor ($min: number, $max: number, $defaultValue?: number)
         }
     }
     namespace ALM.Util.UIToolkitExtend.Elements {
@@ -5049,11 +5065,13 @@
         }
     }
     namespace ALM.Util.UIToolkitExtend.Elements.ColorBindElement {
-        class Bindalbe extends ALM.Util.UIToolkitExtend.Bindable
+        class Bindable extends ALM.Util.UIToolkitExtend.Bindable
         {
             protected [__keep_incompatibility]: never;
+            public Default : UnityEngine.Color
             public get Value(): UnityEngine.Color;
             public constructor ()
+            public constructor ($defaultColor: UnityEngine.Color)
         }
     }
     namespace ALM.Util.Texturing {

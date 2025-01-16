@@ -46,8 +46,8 @@ namespace ALM.Util.UIToolkitExtend
             var info = obj.GetType().GetMember(DataPath, (BindingFlags)int.MaxValue)[0];
 
             var element = ElementBuilder<T>();
-            AfterBuild?.Invoke(element);
             this.Element = element;
+            AfterBuild?.Invoke(element);
 
             ui.Add(element);
             element.value = info switch
@@ -66,8 +66,8 @@ namespace ALM.Util.UIToolkitExtend
             where T : BindableElement, INotifyValueChanged<N>, new()
         {
             var element = ElementBuilder<T>();
-            AfterBuild?.Invoke(element);
             this.Element = element;
+            AfterBuild?.Invoke(element);
             ui.Add(element);
             element.RegisterValueChangedCallback<N>(_ => obj.IsDirty(DataPath));
         }
