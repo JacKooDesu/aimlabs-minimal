@@ -31,7 +31,7 @@ namespace ALM.Screens.Mission
 
             var timer = UIStackHandler.Current().data as Timer;
             timer.OnUpdateInt += UpdateText;
-            timer.OnComplete += 
+            timer.OnComplete +=
                 () => timer.OnUpdateInt -= UpdateText;
         }
 
