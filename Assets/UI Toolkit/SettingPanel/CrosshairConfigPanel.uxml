@@ -4,7 +4,10 @@
     <engine:VisualElement name="Main" class="crossfire-main" style="flex-grow: 1; white-space: nowrap;">
         <engine:VisualElement name="Upper" class="upper" style="flex-grow: 1;">
             <engine:ScrollView name="Options" class="options" />
-            <engine:VisualElement name="Preview" class="preview" style="flex-grow: 1;" />
+            <engine:VisualElement name="Preview" class="preview" style="flex-grow: 1;">
+                <engine:VisualElement name="ScenePreview" class="scene-preview" style="flex-grow: 1;" />
+                <engine:VisualElement name="CrosshairPreview" class="crosshari-preview" />
+            </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="Footer" class="footer" style="flex-grow: 1;">
             <engine:Button text="APPLY" name="Apply" />
