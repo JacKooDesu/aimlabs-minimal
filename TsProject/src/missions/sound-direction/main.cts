@@ -47,8 +47,8 @@ function casted(caster: CS.ALM.Screens.Mission.IRaycaster, _: any) {
 function next() {
   ball.gameObject.SetActive(false);
 
-  let angle = Math.random() * Math.PI * 2;
-  let radius = Math.random() * (maxRadius - minRadius) + minRadius;
+  let angle = service.Rng.Float() * Math.PI * 2;
+  let radius = service.Rng.Float() * (maxRadius - minRadius) + minRadius;
   let x = Math.cos(angle) * radius;
   let z = Math.sin(angle) * radius;
 

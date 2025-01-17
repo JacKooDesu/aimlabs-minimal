@@ -32,8 +32,8 @@ function calhp() {
 }
 
 function resetBall() {
-  speedCurrent = Math.random() * (speedMax - speedMin) + speedMin;
-  x = (Math.random() - 0.5) * moveDst;
+  speedCurrent = service.Rng.Float() * (speedMax - speedMin) + speedMin;
+  x = (service.Rng.Float() - 0.5) * moveDst;
   ball.transform.position = new V3(x, 0, distanceZ);
 
   timer = stayTime;
