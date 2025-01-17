@@ -10,6 +10,7 @@ using VContainer;
 
 namespace ALM.Screens.Mission
 {
+    using ALM.Screens.Mission.Service;
     using Common;
     public class FpsCamController : MonoBehaviour, IRaycaster, IManagedTickable
     {
@@ -25,17 +26,19 @@ namespace ALM.Screens.Mission
         float _rotX = 0.0f;
 
         Quaternion _originRot;
-
+        IController _controller;
         ControlSetting _controlSetting;
         GameplaySetting _gameplaySetting;
         RaycasterService _raycasterService;
         [Inject]
         void _Inject(
+            IController controller,
             ControlSetting controlSetting,
             GameplaySetting gameplaySetting,
             RaycasterService raycasterService,
             MissionLoader.PlayableMission mission)
         {
+            _controller = controller;
             _controlSetting = controlSetting;
             _gameplaySetting = gameplaySetting;
             _raycasterService = raycasterService;
@@ -45,11 +48,11 @@ namespace ALM.Screens.Mission
             _gameplaySetting.OnChange += OnGamePlaySettingChange;
 
             _isTracking = mission.Outline.Type is Data.MissionOutline.MissionType.Tracking;
+
+            _controller.OnFire += Fire;
         }
 
         bool _isTracking;
-        public Action OnFire;
-
         Camera _camera;
 
         #region IRaycaster
@@ -60,26 +63,19 @@ namespace ALM.Screens.Mission
         void Awake()
         {
             _originRot = transform.localRotation;
-
-            OnFire += Fire;
         }
 
         public void Tick()
         {
-            _rotY += Input.GetAxisRaw("Mouse Y") * _gameplaySetting.Sensitivity;
-            _rotX += Input.GetAxisRaw("Mouse X") * _gameplaySetting.Sensitivity;
-
-            var qY = Quaternion.AngleAxis(_rotY, Vector3.left);
-            var qX = Quaternion.AngleAxis(_rotX, Vector3.up);
-
-            transform.localRotation = _originRot * qX * qY;
-
-            if (_isTracking || Input.GetKeyDown(_controlSetting.FireButton))
-                OnFire?.Invoke();
+            transform.localRotation =
+                _originRot * _controller.Qx() * _controller.Qy();
         }
 
         void Fire()
         {
+            if (_isTracking)
+                return;
+
             _raycasterService.Cast(this);
         }
 

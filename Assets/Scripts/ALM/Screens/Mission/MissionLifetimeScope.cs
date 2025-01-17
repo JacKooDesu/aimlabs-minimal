@@ -13,6 +13,7 @@ namespace ALM.Screens.Mission
     using ALM.Common;
     using ALM.Screens.Base;
     using ALM.Screens.Base.Setting;
+    using ALM.Screens.Mission.Service;
     using Data;
     using Realms;
 
@@ -90,17 +91,24 @@ namespace ALM.Screens.Mission
             builder.RegisterInstance<Time>(new(_replay));
 
             if (_replay)
+            {
                 builder.Register(r =>
                 {
                     var jsEnv = r.Resolve<JsEnv>();
                     return IManagedFixedTickable.Create(jsEnv.Tick);
                 }, Lifetime.Scoped);
+                // TODO: auto controller here...
+            }
             else
+            {
                 builder.Register(r =>
                 {
                     var jsEnv = r.Resolve<JsEnv>();
                     return IManagedTickable.Create(jsEnv.Tick);
                 }, Lifetime.Scoped);
+                builder.Register<FpsController>(Lifetime.Scoped)
+                    .AsImplementedInterfaces();
+            }
         }
     }
 }
