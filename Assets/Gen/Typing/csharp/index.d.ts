@@ -4679,12 +4679,14 @@
             public set Score(value: ALM.Screens.Mission.ScoreService);
             public get ScoreData(): ALM.Data.MissionScoreData;
             public set ScoreData(value: ALM.Data.MissionScoreData);
+            public get Rng(): ALM.Util.Rng;
+            public set Rng(value: ALM.Util.Rng);
             public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>, $Rng: $Ref<ALM.Util.Rng>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData, $Rng: ALM.Util.Rng)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4867,6 +4869,45 @@
             protected [__keep_incompatibility]: never;
         }
     }
+    namespace ALM.Util {
+        class Rng extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get Seed(): number;
+            public Float () : number
+            public FloatRange ($min: number, $max: number) : number
+            public Int () : number
+            public IntRange ($min: number, $max: number) : number
+            public UInt () : number
+            public UIntRange ($min: number, $max: number) : number
+            public NewRng () : ALM.Util.Rng
+            public constructor ()
+            public constructor ($obj: any)
+            public constructor ($seed: number)
+        }
+        class FileIO extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static SAVE_PATH : string
+            public static LoadExternalSoundSync ($path: string, $cb: System.Action$1<UnityEngine.AudioClip>, $ct?: System.Threading.CancellationToken) : void
+            public static LoadExternalSoundAsync ($path: string, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<UnityEngine.AudioClip>
+            public static GetPath ($subPath: string, $name?: string) : string
+            public static CopyDirectory ($source: string, $dest: string) : void
+            public static OpenFolder ($path: string, $absolutePath?: boolean) : void
+            public static GetMissionFolder ($missionName: string) : string
+            public static CopyFileProcessor ($origin: ALM.Util.FileIO._File, $file: string, $destPath: string) : ALM.Util.FileIO._File
+            public static SavePNG ($bytes: System.Array$1<number>, $path: string, $name: string) : string
+            public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
+        }
+        class RealmWrapper extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static AddPropertyFor ($realm: Realms.Realm, $model: string, $propertyName: string, $value: Realms.RealmValue) : void
+            public static AllAsArr ($realm: Realms.Realm, $model: string) : System.Array$1<Realms.IRealmObject>
+            public static Object ($value: any) : Realms.RealmValue
+            public static Bool ($value: boolean) : Realms.RealmValue
+        }
+    }
     namespace UnityEngine.Pool {
         class ObjectPool$1<T> extends System.Object implements UnityEngine.Pool.IObjectPool$1<T>, System.IDisposable
         {
@@ -4961,30 +5002,6 @@
             public get Bindables(): System.Array$1<ALM.Util.UIToolkitExtend.Bindable>;
             public set Bindables(value: System.Array$1<ALM.Util.UIToolkitExtend.Bindable>);
             public constructor ()
-        }
-    }
-    namespace ALM.Util {
-        class FileIO extends System.Object
-        {
-            protected [__keep_incompatibility]: never;
-            public static SAVE_PATH : string
-            public static LoadExternalSoundSync ($path: string, $cb: System.Action$1<UnityEngine.AudioClip>, $ct?: System.Threading.CancellationToken) : void
-            public static LoadExternalSoundAsync ($path: string, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<UnityEngine.AudioClip>
-            public static GetPath ($subPath: string, $name?: string) : string
-            public static CopyDirectory ($source: string, $dest: string) : void
-            public static OpenFolder ($path: string, $absolutePath?: boolean) : void
-            public static GetMissionFolder ($missionName: string) : string
-            public static CopyFileProcessor ($origin: ALM.Util.FileIO._File, $file: string) : ALM.Util.FileIO._File
-            public static SavePNG ($bytes: System.Array$1<number>, $path: string, $name: string) : string
-            public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
-        }
-        class RealmWrapper extends System.Object
-        {
-            protected [__keep_incompatibility]: never;
-            public static AddPropertyFor ($realm: Realms.Realm, $model: string, $propertyName: string, $value: Realms.RealmValue) : void
-            public static AllAsArr ($realm: Realms.Realm, $model: string) : System.Array$1<Realms.IRealmObject>
-            public static Object ($value: any) : Realms.RealmValue
-            public static Bool ($value: boolean) : Realms.RealmValue
         }
     }
     namespace Newtonsoft.Json {

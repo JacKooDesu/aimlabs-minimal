@@ -104,6 +104,7 @@ public class TypeConfig
                 typeof(ALM.Util.RealmWrapper),
                 typeof(ALM.Util.Texturing.Creator),
                 typeof(ALM.Util.Texturing.Drawer),
+                typeof(ALM.Util.Rng),
             };
         }
     }

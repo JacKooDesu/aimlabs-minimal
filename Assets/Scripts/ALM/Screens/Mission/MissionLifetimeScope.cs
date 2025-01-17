@@ -80,6 +80,8 @@ namespace ALM.Screens.Mission
             builder.Register(
                 r => r.Resolve<PlayHistory>().ScoreData,
                 Lifetime.Scoped);
+
+            builder.RegisterInstance<Util.Rng>(new Util.Rng(1));
         }
     }
 }
