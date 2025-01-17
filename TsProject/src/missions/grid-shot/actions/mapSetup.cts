@@ -8,7 +8,9 @@ const colCount = 4;
 
 export const balls: CS.ALM.Screens.Mission.Ball[] = [];
 
-export function setupBalls(ballPool: CS.ALM.Screens.Mission.BallPoolService) {
+export function setupBalls(
+  ballPool: CS.ALM.Screens.Mission.BallPoolService,
+  rng: CS.ALM.Util.Rng) {
   let offsetX = (colCount - 1) / 2;
   let offsetY = (rowCount - 1) / 2;
   for (let i = 0; i < rowCount; ++i) {
@@ -24,5 +26,5 @@ export function setupBalls(ballPool: CS.ALM.Screens.Mission.BallPoolService) {
   }
 
   // shuffle balls
-  balls.sort(() => Math.random() - 0.5);
+  balls.sort(() => rng.Float() - 0.5);
 }

@@ -8,16 +8,16 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Base
 {
-    public abstract class HandlableEntry<TEntry> : ITickable, IStartable, IDisposable
+    public abstract class HandlableEntry<TEntry> : ITickable, IFixedTickable, IStartable, IDisposable
         where TEntry : HandlableEntry<TEntry>
     {
         bool _paused = false;
 
         protected IEnumerable<UIBase> _uis;
         protected List<IManagedTickable> _tickables;
+        protected List<IManagedFixedTickable> _fixedTickables;
         protected GameStatusHandler _handler;
         protected AudioService _audioService;
-
         protected readonly UIDocument _rootUi;
 
         [Inject]
@@ -26,12 +26,14 @@ namespace ALM.Screens.Base
             AudioService audioService,
             IEnumerable<UIBase> uis,
             IEnumerable<IAutoRegister> autoRegisters,
-            IEnumerable<IManagedTickable> tickables)
+            IEnumerable<IManagedTickable> tickables,
+            IEnumerable<IManagedFixedTickable> fixedTickables)
         {
             var type = typeof(TEntry);
             _handler = handler;
             _audioService = audioService;
             _tickables = new(tickables);
+            _fixedTickables = new(fixedTickables);
             _handler.AddEntry(type);
 
             _handler.Register(type, GameStatus.Paused, () => _paused = true);
@@ -79,11 +81,27 @@ namespace ALM.Screens.Base
                 tickable?.Tick();
         }
 
+        void IFixedTickable.FixedTick()
+        {
+            ConstFixedTick();
+
+            if (_paused)
+                return;
+
+            FixedTick();
+
+            foreach (var fixedTickalbe in _fixedTickables)
+                fixedTickalbe?.FixedTick();
+        }
+
         /// <summary>
         /// ConstTick is called every frame even entry is paused.
         /// </summary>
         protected virtual void ConstTick() { }
         protected virtual void Tick() { }
+
+        protected virtual void ConstFixedTick() { }
+        protected virtual void FixedTick() { }
 
         void IDisposable.Dispose()
         {

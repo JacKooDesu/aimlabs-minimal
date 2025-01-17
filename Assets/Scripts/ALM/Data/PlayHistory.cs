@@ -10,6 +10,7 @@ namespace ALM.Data
         public MissionData Mission { get; set; }
         public DateTimeOffset PlayedAt { get; set; }
         public MissionScoreData ScoreData { get; set; }
+        public byte[] ReplayData { get; set; }
 
         public PlayHistory() { }
 

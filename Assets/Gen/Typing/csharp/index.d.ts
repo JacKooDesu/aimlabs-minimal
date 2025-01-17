@@ -4679,12 +4679,16 @@
             public set Score(value: ALM.Screens.Mission.ScoreService);
             public get ScoreData(): ALM.Data.MissionScoreData;
             public set ScoreData(value: ALM.Data.MissionScoreData);
+            public get Rng(): ALM.Util.Rng;
+            public set Rng(value: ALM.Util.Rng);
+            public get Time(): ALM.Screens.Mission.Time;
+            public set Time(value: ALM.Screens.Mission.Time);
             public static op_Inequality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>, $Rng: $Ref<ALM.Util.Rng>, $Time: $Ref<ALM.Screens.Mission.Time>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData, $Rng: ALM.Util.Rng, $Time: ALM.Screens.Mission.Time)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4710,13 +4714,20 @@
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class ScoreService extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
             public Tick () : void
             public Dispose () : void
             public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
+            public constructor ()
+        }
+        class Time extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get Delta(): number;
+            public constructor ($fixed?: boolean)
             public constructor ()
         }
         interface JsConfigureDel
@@ -4750,7 +4761,7 @@
             remove_OnHit ($value: System.Action) : void
             HitBy ($index: number) : void
         }
-        class MissionEntry extends ALM.Screens.Base.HandlableEntry$1<ALM.Screens.Mission.MissionEntry> implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
+        class MissionEntry extends ALM.Screens.Base.HandlableEntry$1<ALM.Screens.Mission.MissionEntry> implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, VContainer.Unity.IFixedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
         }
@@ -4792,7 +4803,7 @@
             public constructor ($audioSetting: ALM.Screens.Base.AudioSetting)
             public constructor ()
         }
-        class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, System.IDisposable
+        class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, VContainer.Unity.IFixedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
         }
@@ -4867,6 +4878,44 @@
             protected [__keep_incompatibility]: never;
         }
     }
+    namespace ALM.Util {
+        class Rng extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public get Seed(): number;
+            public Float () : number
+            public FloatRange ($min: number, $max: number) : number
+            public IntRange ($min: number, $max: number) : number
+            public UInt () : number
+            public UIntRange ($min: number, $max: number) : number
+            public NewRng () : ALM.Util.Rng
+            public constructor ()
+            public constructor ($obj: any)
+            public constructor ($seed: number)
+        }
+        class FileIO extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static SAVE_PATH : string
+            public static LoadExternalSoundSync ($path: string, $cb: System.Action$1<UnityEngine.AudioClip>, $ct?: System.Threading.CancellationToken) : void
+            public static LoadExternalSoundAsync ($path: string, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<UnityEngine.AudioClip>
+            public static GetPath ($subPath: string, $name?: string) : string
+            public static CopyDirectory ($source: string, $dest: string) : void
+            public static OpenFolder ($path: string, $absolutePath?: boolean) : void
+            public static GetMissionFolder ($missionName: string) : string
+            public static CopyFileProcessor ($origin: ALM.Util.FileIO._File, $file: string, $destPath: string) : ALM.Util.FileIO._File
+            public static SavePNG ($bytes: System.Array$1<number>, $path: string, $name: string) : string
+            public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
+        }
+        class RealmWrapper extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static AddPropertyFor ($realm: Realms.Realm, $model: string, $propertyName: string, $value: Realms.RealmValue) : void
+            public static AllAsArr ($realm: Realms.Realm, $model: string) : System.Array$1<Realms.IRealmObject>
+            public static Object ($value: any) : Realms.RealmValue
+            public static Bool ($value: boolean) : Realms.RealmValue
+        }
+    }
     namespace UnityEngine.Pool {
         class ObjectPool$1<T> extends System.Object implements UnityEngine.Pool.IObjectPool$1<T>, System.IDisposable
         {
@@ -4885,6 +4934,9 @@
         {
         }
         interface ITickable
+        {
+        }
+        interface IFixedTickable
         {
         }
     }
@@ -4961,30 +5013,6 @@
             public get Bindables(): System.Array$1<ALM.Util.UIToolkitExtend.Bindable>;
             public set Bindables(value: System.Array$1<ALM.Util.UIToolkitExtend.Bindable>);
             public constructor ()
-        }
-    }
-    namespace ALM.Util {
-        class FileIO extends System.Object
-        {
-            protected [__keep_incompatibility]: never;
-            public static SAVE_PATH : string
-            public static LoadExternalSoundSync ($path: string, $cb: System.Action$1<UnityEngine.AudioClip>, $ct?: System.Threading.CancellationToken) : void
-            public static LoadExternalSoundAsync ($path: string, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<UnityEngine.AudioClip>
-            public static GetPath ($subPath: string, $name?: string) : string
-            public static CopyDirectory ($source: string, $dest: string) : void
-            public static OpenFolder ($path: string, $absolutePath?: boolean) : void
-            public static GetMissionFolder ($missionName: string) : string
-            public static CopyFileProcessor ($origin: ALM.Util.FileIO._File, $file: string) : ALM.Util.FileIO._File
-            public static SavePNG ($bytes: System.Array$1<number>, $path: string, $name: string) : string
-            public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
-        }
-        class RealmWrapper extends System.Object
-        {
-            protected [__keep_incompatibility]: never;
-            public static AddPropertyFor ($realm: Realms.Realm, $model: string, $propertyName: string, $value: Realms.RealmValue) : void
-            public static AllAsArr ($realm: Realms.Realm, $model: string) : System.Array$1<Realms.IRealmObject>
-            public static Object ($value: any) : Realms.RealmValue
-            public static Bool ($value: boolean) : Realms.RealmValue
         }
     }
     namespace Newtonsoft.Json {

@@ -47,7 +47,7 @@ namespace ALM.Screens.Result
 
             _elementBase.Q<Button>("Retry").RegisterCallback<ClickEvent>(_ =>
                 MissionLifetimeScope.Load(
-                    new MissionLifetimeScope.Payload(_missionOutline.Name)).Forget());
+                    new MissionLifetimeScope.MissionPayload(_missionOutline.Name)).Forget());
 
             _elementBase.Q<Button>("Exit").RegisterCallback<ClickEvent>(_ =>
                 MenuLifetimeScope.Load().Forget());

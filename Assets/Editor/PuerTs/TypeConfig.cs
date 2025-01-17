@@ -78,6 +78,7 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.JsConfigureDel),
                 typeof(ALM.Screens.Mission.BallPoolService),
                 typeof(ALM.Screens.Mission.RaycasterService),
+                typeof(ALM.Screens.Mission.Time),
                 typeof(ALM.Screens.Mission.IRaycaster),
                 typeof(ALM.Screens.Mission.IRaycastTarget),
                 typeof(ALM.Screens.Mission.Ball),
@@ -104,6 +105,7 @@ public class TypeConfig
                 typeof(ALM.Util.RealmWrapper),
                 typeof(ALM.Util.Texturing.Creator),
                 typeof(ALM.Util.Texturing.Drawer),
+                typeof(ALM.Util.Rng),
             };
         }
     }

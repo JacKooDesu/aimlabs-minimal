@@ -30,8 +30,8 @@ function next() {
   iter = (iter + 1) % 2;
   ball = balls[iter];
   if (iter == 0) {
-    let angle = Math.random() * Math.PI * 2;
-    let radius = Math.random() * (maxRadius - minRadius) + minRadius;
+    let angle = service.Rng.Float() * Math.PI * 2;
+    let radius = service.Rng.Float() * (maxRadius - minRadius) + minRadius;
     let x = Math.cos(angle) * radius;
     let y = Math.sin(angle) * radius;
 

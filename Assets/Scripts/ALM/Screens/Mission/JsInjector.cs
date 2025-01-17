@@ -12,7 +12,9 @@ namespace ALM.Screens.Mission
         BallPoolService BallPool,
         AudioService Audio,
         ScoreService Score,
-        MissionScoreData ScoreData);
+        MissionScoreData ScoreData,
+        Util.Rng Rng,
+        Time Time);
 
     // this is delegate to configure service required by js env
     public delegate void JsConfigureDel(JsConfigure configure);
