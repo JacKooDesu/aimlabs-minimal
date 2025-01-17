@@ -51,7 +51,7 @@ namespace ALM.Screens.Mission
 
             _playHistory = playHistory;
             _room = room;
-            _replay = replay;
+            _replay = replay.InputFrames.Count > 0 ? null : replay;
 
             if (_mission.Outline.Time > 0)
                 _timer = timerFactory(_mission.Outline.Time);
@@ -90,8 +90,9 @@ namespace ALM.Screens.Mission
 
         void OnFinishedMission()
         {
-            _playHistoryService.AddPlayHistory(
-                _playHistory, _replay.Serialize());
+            if (_replay is not null)
+                _playHistoryService.AddPlayHistory(
+                    _playHistory, _replay.Serialize());
 
             Result.ResultLifetimeScope.Load(
                    new Result.ResultLifetimeScope.Payload(
