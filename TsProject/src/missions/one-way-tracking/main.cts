@@ -27,7 +27,7 @@ export function entry() {
 }
 
 function calhp() {
-  timer -= CS.UnityEngine.Time.deltaTime;
+  timer -= service.Time.Delta;
   if (timer <= 0) resetBall();
 }
 
@@ -43,10 +43,10 @@ function moveBall() {
   if (x < -moveDstHalf) dir = 1;
   if (x > moveDstHalf) dir = -1;
 
-  x += dir * speedCurrent * CS.UnityEngine.Time.deltaTime;
+  x += dir * speedCurrent * service.Time.Delta;
 
   ball.transform.Translate(
-    new V3(dir * speedCurrent * CS.UnityEngine.Time.deltaTime, 0, 0)
+    new V3(dir * speedCurrent * service.Time.Delta, 0, 0)
   );
 
   ball.Hp = timer / stayTime;

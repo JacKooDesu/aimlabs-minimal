@@ -10,6 +10,7 @@ using TsEnvCore;
 
 namespace ALM.Screens.Mission
 {
+    using ALM.Common;
     using ALM.Screens.Base;
     using ALM.Screens.Base.Setting;
     using Data;
@@ -20,6 +21,8 @@ namespace ALM.Screens.Mission
     {
         [SerializeField]
         string _missionName = null;
+        bool _replay = false;
+
         [SerializeField]
         UIDocument _rootUi;
         [SerializeField]
@@ -32,11 +35,12 @@ namespace ALM.Screens.Mission
             typeof(BaseUi),
         };
 
-        public record Payload(string MissionName) : LoadPayload;
+        public record Payload(string MissionName, bool IsReplay = false) : LoadPayload;
         public override void AfterLoad(LoadPayload payload)
         {
             var p = payload as Payload;
             _missionName = p.MissionName;
+            _replay = p.IsReplay;
         }
 
         protected override void Configure(IContainerBuilder builder)
@@ -82,6 +86,21 @@ namespace ALM.Screens.Mission
                 Lifetime.Scoped);
 
             builder.RegisterInstance<Util.Rng>(new Util.Rng(1));
+            // replay use fixedDeltaTime
+            builder.RegisterInstance<Time>(new(_replay));
+
+            if (_replay)
+                builder.Register(r =>
+                {
+                    var jsEnv = r.Resolve<JsEnv>();
+                    return IManagedFixedTickable.Create(jsEnv.Tick);
+                }, Lifetime.Scoped);
+            else
+                builder.Register(r =>
+                {
+                    var jsEnv = r.Resolve<JsEnv>();
+                    return IManagedTickable.Create(jsEnv.Tick);
+                }, Lifetime.Scoped);
         }
     }
 }

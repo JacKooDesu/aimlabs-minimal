@@ -78,6 +78,7 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.JsConfigureDel),
                 typeof(ALM.Screens.Mission.BallPoolService),
                 typeof(ALM.Screens.Mission.RaycasterService),
+                typeof(ALM.Screens.Mission.Time),
                 typeof(ALM.Screens.Mission.IRaycaster),
                 typeof(ALM.Screens.Mission.IRaycastTarget),
                 typeof(ALM.Screens.Mission.Ball),

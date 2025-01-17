@@ -101,9 +101,10 @@ namespace ALM.Screens.Mission
 
         protected override void Tick()
         {
-            _jsEnv.Tick();
             _timer?.Tick();
         }
+
+        protected override void FixedTick() { }
 
         void AssignToJsEnv()
         {
