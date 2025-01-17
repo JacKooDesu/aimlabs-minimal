@@ -25,6 +25,7 @@ namespace ALM.Screens.Mission
         readonly PlayHistory _playHistory;
         readonly Timer _timer;
         readonly Room _room;
+        readonly Replay _replay;
 
         public MissionEntry(
             JsEnv jsEnv,
@@ -35,6 +36,7 @@ namespace ALM.Screens.Mission
             PlayHistory playHistory,
             CrosshairService crosshairService,
             Room room,
+            Replay replay,
             Realm realm,
             Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
@@ -49,6 +51,7 @@ namespace ALM.Screens.Mission
 
             _playHistory = playHistory;
             _room = room;
+            _replay = replay;
 
             if (_mission.Outline.Time > 0)
                 _timer = timerFactory(_mission.Outline.Time);
@@ -85,9 +88,10 @@ namespace ALM.Screens.Mission
             _pauseHandleService.CountDown();
         }
 
-        private void OnFinishedMission()
+        void OnFinishedMission()
         {
-            _playHistoryService.AddPlayHistory(_playHistory);
+            _playHistoryService.AddPlayHistory(
+                _playHistory, _replay.Serialize());
 
             Result.ResultLifetimeScope.Load(
                    new Result.ResultLifetimeScope.Payload(
@@ -106,9 +110,6 @@ namespace ALM.Screens.Mission
 
         protected override void FixedTick() { }
 
-        void AssignToJsEnv()
-        {
-        }
 
         public override void Dispose()
         {

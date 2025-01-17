@@ -6,8 +6,10 @@ namespace ALM.Screens.Menu
 {
     using System.Linq;
     using ALM.Screens.Base;
+    using ALM.Screens.Mission;
     using ALM.Util;
     using Common;
+    using Cysharp.Threading.Tasks;
 
     public class HistoryPanel : MenuUIBase
     {
@@ -56,6 +58,8 @@ namespace ALM.Screens.Menu
         void Replay(Data.PlayHistory h)
         {
             // TODO: Replay here
+            MissionLifetimeScope.Load(new MissionLifetimeScope.ReplayPayload(h))
+                .Forget();
         }
     }
 }

@@ -15,12 +15,12 @@ namespace ALM.Screens.Base
         readonly Realm _realm;
 
         public void AddPlayHistory(
-            MissionData mission,
-            MissionScoreData scoreData) =>
-            _realm.Write(() => _realm.Add(new PlayHistory(mission, scoreData)));
-
-        public void AddPlayHistory(PlayHistory history) =>
-            _realm.Write(() => _realm.Add(history));
+            PlayHistory history, byte[] replay) =>
+            _realm.Write(() =>
+            {
+                history.ReplayData = replay;
+                _realm.Add(history);
+            });
 
         public IQueryable<PlayHistory> GetPlayHistories(string mission) =>
             _realm.Find<MissionData>(mission).PlayHistories;

@@ -1,11 +1,9 @@
 using System;
 using UnityEngine;
 
-namespace ALM.Screens.Mission.Service
+namespace ALM.Screens.Mission
 {
-    using Common;
-
-    interface IController
+    public interface IController
     {
         public event Action OnFire;
 

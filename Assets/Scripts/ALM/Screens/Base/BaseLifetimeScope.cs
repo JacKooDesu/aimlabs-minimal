@@ -30,7 +30,10 @@ namespace ALM.Screens.Base
                     new RealmConfiguration(FileIO.GetPath(Constants.DB_PATH))
                     {
                         SchemaVersion = (ulong)VersionChecker.CurrentVersionInt,
-                        MigrationCallback = VersionChecker.DbMigration
+                        MigrationCallback = VersionChecker.DbMigration,
+#if UNITY_EDITOR
+                        ShouldDeleteIfMigrationNeeded = true
+#endif
                     }),
                 Lifetime.Singleton);
 

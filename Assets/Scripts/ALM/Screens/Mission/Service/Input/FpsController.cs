@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ALM.Screens.Mission.Service
+namespace ALM.Screens.Mission
 {
     using ALM.Common;
     using ALM.Screens.Base.Setting;
