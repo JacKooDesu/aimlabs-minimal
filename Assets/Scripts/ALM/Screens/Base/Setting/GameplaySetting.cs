@@ -73,6 +73,6 @@ namespace ALM.Screens.Base.Setting
         }
 
         public Texture GetCrosshairTexture() =>
-            FileIO.LoadTexture(Constants.CROSSHAIR_PATH + '/' + Crosshair.path);
+            FileIO.LoadTexture(Constants.CROSSHAIR_PATH, Crosshair.path);
     }
 }

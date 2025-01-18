@@ -44,7 +44,7 @@ namespace ALM.Screens.Base.Setting
             BallColors[index];
 
         public Texture2D GetRoomTexture() =>
-            FileIO.LoadTexture(RoomTextureName.path);
+            FileIO.LoadTexture(Constants.CUSTOMIZE_PATH, RoomTextureName.path);
 
         public static ObjectSetting Load() =>
             FileIO.JLoad<ObjectSetting>(Constants.SETTING_PATH, NAME, true, new UColorJsonConverter());

@@ -88,13 +88,13 @@ namespace ALM.Util
             return JsonConvert.DeserializeObject<T>(json, converters);
         }
 
-        internal static Texture2D LoadTexture(string texturePath)
+        internal static Texture2D LoadTexture(string path, string file)
         {
-            var path = GetPath(Constants.CUSTOMIZE_PATH, texturePath);
-            if (!File.Exists(path.Dbg("texture")))
+            var fullPath = GetPath(path, file);
+            if (!File.Exists(fullPath.Dbg("texture")))
                 return null;
 
-            byte[] bytes = File.ReadAllBytes(path);
+            byte[] bytes = File.ReadAllBytes(fullPath);
             Texture2D texture = new(2, 2);
             texture.LoadImage(bytes);
             return texture;
