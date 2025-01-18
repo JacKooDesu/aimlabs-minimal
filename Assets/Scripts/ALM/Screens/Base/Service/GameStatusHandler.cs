@@ -6,8 +6,6 @@ namespace ALM.Screens.Base
 {
     public class GameStatusHandler
     {
-        // public GameStatus this[HandlableEntry entry] => _statusDict[entry.GetType()].status;
-
         readonly Dictionary<Type, (uint priority, GameStatus status)> _statusDict;
         readonly Dictionary<Type, Dictionary<GameStatus, List<Action>>> _triggerDict;
 

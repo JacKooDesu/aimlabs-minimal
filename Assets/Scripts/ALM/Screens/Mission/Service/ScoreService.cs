@@ -4,6 +4,7 @@ using Unity.Mathematics;
 namespace ALM.Screens.Mission
 {
     using System;
+    using System.Diagnostics;
     using ALM.Common;
     using ALM.Data;
     using ALM.Screens.Base;
@@ -76,6 +77,12 @@ namespace ALM.Screens.Mission
 
             public void OnCasted(IRaycaster _, IRaycastTarget target)
             {
+                if (Data?.IsManaged ?? false)
+                {
+                    UnityEngine.Debug.LogWarning("Cannot write to managed data");
+                    return;
+                }
+
                 _totalShot += 1;
 
                 if (target is not null)
