@@ -21,6 +21,9 @@ namespace ALM.Screens.Menu
             typeof(ManageAssets),
             typeof(AssetsList),
             typeof(HistoryPanel),
+            typeof(MissionRepos),
+            typeof(RepoMissions),
+            typeof(RepoMissionInfo),
         };
 
         protected override void Configure(IContainerBuilder builder)

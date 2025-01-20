@@ -2,10 +2,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using Realms;
+using Newtonsoft.Json;
 using VContainer;
+using UnityEngine.Networking;
+using Cysharp.Threading.Tasks;
 
 namespace ALM.Screens.Base
 {
+    using System;
     using ALM.Data;
     using ALM.Util;
 
@@ -17,6 +21,7 @@ namespace ALM.Screens.Base
             UnityEngine.Application.dataPath +
                 "/../" +
                 "/missions";
+        readonly string DEFAULT_REPO_SETTING = "mission_repo.json";
 
         public MissionImporter()
         {
@@ -70,8 +75,10 @@ namespace ALM.Screens.Base
             return result.ToArray();
         }
 
-        public string ImportZip(string path)
+        public string ImportZip(string path, bool delete = false)
         {
+            string result = null;
+
             using (var archive = ZipFile.OpenRead(path))
             {
                 var entries = MissionValidator.Validate(archive);
@@ -101,8 +108,59 @@ namespace ALM.Screens.Base
 
                 WriteToRealm(missionName);
 
-                return missionName;
+
+                result = missionName;
             }
+
+            if (delete)
+                File.Delete(path);
+
+            return result;
+        }
+
+        public MissionRepoList GetMissionRepoList()
+        {
+            var path = Path.Combine(
+                DEFAULT_PATH,
+                DEFAULT_REPO_SETTING);
+
+            return FileIO.JLoad<MissionRepoList>(FileIO._File.Absolute(path), true);
+        }
+
+        public async UniTask<RepoContent> GetRepoContent(MissionRepo repo)
+        {
+            var result = new List<MissionOutline>();
+            var request = await UnityWebRequest
+                .Get(repo.Endpoint)
+                .SendWebRequest()
+                .ToUniTask();
+
+            if (request.result is not UnityWebRequest.Result.Success)
+                throw new Exception("Failed to get mission list.");
+
+            var content = JsonConvert.DeserializeObject<RepoContent>(request.downloadHandler.text);
+
+            return content;
+        }
+
+        public async UniTask<string> DownloadMission(RepoContent repo, MissionOutline outline)
+        {
+            var result = await UnityWebRequest
+                .Get(repo.DownloadApi + outline.Name)
+                .SendWebRequest()
+                .ToUniTask();
+
+            if (!result.isDone)
+                throw new Exception("Failed to download mission.");
+
+
+            var path = Path.Combine(
+                DEFAULT_PATH,
+                outline.Name + ".zip");
+
+            File.WriteAllBytes(path, Convert.FromBase64String(result.downloadHandler.text));
+
+            return ImportZip(path, true);
         }
 
         void WriteToRealm(string missionName)
@@ -115,5 +173,6 @@ namespace ALM.Screens.Base
                 }, update: true);
             });
         }
+
     }
 }

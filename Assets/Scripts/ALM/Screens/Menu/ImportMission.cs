@@ -1,13 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using UnityEngine.UIElements;
 using VContainer;
 using System.IO.Compression;
 
 namespace ALM.Screens.Menu
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
     using System.Linq;
+    using ALM.Common;
     using ALM.Screens.Base;
     using ALM.Util;
     using Cysharp.Threading.Tasks;
@@ -31,6 +33,9 @@ namespace ALM.Screens.Menu
 
             _elementBase.Q<Button>("SelectFile").RegisterCallback<ClickEvent>(
                 SelectFile);
+
+            _elementBase.Q<Button>("ExploreMission").RegisterCallback<ClickEvent>(
+                ExploreMission);
         }
 
         void AutoImport(ClickEvent _)
@@ -50,6 +55,11 @@ namespace ALM.Screens.Menu
                 "zip",
                 true,
                 FileSelected);
+        }
+
+        void ExploreMission(ClickEvent _)
+        {
+            UIStackHandler.PushUI((uint)UIIndex.MissionRepos);
         }
 
         void FileSelected(string[] paths)

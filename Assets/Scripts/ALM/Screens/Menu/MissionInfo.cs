@@ -24,6 +24,11 @@ namespace ALM.Screens.Menu
             _missionDescription = _elementBase.Q<Label>("MissionDescription");
             _missionAuthor = _elementBase.Q<Label>("MissionAuthor");
 
+            BindElement();
+        }
+
+        protected virtual void BindElement()
+        {
             _elementBase.Q<Button>("Play").RegisterCallback<ClickEvent>(
                 _ => MissionLifetimeScope.Load(new MissionLifetimeScope.MissionPayload(
                     (UIStackHandler.Current().data as MissionLoader.PlayableMission)
@@ -40,9 +45,14 @@ namespace ALM.Screens.Menu
 
             var mission = UIStackHandler.Current().data as MissionLoader.PlayableMission;
 
-            _missionName.text = mission.Outline.Name;
-            _missionDescription.text = mission.Outline.Description;
-            _missionAuthor.text = mission.Outline.Author;
+            UpdateInfo(mission.Outline);
+        }
+
+        protected void UpdateInfo(Data.MissionOutline outline)
+        {
+            _missionName.text = outline.Name;
+            _missionDescription.text = outline.Description;
+            _missionAuthor.text = outline.Author;
         }
     }
 }
