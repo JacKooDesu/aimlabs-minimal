@@ -32,6 +32,18 @@ namespace ALM.Util
                 this.extension = extension;
             }
 
+            public static _File Absolute(string path) =>
+                new AnomoyousFile(path, PathType.Absolute);
+            public static _File Relative(string path) =>
+                new AnomoyousFile(path, PathType.Relative);
+
+            class AnomoyousFile : _File
+            {
+                public AnomoyousFile(string path, PathType type) :
+                    base(path, type, null)
+                { }
+            }
+
             public static implicit operator string(_File file) =>
                 file.type == PathType.Relative ?
                     GetPath(file.path) : file.path;
