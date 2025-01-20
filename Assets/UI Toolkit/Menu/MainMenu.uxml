@@ -20,6 +20,7 @@
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
             <engine:Button text="Auto Import" name="AutoImport" />
             <engine:Button text="Select File" name="SelectFile" />
+            <engine:Button text="Explore Mission" name="ExploreMission" />
         </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
@@ -48,12 +49,29 @@
         </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
+    <engine:VisualElement name="MissionRepos" class="selection-parent inactive 3rd" style="height: auto; top: 10%; bottom: 10%;">
+        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
+        <engine:Button name="ReturnButton" class="return-button" />
+    </engine:VisualElement>
     <engine:VisualElement name="AssetsList" class="selection-parent inactive 3rd" style="height: auto; top: 10%; bottom: 10%;">
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="HistoryPanel" class="selection-parent 4th inactive" style="height: auto; top: 10%; bottom: 10%;">
         <engine:ScrollView name="SelectionInner" class="selection-inner" />
+        <engine:Button name="ReturnButton" class="return-button" />
+    </engine:VisualElement>
+    <engine:VisualElement name="RepoMissions" class="selection-parent inactive 4th" style="height: auto; top: 10%; bottom: 10%;">
+        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
+        <engine:Button name="ReturnButton" class="return-button" />
+    </engine:VisualElement>
+    <engine:VisualElement name="RepoMissionInfo" class="selection-parent 5th inactive">
+        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;">
+            <engine:Label text="Mission Info Name" name="MissionName" class="credit-title" />
+            <engine:Label text="Mission Desc" name="MissionDescription" class="credit-content" />
+            <engine:Label text="Mission Desc" name="MissionAuthor" class="credit-content" />
+            <engine:Button text="Download" name="Download" />
+        </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:Instance template="MenuBase" />
