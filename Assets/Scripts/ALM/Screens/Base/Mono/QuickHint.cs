@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -37,6 +38,15 @@ namespace ALM.Screens.Base
             else
                 await delay;
             SetActive(false);
+        }
+
+        public void ShowSync(string text, float time, bool skipable = true, Action callback = null)
+        {
+            var task = callback is null ?
+                Show(text, time, skipable) :
+                Show(text, time, skipable).ContinueWith(callback);
+
+            task.Forget();
         }
 
         public async UniTask Queue(IEnumerable<string> messgaes, float time, bool skipable = true)

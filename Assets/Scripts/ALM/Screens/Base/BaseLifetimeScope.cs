@@ -69,6 +69,7 @@ namespace ALM.Screens.Base
             builder.RegisterComponentInHierarchy<Room>();
             builder.RegisterComponentInHierarchy<ColorPickerUI>();
             builder.RegisterComponentInHierarchy<QuickHint>();
+            builder.RegisterComponentInHierarchy<LoadingPanel>();
 
             builder.RegisterInstance(_audioMap);
         }

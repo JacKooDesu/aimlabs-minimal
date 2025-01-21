@@ -176,7 +176,8 @@ namespace ALM.Screens.Base
                 return false;
             }
 
-            outline = FileIO.JLoad<MissionOutline>(outlinePath);
+            outline = FileIO.JLoad<MissionOutline>(
+                FileIO._File.Absolute(outlinePath));
             fullPath = di.FullName;
             return true;
         }

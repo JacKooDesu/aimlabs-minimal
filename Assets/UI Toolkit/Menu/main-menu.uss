@@ -57,6 +57,21 @@
     transition-delay: 0s, 0s;
 }
 
+.selection-parent.5th {
+    flex-grow: 1;
+    width: 40%;
+    background-color: rgba(17, 0, 20, 0.7);
+    align-content: flex-start;
+    transition-property: width, left;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease-out-cubic, ease-out-cubic;
+    position: absolute;
+    height: 80%;
+    top: 10%;
+    left: 33%;
+    transition-delay: 0s, 0s;
+}
+
 .selection-parent.hide {
     flex-grow: 1;
     width: 5%;

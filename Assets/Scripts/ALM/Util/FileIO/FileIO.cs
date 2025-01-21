@@ -43,14 +43,13 @@ namespace ALM.Util
         }
 
         public static void JSave<T>(
-            T obj, string filePath,
+            T obj, _File file,
             params JsonConverter[] converters)
         {
             string json = JsonConvert.SerializeObject(obj, converters);
-            var absolutePath = GetPath(filePath);
 
-            Directory.CreateDirectory(Path.GetDirectoryName(absolutePath));
-            File.WriteAllText(absolutePath.Dbg("saving: "), json);
+            Directory.CreateDirectory(Path.GetDirectoryName(file));
+            File.WriteAllText(file.path.Dbg("saving: "), json);
         }
 
         public static T JLoad<T>(
@@ -72,19 +71,18 @@ namespace ALM.Util
         }
 
         public static T JLoad<T>(
-            string filePath,
+            _File file,
             bool createDefault = false,
             params JsonConverter[] converters)
         {
-            filePath = GetPath(filePath);
-            if (createDefault && !File.Exists(filePath))
+            if (createDefault && !File.Exists(file))
             {
                 var obj = System.Activator.CreateInstance<T>();
-                JSave(obj, filePath);
+                JSave(obj, file);
                 return obj;
             }
 
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(file);
             return JsonConvert.DeserializeObject<T>(json, converters);
         }
 

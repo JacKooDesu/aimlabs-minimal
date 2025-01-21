@@ -18,8 +18,6 @@ namespace ALM.Screens.Menu
         SettingPanel _settingPanel;
 
         [Inject]
-        MissionImporter _missionImporter;
-        [Inject]
         MissionLoader _missionLoader;
 
         [Inject]
