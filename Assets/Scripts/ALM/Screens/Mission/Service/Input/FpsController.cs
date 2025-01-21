@@ -34,8 +34,8 @@ namespace ALM.Screens.Mission
         }
 
         public Quaternion Qx() =>
-            Quaternion.AngleAxis(RotY, Vector3.left);
-        public Quaternion Qy() =>
             Quaternion.AngleAxis(RotX, Vector3.up);
+        public Quaternion Qy() =>
+            Quaternion.AngleAxis(RotY, Vector3.left);
     }
 }
