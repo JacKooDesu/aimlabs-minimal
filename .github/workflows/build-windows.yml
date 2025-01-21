@@ -92,6 +92,11 @@ jobs:
           targetPlatform: StandaloneWindows64
           buildName: AimLabs-Minimal_Win64
 
+      - name: Copy mission repo
+        run: |
+          mkdir -p ./build/missions
+          cp -r ./docs/mission_repo.json ./build/missions/mission_repo.json
+
       # 自動編譯並匯入預設任務
       - name: Ts Mission Compile Job
         uses: actions/setup-node@v4
