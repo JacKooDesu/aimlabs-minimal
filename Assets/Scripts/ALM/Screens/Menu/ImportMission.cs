@@ -28,6 +28,8 @@ namespace ALM.Screens.Menu
 
         protected override void AfterConfig()
         {
+            base.AfterConfig();
+
             _elementBase.Q<Button>("AutoImport").RegisterCallback<ClickEvent>(
                 AutoImport);
 

@@ -18,6 +18,8 @@ namespace ALM.Screens.Menu
         MissionImporter _missionImporter;
         [Inject]
         QuickHint _quickHint;
+        [Inject]
+        LoadingPanel _loadingPanel;
 
         protected override void AfterConfig()
         {
@@ -45,9 +47,13 @@ namespace ALM.Screens.Menu
             if (UIStackHandler.Current().data is not Payload payload)
                 throw new Exception("MissionOutline is null");
 
-            _missionImporter.DownloadMission(payload.Repo, payload.Outline)
-                .ContinueWith(m => _quickHint.Show("Imported: " + payload.Outline.Name, 1.5f))
-                .Forget();
+            var task = _missionImporter.DownloadMission(payload.Repo, payload.Outline)
+                .ContinueWith(m => _quickHint.Show("Imported: " + payload.Outline.Name, 1.5f));
+
+
+            _loadingPanel.ShowSync(
+                _missionImporter.DownloadMission(payload.Repo, payload.Outline),
+                () => _quickHint.ShowSync("Imported: " + payload.Outline.Name, 1.5f));
         }
     }
 }

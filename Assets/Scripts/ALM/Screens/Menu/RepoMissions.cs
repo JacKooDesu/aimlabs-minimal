@@ -16,6 +16,8 @@ namespace ALM.Screens.Menu
 
         [Inject]
         MissionImporter _missionImporter;
+        [Inject]
+        LoadingPanel _loadingPanel;
         VisualElement _selectionInner;
 
         protected override void AfterConfig()
@@ -28,18 +30,17 @@ namespace ALM.Screens.Menu
         public override void Push()
         {
             base.Push();
+            _selectionInner.Clear();
 
             if (UIStackHandler.Current().data is not Data.MissionRepo repo)
                 return;
 
-            _missionImporter.GetRepoContent(repo)
-                .ContinueWith(c => UpdateButton(c))
-                .Forget();
+            _loadingPanel.ShowSync(
+                _missionImporter.GetRepoContent(repo)
+                .ContinueWith(c => UpdateButton(c)));
 
             void UpdateButton(RepoContent c)
             {
-                _selectionInner.Clear();
-
                 foreach (var mission in c.Missions)
                 {
                     var button = new Button();

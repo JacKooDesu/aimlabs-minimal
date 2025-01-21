@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/LoadingPanel/loading-panel.uss?fileID=7433441132597879392&amp;guid=228fdf47544bcbc4b8a8ff47406029bd&amp;type=3#loading-panel" />
+    <engine:VisualElement name="_PreventTouch" class="bg">
+        <engine:VisualElement name="Block" class="block">
+            <engine:Label text="の" name="Rotator" class="rotator" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
