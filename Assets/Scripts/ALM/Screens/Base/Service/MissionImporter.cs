@@ -96,11 +96,15 @@ namespace ALM.Screens.Base
                     Constants.MISSION_PATH,
                     missionName);
 
+                bool root = baseDir is "/";
                 foreach (var e in entries)
                 {
+                    var name = root ?
+                        e.FullName :
+                        e.FullName.Replace(baseDir, "");
                     var dest = Path.Combine(
                         missionDirAbs,
-                        e.FullName.Replace(baseDir, ""));
+                        name);
 
                     Directory.CreateDirectory(Path.GetDirectoryName(dest));
                     e.ExtractToFile(dest, true);
