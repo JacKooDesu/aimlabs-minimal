@@ -38,6 +38,7 @@ namespace ALM.Screens.Mission
             Room room,
             Replay replay,
             Realm realm,
+            DiscordHandler discordHandler,
             Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
         {
@@ -55,6 +56,8 @@ namespace ALM.Screens.Mission
 
             if (_mission.Outline.Time > 0)
                 _timer = timerFactory(_mission.Outline.Time);
+
+            discordHandler.SetMission(_mission.Outline);
         }
 
         public override void Start()
