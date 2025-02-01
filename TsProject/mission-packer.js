@@ -18,6 +18,8 @@ fs.promises.readdir(dest).then((f, err, _) => {
 
 async function calMd5(mPath) {
   mPath = path.join(dest, mPath);
+  if (fs.lstatSync(mPath).isFile()) return;
+
   let files = await fs.promises.readdir(mPath, {
     withFileTypes: true,
     recursive: true,
