@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ALM.Common;
 using ALM.Data;
 using ALM.Util.Debugger;
@@ -10,6 +12,11 @@ namespace ALM.Screens.Base
     public class DiscordHandler : IManagedTickable, IDisposable
     {
         DiscordRpcClient discord;
+        Button _downloadButton = new()
+        {
+            Label = "Download ALM",
+            Url = Constants.Url.GITHUB_REPO
+        };
 
         public DiscordHandler()
         {
@@ -17,6 +24,7 @@ namespace ALM.Screens.Base
                 Constants.Discord.APP_ID,
                 logger: new Logger());
 
+            // discord.RegisterUriScheme();
             discord.Initialize();
         }
 
@@ -31,6 +39,9 @@ namespace ALM.Screens.Base
 
         public void SetActivity(RichPresence presence)
         {
+            List<Button> btns = presence.Buttons?.ToList() ?? new();
+            btns.Add(_downloadButton);
+            presence.Buttons = btns.ToArray();
             discord.SetPresence(presence);
         }
 
