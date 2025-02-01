@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -9,7 +12,6 @@ using Cysharp.Threading.Tasks;
 
 namespace ALM.Screens.Base
 {
-    using System;
     using ALM.Data;
     using ALM.Util;
 
@@ -189,5 +191,33 @@ namespace ALM.Screens.Base
             });
         }
 
+        // This is csharp version of mission md5 generator
+        // Also see 'TsProject/mission-packager.js'
+        string MissionMd5Generator(string missionPath)
+        {
+            var md5 = MD5.Create();
+
+            var list = Directory.GetFiles(missionPath, "*", new EnumerationOptions() { RecurseSubdirectories = true })
+                .Where(x => !x.EndsWith(".map") && !x.EndsWith(".md5"))
+                .OrderBy(x => Path.GetFileName(x))
+                .ToList();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                using (FileStream fs = File.OpenRead(list[i]))
+                {
+                    // FIXME: use const size buffer?
+                    var bytes = new byte[fs.Length];
+                    fs.Read(bytes, 0, bytes.Length);
+
+                    if (i == list.Count - 1)
+                        md5.TransformFinalBlock(bytes, 0, bytes.Length);
+                    else
+                        md5.TransformBlock(bytes, 0, bytes.Length, bytes, 0);
+                }
+            }
+
+            return BitConverter.ToString(md5.Hash).Replace("-", "").ToLower();
+        }
     }
 }
