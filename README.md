@@ -3,6 +3,7 @@
 >**This project is in very early dev status. Leave comment in issue page if you have any good idea! PR accepted as well!**
 
 [中文這裡](./docs/README-ZH.md)
+[Dev Logs](https://www.youtube.com/playlist?list=PLG-7kiz0ACzoNg00PC8ezm3Dl2S-2Edmh)
 
 # AimLabs Minimal
 
@@ -10,17 +11,22 @@ I am a poor skill FPS game lover and improve skill with AimLabs before. As you c
 
 So here comes AimLabs Minimal aka ALM!!
 
-## Features
+## Goals
 
-- Very small file size and non-profit in this training tool
-- Missions are expandable using js scripts
-- Webgl version is planned as well, means you don't need to download it to your disk
+- Keep the main executable binary in small file size
+- Non-profit and hope comunity stronger make it better training tool
+- By PuerTs, missions are expandable using js scripts, and a big develop direction is to provide bindings to make mission development easier
+- High customized options
+- Standardized mission repository deploy planned, everyone can host the service
+- ~~Webgl version is planned as well, means you don't need to download it to your disk~~(since PuerTs not provide a proper way to hot-reload scripts on webgl, the develop has paused)
 
 ## Download
 
 Can download it from release page
 
 ### Windows
+
+[Link](https://github.com/JacKooDesu/aimlabs-minimal/releases/latest)
 
 ### Linux
 
@@ -49,6 +55,7 @@ Simplily download and put them into `[game-root]/updater`.
   - [VContainer](https://vcontainer.hadashikick.jp)
   - [UniTask](https://github.com/Cysharp/UniTask)
   - [Realms](https://github.com/realm/realm-dotnet)
+  - [Discord RPC](https://github.com/lachee/discord-rpc-csharp)
 
 ### Mission Develop
 

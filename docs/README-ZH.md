@@ -1,20 +1,27 @@
+[開發紀錄](https://www.youtube.com/playlist?list=PLG-7kiz0ACzoNg00PC8ezm3Dl2S-2Edmh)
+
 # AimLabs 極簡版
 
 我是欠缺練習的 FPS 遊戲愛好者，之前用 AimLabs 來提升技術。但它現在又大又圓，廣告多而且大小來到了 10 多 GB。
 
 所以這就是為什麼有了 AimLabs 極簡版，簡稱 ALM！！
 
-## 功能特色
+## 目標
 
-- 檔案體積極小且非營利的訓練工具
-- 可透過 js 腳本擴充任務
-- 計劃開發 WebGL 版本，意味著你不需要下載
+- 保持主執行檔案小容量
+- 非營利且希望社群能夠協助使其成為更好的訓練工具
+- 透過 PuerTs，任務可使用 js 腳本擴展。其中一個開發方向是提供綁定以使任務開發更容易
+- 高度客製化
+- 計劃部署標準化任務儲存庫，每個人都可以託管服務
+- ~~計劃開發 Webgl 版本，意味著你不需要下載到硬碟中~~（由於 PuerTs 未提供適當的方式在 webgl 上熱重載腳本，開發已暫停）
 
 ## 下載
 
 可以在 Release 內下載
 
 ### Windows
+
+[連結](https://github.com/JacKooDesu/aimlabs-minimal/releases/latest)
 
 ### Linux
 
@@ -43,6 +50,7 @@
   - [VContainer](https://vcontainer.hadashikick.jp)
   - [UniTask](https://github.com/Cysharp/UniTask)
   - [Realms](https://github.com/realm/realm-dotnet)
+  - [Discord RPC](https://github.com/lachee/discord-rpc-csharp)
 
 ### 任務開發
 
