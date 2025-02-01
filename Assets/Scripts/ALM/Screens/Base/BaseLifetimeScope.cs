@@ -64,6 +64,10 @@ namespace ALM.Screens.Base
 
             builder.Register<PlayHistoryService>(Lifetime.Singleton);
 
+            builder.Register<DiscordHandler>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+
             builder.RegisterComponentInHierarchy<SettingPanel>();
             builder.RegisterComponentInHierarchy<CrosshairPanel>();
             builder.RegisterComponentInHierarchy<Room>();

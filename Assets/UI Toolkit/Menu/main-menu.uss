@@ -228,19 +228,19 @@
     color: rgba(27, 27, 27, 0);
 }
 
-.unity-text-element
-{
+.unity-text-element {
     overflow: hidden;
 }
 
-
-.unity-label
-{
+.unity-label {
     overflow: hidden;
+    color: rgb(153, 153, 153);
+    font-size: 32px;
+    -unity-text-align: middle-left;
+    -unity-font-style: bold;
 }
 
-.unity-button
-{
+.unity-button {
     overflow: hidden;
 }
 
@@ -323,4 +323,12 @@
     transition-property: width;
     transition-duration: 0.5s;
     transition-timing-function: ease-out-cubic;
+}
+
+#RepoFunctions {
+    flex-grow: 0;
+    max-height: 10%;
+    margin-bottom: 0;
+    flex-direction: row;
+    justify-content: space-between;
 }

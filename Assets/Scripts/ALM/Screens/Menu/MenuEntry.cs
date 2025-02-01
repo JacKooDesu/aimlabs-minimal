@@ -19,8 +19,14 @@ namespace ALM.Screens.Menu
         [Inject]
         Room _room;
 
-        public MenuEntry(UIDocument rootUi) : base(rootUi)
+        public MenuEntry(
+            DiscordHandler discordHandler,
+            UIDocument rootUi) : base(rootUi)
         {
+            discordHandler.SetActivity(new()
+            {
+                State = "In Menu",
+            });
         }
 
         public override void Start()

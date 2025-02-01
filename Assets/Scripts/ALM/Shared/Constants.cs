@@ -36,5 +36,10 @@ namespace ALM
         {
             public const string GITHUB_REPO = "https://github.com/JacKooDesu/aimlabs-minimal";
         }
+
+        public static class Discord
+        {
+            public const string APP_ID = "1331314323905056798";
+        }
     }
 }
