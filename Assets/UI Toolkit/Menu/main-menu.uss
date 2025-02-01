@@ -236,7 +236,7 @@
     overflow: hidden;
     color: rgb(153, 153, 153);
     font-size: 32px;
-    -unity-text-align: middle-center;
+    -unity-text-align: middle-left;
     -unity-font-style: bold;
 }
 
