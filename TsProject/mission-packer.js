@@ -3,8 +3,8 @@ const fs = require("fs");
 const path = require("path");
 
 const destMap = {
-  win: "../build/StandaloneWindows64",
-  linux: "../build/StandaloneLinux64",
+  win: "../build/StandaloneWindows64/missions",
+  linux: "../build/StandaloneLinux64/missions",
 };
 const dest = destMap[process.argv[2]] || "./output" + "/missions";
 
