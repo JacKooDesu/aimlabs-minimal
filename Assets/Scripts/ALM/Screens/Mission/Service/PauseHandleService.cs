@@ -15,6 +15,9 @@ namespace ALM.Screens.Mission
         readonly Timer _countDownTimer;
         Action _countDownTicker;
 
+        public event Action OnPause;
+        public event Action OnResume;
+
         public PauseHandleService(
             GameStatusHandler handler,
             Func<float, Timer> timerFactory)
@@ -41,6 +44,7 @@ namespace ALM.Screens.Mission
 
         void Paused()
         {
+            OnPause?.Invoke();
             _countDownTicker = null;
 
             UIStackHandler.PushUI((uint)UIIndex.Pause);
@@ -60,6 +64,10 @@ namespace ALM.Screens.Mission
 
             _countDownTimer.Reset();
             _countDownTicker = _countDownTimer.Tick;
+
+            // We need know when to off blur ui, 
+            // not like the method Resume() to set game status
+            OnResume?.Invoke();
         }
 
         void Resume()
