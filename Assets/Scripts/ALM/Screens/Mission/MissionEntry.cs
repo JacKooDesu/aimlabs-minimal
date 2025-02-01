@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cysharp.Threading.Tasks;
@@ -57,7 +58,11 @@ namespace ALM.Screens.Mission
             if (_mission.Outline.Time > 0)
                 _timer = timerFactory(_mission.Outline.Time);
 
-            discordHandler.SetMission(_mission.Outline);
+            discordHandler.SetMission(
+                _mission.Outline,
+                realm.All<MissionRepoData>()
+                    .GetMissionDownloadUrls(_mission.Outline)
+                    .First());
         }
 
         public override void Start()

@@ -161,7 +161,7 @@ namespace ALM.Screens.Base
         public async UniTask<string> DownloadMission(RepoContent repo, MissionOutline outline)
         {
             var result = await UnityWebRequest
-                .Get(repo.DownloadApi + outline.Name)
+                .Get(repo.GetMissionDownloadUrl(outline))
                 .SendWebRequest()
                 .ToUniTask();
 

@@ -28,13 +28,23 @@ namespace ALM.Screens.Base
             discord.Initialize();
         }
 
-        public void SetMission(MissionOutline mission)
+        public void SetMission(
+            MissionOutline mission,
+            string downloadUrl = null)
         {
             SetActivity(new()
             {
                 State = mission.Name,
                 Details = mission.Description,
+                Buttons = _Buttons()
             });
+
+            DiscordRPC.Button[] _Buttons() => downloadUrl is null ?
+                Array.Empty<DiscordRPC.Button>() :
+                new DiscordRPC.Button[] { new(){
+                    Label = "Get Mission",
+                    Url = downloadUrl
+                } };
         }
 
         public void SetActivity(RichPresence presence)

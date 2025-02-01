@@ -29,5 +29,8 @@ namespace ALM.Data
 
         [JsonProperty("missions")]
         public MissionOutline[] Missions { get; private set; }
+
+        public string GetMissionDownloadUrl(MissionOutline outline) =>
+            DownloadApi + outline.Name;
     }
 }
