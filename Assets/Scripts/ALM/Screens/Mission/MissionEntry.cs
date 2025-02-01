@@ -62,7 +62,7 @@ namespace ALM.Screens.Mission
                 _mission.Outline,
                 realm.All<MissionRepoData>()
                     .GetMissionDownloadUrls(_mission.Outline)
-                    .First());
+                    .FirstOrDefault());
         }
 
         public override void Start()
