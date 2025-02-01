@@ -150,8 +150,9 @@ namespace ALM.Screens.Mission
 
             builder.RegisterBuildCallback(r =>
             {
-                r.Resolve<GameStatusHandler>().Register<MissionEntry>(GameStatus.Paused, () => _pauseBlur.SetActive(true));
-                r.Resolve<GameStatusHandler>().Register<MissionEntry>(GameStatus.Playing, () => _pauseBlur.SetActive(false));
+                var pauseService = r.Resolve<PauseHandleService>();
+                pauseService.OnPause += () => _pauseBlur.SetActive(true);
+                pauseService.OnResume += () => _pauseBlur.SetActive(false);
             });
         }
     }
