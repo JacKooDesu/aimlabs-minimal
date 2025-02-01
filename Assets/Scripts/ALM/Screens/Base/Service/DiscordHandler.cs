@@ -24,7 +24,6 @@ namespace ALM.Screens.Base
                 Constants.Discord.APP_ID,
                 logger: new Logger());
 
-            // discord.RegisterUriScheme();
             discord.Initialize();
         }
 
@@ -34,8 +33,8 @@ namespace ALM.Screens.Base
         {
             SetActivity(new()
             {
-                State = mission.Name,
-                Details = mission.Description,
+                State = "Training",
+                Details = mission.Name,
                 Buttons = _Buttons()
             });
 
