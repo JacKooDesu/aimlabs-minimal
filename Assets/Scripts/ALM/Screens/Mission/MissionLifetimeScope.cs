@@ -28,6 +28,8 @@ namespace ALM.Screens.Mission
         UIDocument _rootUi;
         [SerializeField]
         UnityEngine.UI.RawImage _crosshair;
+        [SerializeField]
+        GameObject _pauseBlur;
 
         protected override Type[] UiTypes() => new[]
         {
@@ -145,6 +147,12 @@ namespace ALM.Screens.Mission
                 builder.RegisterInstance<Util.Rng>(
                     new Util.Rng((uint)Guid.NewGuid().GetHashCode()));
             }
+
+            builder.RegisterBuildCallback(r =>
+            {
+                r.Resolve<GameStatusHandler>().Register<MissionEntry>(GameStatus.Paused, () => _pauseBlur.SetActive(true));
+                r.Resolve<GameStatusHandler>().Register<MissionEntry>(GameStatus.Playing, () => _pauseBlur.SetActive(false));
+            });
         }
     }
 }

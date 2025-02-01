@@ -474,7 +474,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -511,7 +511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1192825426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,6 +703,7 @@ MonoBehaviour:
   _missionName: test-mission
   _rootUi: {fileID: 1374097342}
   _crosshair: {fileID: 1458579377}
+  _pauseBlur: {fileID: 1192825425}
 --- !u!4 &1518459353
 Transform:
   m_ObjectHideFlags: 0
