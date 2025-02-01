@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MemoryPack;
 using Newtonsoft.Json;
 
 namespace ALM.Data
@@ -20,7 +21,8 @@ namespace ALM.Data
     }
 
     [JsonObject]
-    public class RepoContent
+    [MemoryPackable]
+    public partial class RepoContent
     {
         [JsonProperty("download_api")]
         public string DownloadApi { get; private set; }

@@ -131,9 +131,15 @@ namespace ALM.Screens.Base
             return FileIO.JLoad<MissionRepoList>(FileIO._File.Absolute(path), true);
         }
 
-        public async UniTask<RepoContent> GetRepoContent(MissionRepo repo)
+        public async UniTask<RepoContent> GetRepoContent(MissionRepo repo, bool forceUpdate = false)
         {
-            var result = new List<MissionOutline>();
+            if (!forceUpdate)
+            {
+                var data = _realm.Find<MissionRepoData>(repo.Name);
+                if (data is not null)
+                    return data.RepoContent;
+            }
+
             var request = await UnityWebRequest
                 .Get(repo.Endpoint)
                 .SendWebRequest()
@@ -143,6 +149,11 @@ namespace ALM.Screens.Base
                 throw new Exception("Failed to get mission list.");
 
             var content = JsonConvert.DeserializeObject<RepoContent>(request.downloadHandler.text);
+
+            _realm.Write(() =>
+            {
+                _realm.Add(new MissionRepoData(repo, request.downloadHandler.text), update: true);
+            });
 
             return content;
         }

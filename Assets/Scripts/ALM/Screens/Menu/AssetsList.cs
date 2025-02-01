@@ -13,18 +13,19 @@ namespace ALM.Screens.Menu
         public override uint Index => ((uint)UIIndex.AssetsList);
 
         List<Button> _buttons = new();
+        ScrollView _selectionInner;
 
         protected override void AfterConfig()
         {
             base.AfterConfig();
+            _selectionInner = _elementBase.Q<ScrollView>(name: "SelectionInner");
         }
 
         public override void Push()
         {
             base.Push();
 
-            var selectionInner = _elementBase.Q(name: "SelectionInner");
-            _buttons.ForEach(button => selectionInner.Remove(button));
+            _selectionInner.contentContainer.Clear();
             _buttons.Clear();
 
             if (UIStackHandler.Current().data is not EType t)
@@ -52,7 +53,7 @@ namespace ALM.Screens.Menu
                 Button button = new();
                 button.text = name;
                 button.RegisterCallback<ClickEvent>(_ => { });
-                selectionInner.Add(button);
+                _selectionInner.contentContainer.Add(button);
 
                 _buttons.Add(button);
             });

@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 namespace ALM.Data
 {
     using ALM.Util;
+    using MemoryPack;
 
     [JsonObject]
     public class MissionOutline

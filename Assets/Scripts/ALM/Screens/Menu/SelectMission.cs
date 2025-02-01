@@ -13,6 +13,7 @@ namespace ALM.Screens.Menu
         public override uint Index => ((uint)UIIndex.SelectMission);
         readonly MissionLoader _missionLoader;
 
+        ScrollView _selectionInner;
         List<Button> _missionButtons { get; } = new();
         int _missionVersion;
 
@@ -24,7 +25,8 @@ namespace ALM.Screens.Menu
         protected override void AfterConfig()
         {
             base.AfterConfig();
-            GenerateMissionList();
+            // GenerateMissionList();
+            _selectionInner = _elementBase.Q<ScrollView>(name: "SelectionInner");
         }
 
         public override void Push()
@@ -37,9 +39,7 @@ namespace ALM.Screens.Menu
 
         void GenerateMissionList()
         {
-            var selectionInner = _elementBase.Q(name: "SelectionInner");
-
-            _missionButtons.ForEach(button => selectionInner.Remove(button));
+            _selectionInner.contentContainer.Clear();
             _missionButtons.Clear();
 
             foreach (var mission in _missionLoader.GetMissions())
@@ -47,7 +47,7 @@ namespace ALM.Screens.Menu
                 Button button = new();
                 button.text = mission.Outline.Name;
                 button.RegisterCallback<ClickEvent>(_ => OnSelectMission(mission));
-                selectionInner.Add(button);
+                _selectionInner.contentContainer.Add(button);
 
                 _missionButtons.Add(button);
             }

@@ -13,7 +13,7 @@
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="MissionPanel" class="selection-parent 2nd inactive" style="height: auto; top: 10%; bottom: 10%;">
-        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
+        <engine:ScrollView name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="ImportPanel" class="selection-parent 2nd inactive" style="height: auto; top: 10%; bottom: 10%;">
@@ -54,15 +54,19 @@
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="AssetsList" class="selection-parent inactive 3rd" style="height: auto; top: 10%; bottom: 10%;">
-        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
+        <engine:ScrollView name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="HistoryPanel" class="selection-parent 4th inactive" style="height: auto; top: 10%; bottom: 10%;">
         <engine:ScrollView name="SelectionInner" class="selection-inner" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
-    <engine:VisualElement name="RepoMissions" class="selection-parent inactive 4th" style="height: auto; top: 10%; bottom: 10%;">
-        <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
+    <engine:VisualElement name="RepoMissions" class="selection-parent 4th inactive" style="height: auto; top: 10%; bottom: 10%;">
+        <engine:VisualElement name="RepoFunctions" class="selection-inner" style="flex-grow: 1;">
+            <engine:Label text="" name="RepoName" class="unity-label" />
+            <engine:Button text="Refresh" name="RefreshBtn" />
+        </engine:VisualElement>
+        <engine:ScrollView name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
     <engine:VisualElement name="RepoMissionInfo" class="selection-parent 5th inactive">
