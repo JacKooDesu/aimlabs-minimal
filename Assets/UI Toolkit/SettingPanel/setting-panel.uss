@@ -88,7 +88,7 @@
 
 .color-input-field__input {
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .color-input-field__rgb-field {
@@ -97,7 +97,8 @@
 
 .color-input-field__color-button {
     width: 8%;
-    margin-left: 15%;
+    margin-left: 0;
+    min-width: 8%;
 }
 
 .color-input-field__rgb-field .unity-base-field__label {

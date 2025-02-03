@@ -58,6 +58,7 @@ public class TypeConfig
                 typeof(UnityEngine.UI.Toggle),
                 typeof(UnityEngine.UI.Toggle.ToggleEvent),
                 typeof(UnityEngine.Events.UnityEvent<bool>),
+                typeof(UnityEngine.Color),
 
                 // UI Toolkit
                 typeof(UnityEngine.UIElements.Toggle),
@@ -101,7 +102,8 @@ public class TypeConfig
                 typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.Slider),
                 typeof(ALM.Util.UIToolkitExtend.OriginBindalbe.SliderInt),
                 typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement),
-                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindable),
+                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement.RgbaBindable),
+                typeof(ALM.Util.UIToolkitExtend.Elements.ColorBindElement.RgbBindable),
                 typeof(ALM.Util.RealmWrapper),
                 typeof(ALM.Util.Texturing.Creator),
                 typeof(ALM.Util.Texturing.Drawer),

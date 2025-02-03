@@ -9,7 +9,8 @@ const Drawer = CS.ALM.Util.Texturing.Drawer;
 const SliderIntBind = CS.ALM.Util.UIToolkitExtend.OriginBindalbe.SliderInt;
 const ToggleBind = CS.ALM.Util.UIToolkitExtend.OriginBindalbe.Toggle;
 const ColorBind =
-  CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement.Bindable;
+  CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement.RgbaBindable;
+const DefaultColor = CS.UnityEngine.Color.green;
 
 type ColorElement = CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement;
 type Toggle = CS.UnityEngine.UIElements.Toggle;
@@ -27,7 +28,7 @@ var thickness = new SliderIntBind(0, 20, 2);
 thickness.DataPath = "thickness";
 thickness.Label = "Thickness";
 
-var color = new ColorBind();
+var color = new ColorBind(DefaultColor);
 color.DataPath = "color";
 color.Label = "Color";
 
@@ -39,7 +40,7 @@ var innerCircle = new SliderIntBind(0, 120, 0);
 innerCircle.DataPath = "inner-circle";
 innerCircle.Label = "Inner Circle";
 
-var circleColor = new ColorBind();
+var circleColor = new ColorBind(DefaultColor);
 circleColor.DataPath = "circleColor";
 circleColor.Label = "circleColor";
 

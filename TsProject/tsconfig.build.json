@@ -1,7 +1,9 @@
 {
-  "extends": "./tsconfig.build.json",
+  "extends": "./tsconfig.json",
+  "exclude": ["./src/migration_updater/**", "./src/game_systems/**"],
   "compilerOptions": {
     "rootDir": "./src/missions",
     "outDir": "../build/StandaloneWindows64/missions"
   }
 }
+
