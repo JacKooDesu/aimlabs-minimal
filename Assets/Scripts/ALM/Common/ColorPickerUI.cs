@@ -130,6 +130,9 @@ namespace ALM.Common
 
         void ResolveArg(OpenArg arg)
         {
+            if (arg is null)
+                return;
+
             switch (arg)
             {
                 case OpenArgs args:

@@ -128,8 +128,8 @@ namespace ALM.Screens.Base
             var binder = new DataBinderCS(_optionView, _setting.Bindables, _setting);
             foreach (var x in _setting.Bindables)
             {
-                if (x.Element is ColorBindElement cb)
-                    cb.OnClickColorBlock += e => PickColor(e, cb);
+                if (x.Element is ColorBindElement element)
+                    element.OnClickColorBlock += e => PickColor(e, x, element);
             }
 
             _setting.OnChange += _ => _crosshairRenderer.Invoke(_canvas);
@@ -138,12 +138,16 @@ namespace ALM.Screens.Base
 
             _crosshairRenderer?.Invoke(_canvas);
 
-            void PickColor(ClickEvent e, ColorBindElement cb)
+            void PickColor(ClickEvent e, Bindable b, ColorBindElement element)
             {
                 _colorPicker.ConfigColor(
-                    new ColorPickerUI.OpenBy(e.position),
-                    c => cb.value = c,
-                    cb.value);
+                    new ColorPickerUI.OpenArgs(
+                        new ColorPickerUI.OpenBy(e.position),
+                        b is ColorBindElement.RgbaBindable ?
+                            new ColorPickerUI.WithAlpha() : null
+                    ),
+                    c => element.value = c,
+                    element.value);
             }
         }
 
