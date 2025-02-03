@@ -13,16 +13,23 @@ namespace ALM.Common
         VisualElement _outside;
         VisualElement _mainElement;
         ColorPicker _pickerElement;
-        AlphaPicker _alphaElement;
+        AlphaPicker _alphaSlider;
         Label _rgbLabel;
         VisualElement _colorBlock;
 
+        public event Action<Color> OnChangeColor;
+
         public Color Color
         {
-            get => _pickerElement.Color;
+            get => new(
+                _pickerElement.Color.r,
+                _pickerElement.Color.g,
+                _pickerElement.Color.b,
+                _alphaSlider.Alpha);
             set
             {
                 _pickerElement.Color = value;
+                _alphaSlider.Alpha = value.a;
                 UpdateColor();
             }
         }
@@ -35,7 +42,7 @@ namespace ALM.Common
             _pickerElement = _mainElement.Q<ColorPicker>();
             _rgbLabel = _mainElement.Q<Label>();
             _colorBlock = _mainElement.Q<VisualElement>("ColorBlock");
-            _alphaElement = _mainElement.Q<AlphaPicker>();
+            _alphaSlider = _mainElement.Q<AlphaPicker>();
 
             _mainElement.Q<VisualElement>("ColorBlockBg").style.backgroundImage =
                 new(RuntimeResources.TransparencyGrid);
@@ -48,14 +55,16 @@ namespace ALM.Common
 
         void BindEvent()
         {
-            _pickerElement.OnChangeColor += _ => UpdateColor();
+            _pickerElement.OnChangeColor += c => OnChangeColor?.Invoke(c);
+            _alphaSlider.OnChangeAlpha += c => OnChangeColor?.Invoke(c);
+
+            OnChangeColor += _ => UpdateColor();
         }
 
         void UpdateColor()
         {
             _rgbLabel.text = $"RGB(#{ColorUtility.ToHtmlStringRGB(Color)})";
-            _colorBlock.style.backgroundColor = Color;
-            _alphaElement.Color = Color;
+            _colorBlock.style.backgroundColor = _alphaSlider.Color = Color;
         }
 
         #region public methods
@@ -74,7 +83,7 @@ namespace ALM.Common
             _outside.RegisterCallback<ClickEvent>(ReturnCheck);
 
             Color = color;
-            _pickerElement.OnChangeColor += setterAction;
+            OnChangeColor += setterAction;
 
             SetActive(true);
 
@@ -86,7 +95,7 @@ namespace ALM.Common
                 SetActive(false);
 
                 _outside.UnregisterCallback<ClickEvent>(ReturnCheck);
-                _pickerElement.OnChangeColor -= setterAction;
+                OnChangeColor -= setterAction;
             }
         }
 
@@ -101,13 +110,13 @@ namespace ALM.Common
             Color = color;
             bool flag = false;
             _outside.RegisterCallback<ClickEvent>(Checker);
-            _pickerElement.OnChangeColor += setterAction;
+            OnChangeColor += setterAction;
             SetActive(true);
 
             await UniTask.WaitUntil(() => flag);
 
             _outside.UnregisterCallback<ClickEvent>(Checker);
-            _pickerElement.OnChangeColor -= setterAction;
+            OnChangeColor -= setterAction;
 
             SetActive(false);
             return Color;
@@ -124,7 +133,7 @@ namespace ALM.Common
             }
 
             _outside.AddToClassList("hide");
-            _alphaElement.style.display = DisplayStyle.None;
+            _alphaSlider.style.display = DisplayStyle.None;
         }
         #endregion
 
@@ -145,7 +154,7 @@ namespace ALM.Common
                     break;
 
                 case WithAlpha _:
-                    _alphaElement.style.display = DisplayStyle.Flex;
+                    _alphaSlider.style.display = DisplayStyle.Flex;
                     break;
 
                 default:
@@ -190,10 +199,10 @@ namespace ALM.Common
 
         Action<Color> GetColorSetter(Action<Color> setter)
         {
-            if (_alphaElement.style.display == DisplayStyle.None)
+            if (_alphaSlider.style.display == DisplayStyle.None)
                 return setter;
 
-            return _ => setter(_alphaElement.Color);
+            return _ => setter(Color);
         }
     }
 }

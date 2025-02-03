@@ -13,16 +13,23 @@ namespace ALM.Util.UIToolkitExtend.Elements
         [UxmlAttribute, CreateProperty]
         public Color Color
         {
-            get => _color;
             set
             {
                 _color = value;
                 _color.a = _slider.value;
             }
         }
+        public float Alpha
+        {
+            get => _slider.value;
+            set => _slider.value = value;
+        }
 
         Slider _slider;
 
+        public event Action<Color> OnChangeAlpha;
+
+        // mark obsolete supress warning
         [Obsolete]
         public AlphaPicker()
         {
@@ -36,6 +43,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
             _slider.RegisterValueChangedCallback(evt =>
             {
                 _color.a = evt.newValue;
+                OnChangeAlpha?.Invoke(_color);
+                MarkDirtyRepaint();
             });
             _slider.style.opacity = 0f;
             _slider.inverted = true;
@@ -62,7 +71,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
                     },
                     colorKeys = new GradientColorKey[]
                     {
-                        new(Color, 0f),
+                        new(_color, 0f),
                     }
                 };
                 painter.MoveTo(rect.center - new Vector2(half, 0));

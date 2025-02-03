@@ -14,7 +14,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
         FloatField _b;
         FloatField _a;
 
-        Button _colorBlock;
+        Button _colorBtn;
+        VisualElement _colorBlock;
         public event Action<ClickEvent> OnClickColorBlock;
 
         public ColorBindElement() : this(false) { }
@@ -29,7 +30,20 @@ namespace ALM.Util.UIToolkitExtend.Elements
             if (withAlpha)
                 _a = this.Q<FloatField>("A");
 
-            _colorBlock = this.Q<Button>("ColorBlock");
+            _colorBtn = this.Q<Button>("ColorBlock");
+            _colorBtn.style.backgroundImage = RuntimeResources.TransparencyGrid;
+            _colorBtn.style.paddingBottom =
+                _colorBtn.style.paddingTop =
+                _colorBtn.style.paddingLeft =
+                _colorBtn.style.paddingRight = 0;
+            _colorBtn.Add(_colorBlock = new VisualElement()
+            {
+                pickingMode = PickingMode.Ignore,
+                style =
+                {
+                    flexGrow = 1
+                }
+            });
 
             value = Color.black;
             _r.RegisterValueChangedCallback<float>(v =>
@@ -45,7 +59,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
 
             this.AddToClassList("color-input-field");
 
-            _colorBlock.RegisterCallback<ClickEvent>(e => OnClickColorBlock?.Invoke(e));
+            _colorBtn.RegisterCallback<ClickEvent>(e => OnClickColorBlock?.Invoke(e));
         }
 
         protected Color GetColorCopy(float r = -1, float g = -1, float b = -1, float a = -1)
@@ -97,6 +111,9 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 _r.value = value.r;
                 _g.value = value.g;
                 _b.value = value.b;
+
+                if (_a is not null)
+                    _a.value = value.a;
 
                 _colorBlock.style.backgroundColor = value;
 
