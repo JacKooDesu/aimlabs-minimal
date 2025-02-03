@@ -3,8 +3,11 @@
     <engine:VisualElement name="Outside" class="outside">
         <engine:VisualElement name="MainPanel" class="main-panel">
             <ALM.Util.UIToolkitExtend.Elements.ColorPicker name="ColorPicker" class="hsv-ring-color-picker" />
+            <ALM.Util.UIToolkitExtend.Elements.AlphaPicker color="#FF0000FF" name="AlphaPicker" class="alpha-picker" style="-unity-background-scale-mode: scale-to-fit; background-repeat: no-repeat no-repeat;" />
             <engine:VisualElement name="ColorInfo" picking-mode="Ignore" class="color-info">
-                <engine:VisualElement name="ColorBlock" picking-mode="Ignore" class="color-block" />
+                <engine:VisualElement name="ColorBlockBg" picking-mode="Ignore" class="color-block">
+                    <engine:VisualElement name="ColorBlock" style="flex-grow: 1;" />
+                </engine:VisualElement>
                 <engine:Label text="RGB(#fffffff)" name="RgbLabel" picking-mode="Ignore" class="rgb-label" />
             </engine:VisualElement>
         </engine:VisualElement>

@@ -13,6 +13,7 @@ namespace ALM.Common
         VisualElement _outside;
         VisualElement _mainElement;
         ColorPicker _pickerElement;
+        AlphaPicker _alphaElement;
         Label _rgbLabel;
         VisualElement _colorBlock;
 
@@ -34,6 +35,10 @@ namespace ALM.Common
             _pickerElement = _mainElement.Q<ColorPicker>();
             _rgbLabel = _mainElement.Q<Label>();
             _colorBlock = _mainElement.Q<VisualElement>("ColorBlock");
+            _alphaElement = _mainElement.Q<AlphaPicker>();
+
+            _mainElement.Q<VisualElement>("ColorBlockBg").style.backgroundImage =
+                new(RuntimeResources.TransparencyGrid);
 
             BindEvent();
             UpdateColor();
@@ -50,26 +55,26 @@ namespace ALM.Common
         {
             _rgbLabel.text = $"RGB(#{ColorUtility.ToHtmlStringRGB(Color)})";
             _colorBlock.style.backgroundColor = Color;
+            _alphaElement.Color = Color;
         }
 
         #region public methods
         public abstract record OpenArg();
-        public abstract record OpenArgs(OpenArg[] Args) : OpenArg;
+        public record OpenArgs(params OpenArg[] Args) : OpenArg;
         public record OpenBy(Vector2 Position, float Scale = 1) : OpenArg;
+        public record WithAlpha : OpenArg;
 
         public void ConfigColor(
             OpenArg arg,
             Action<Color> setter,
             Color color = default)
         {
-            if (arg is OpenBy openBy)
-            {
-                MappingUI(openBy.Position, openBy.Scale);
-            }
+            ResolveArg(arg);
+            var setterAction = GetColorSetter(setter);
             _outside.RegisterCallback<ClickEvent>(ReturnCheck);
 
             Color = color;
-            _pickerElement.OnChangeColor += setter;
+            _pickerElement.OnChangeColor += setterAction;
 
             SetActive(true);
 
@@ -81,7 +86,7 @@ namespace ALM.Common
                 SetActive(false);
 
                 _outside.UnregisterCallback<ClickEvent>(ReturnCheck);
-                _pickerElement.OnChangeColor -= setter;
+                _pickerElement.OnChangeColor -= setterAction;
             }
         }
 
@@ -90,19 +95,19 @@ namespace ALM.Common
             Action<Color> setter,
             Color color = default)
         {
-            if (arg is OpenBy openBy)
-                MappingUI(openBy.Position, openBy.Scale);
+            ResolveArg(arg);
 
+            var setterAction = GetColorSetter(setter);
             Color = color;
             bool flag = false;
             _outside.RegisterCallback<ClickEvent>(Checker);
-            _pickerElement.OnChangeColor += setter;
+            _pickerElement.OnChangeColor += setterAction;
             SetActive(true);
 
             await UniTask.WaitUntil(() => flag);
 
             _outside.UnregisterCallback<ClickEvent>(Checker);
-            _pickerElement.OnChangeColor -= setter;
+            _pickerElement.OnChangeColor -= setterAction;
 
             SetActive(false);
             return Color;
@@ -113,11 +118,37 @@ namespace ALM.Common
         public void SetActive(bool active)
         {
             if (active)
+            {
                 _outside.RemoveFromClassList("hide");
-            else
-                _outside.AddToClassList("hide");
+                return;
+            }
+
+            _outside.AddToClassList("hide");
+            _alphaElement.style.display = DisplayStyle.None;
         }
         #endregion
+
+        void ResolveArg(OpenArg arg)
+        {
+            switch (arg)
+            {
+                case OpenArgs args:
+                    foreach (var item in args.Args)
+                        ResolveArg(item);
+                    break;
+
+                case OpenBy openBy:
+                    MappingUI(openBy.Position, openBy.Scale);
+                    break;
+
+                case WithAlpha _:
+                    _alphaElement.style.display = DisplayStyle.Flex;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         void MappingUI(Vector2 position, float scale)
         {
@@ -152,6 +183,14 @@ namespace ALM.Common
             _mainElement.style.transformOrigin = anchor;
             _mainElement.style.left = math.clamp(position.x, 0, leftMax) * converted;
             _mainElement.style.top = math.clamp(position.y, 0, topMax) * converted;
+        }
+
+        Action<Color> GetColorSetter(Action<Color> setter)
+        {
+            if (_alphaElement.style.display == DisplayStyle.None)
+                return setter;
+
+            return _ => setter(_alphaElement.Color);
         }
     }
 }
