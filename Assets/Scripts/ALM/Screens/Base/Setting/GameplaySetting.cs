@@ -28,7 +28,7 @@ namespace ALM.Screens.Base.Setting
         [JsonProperty("invertX")]
         public bool InvertX { get; private set; } = false;
         [JsonProperty("fov")]
-        public float FOV { get; private set; } = 60.0f;
+        public float FOV { get; private set; } = 90.0f;
 
         [JsonProperty("crosshair")]
         public IMAGE_FILE Crosshair { get; private set; } = new("");

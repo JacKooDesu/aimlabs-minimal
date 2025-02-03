@@ -43,7 +43,7 @@ namespace ALM.Screens.Mission
             _raycasterService = raycasterService;
 
             _camera = GetComponent<Camera>();
-            _camera.fieldOfView = _gameplaySetting.FOV;
+            SetFov();
             _gameplaySetting.OnChange += OnGamePlaySettingChange;
 
             _isTracking = mission.Outline.Type is Data.MissionOutline.MissionType.Tracking;
@@ -88,7 +88,12 @@ namespace ALM.Screens.Mission
         void OnGamePlaySettingChange(string path)
         {
             if (path == nameof(GameplaySetting.FOV))
-                _camera.fieldOfView = _gameplaySetting.FOV;
+                SetFov();
+        }
+
+        void SetFov()
+        {
+            _camera.fieldOfView = Camera.HorizontalToVerticalFieldOfView(_gameplaySetting.FOV, 16f / 9f);
         }
     }
 }
