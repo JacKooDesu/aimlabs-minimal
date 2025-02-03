@@ -1346,6 +1346,129 @@
         class Color extends System.ValueType implements System.IFormattable, System.IEquatable$1<UnityEngine.Color>
         {
             protected [__keep_incompatibility]: never;
+            /** Red component of the color.
+            */
+            public r : number
+            /** Green component of the color.
+            */
+            public g : number
+            /** Blue component of the color.
+            */
+            public b : number
+            /** Alpha component of the color (0 is transparent, 1 is opaque).
+            */
+            public a : number
+            /** Solid red. RGBA is (1, 0, 0, 1).
+            */
+            public static get red(): UnityEngine.Color;
+            /** Solid green. RGBA is (0, 1, 0, 1).
+            */
+            public static get green(): UnityEngine.Color;
+            /** Solid blue. RGBA is (0, 0, 1, 1).
+            */
+            public static get blue(): UnityEngine.Color;
+            /** Solid white. RGBA is (1, 1, 1, 1).
+            */
+            public static get white(): UnityEngine.Color;
+            /** Solid black. RGBA is (0, 0, 0, 1).
+            */
+            public static get black(): UnityEngine.Color;
+            /** Yellow. RGBA is (1, 0.92, 0.016, 1), but the color is nice to look at!
+            */
+            public static get yellow(): UnityEngine.Color;
+            /** Cyan. RGBA is (0, 1, 1, 1).
+            */
+            public static get cyan(): UnityEngine.Color;
+            /** Magenta. RGBA is (1, 0, 1, 1).
+            */
+            public static get magenta(): UnityEngine.Color;
+            /** Gray. RGBA is (0.5, 0.5, 0.5, 1).
+            */
+            public static get gray(): UnityEngine.Color;
+            /** English spelling for gray. RGBA is the same (0.5, 0.5, 0.5, 1).
+            */
+            public static get grey(): UnityEngine.Color;
+            /** Completely transparent. RGBA is (0, 0, 0, 0).
+            */
+            public static get clear(): UnityEngine.Color;
+            /** The grayscale value of the color. (Read Only)
+            */
+            public get grayscale(): number;
+            /** A linear value of an sRGB color.
+            */
+            public get linear(): UnityEngine.Color;
+            /** A version of the color that has had the gamma curve applied.
+            */
+            public get gamma(): UnityEngine.Color;
+            /** Returns the maximum color component value: Max(r,g,b).
+            */
+            public get maxColorComponent(): number;
+            /** Returns a formatted string of this color.
+            * @param $format A numeric format string.
+            * @param $formatProvider An object that specifies culture-specific formatting.
+            */
+            public ToString () : string
+            /** Returns a formatted string of this color.
+            * @param $format A numeric format string.
+            * @param $formatProvider An object that specifies culture-specific formatting.
+            */
+            public ToString ($format: string) : string
+            /** Returns a formatted string of this color.
+            * @param $format A numeric format string.
+            * @param $formatProvider An object that specifies culture-specific formatting.
+            */
+            public ToString ($format: string, $formatProvider: System.IFormatProvider) : string
+            public Equals ($other: any) : boolean
+            public Equals ($other: UnityEngine.Color) : boolean
+            public static op_Addition ($a: UnityEngine.Color, $b: UnityEngine.Color) : UnityEngine.Color
+            public static op_Subtraction ($a: UnityEngine.Color, $b: UnityEngine.Color) : UnityEngine.Color
+            public static op_Multiply ($a: UnityEngine.Color, $b: UnityEngine.Color) : UnityEngine.Color
+            public static op_Multiply ($a: UnityEngine.Color, $b: number) : UnityEngine.Color
+            public static op_Multiply ($b: number, $a: UnityEngine.Color) : UnityEngine.Color
+            public static op_Division ($a: UnityEngine.Color, $b: number) : UnityEngine.Color
+            public static op_Equality ($lhs: UnityEngine.Color, $rhs: UnityEngine.Color) : boolean
+            public static op_Inequality ($lhs: UnityEngine.Color, $rhs: UnityEngine.Color) : boolean
+            /** Linearly interpolates between colors a and b by t.
+            * @param $a Color a.
+            * @param $b Color b.
+            * @param $t Float for combining a and b.
+            */
+            public static Lerp ($a: UnityEngine.Color, $b: UnityEngine.Color, $t: number) : UnityEngine.Color
+            /** Linearly interpolates between colors a and b by t.
+            */
+            public static LerpUnclamped ($a: UnityEngine.Color, $b: UnityEngine.Color, $t: number) : UnityEngine.Color
+            public static op_Implicit ($c: UnityEngine.Color) : UnityEngine.Vector4
+            public static op_Implicit ($v: UnityEngine.Vector4) : UnityEngine.Color
+            public get_Item ($index: number) : number
+            public set_Item ($index: number, $value: number) : void
+            /** Calculates the hue, saturation and value of an RGB input color.
+            * @param $rgbColor An input color.
+            * @param $H Output variable for hue.
+            * @param $S Output variable for saturation.
+            * @param $V Output variable for value.
+            */
+            public static RGBToHSV ($rgbColor: UnityEngine.Color, $H: $Ref<number>, $S: $Ref<number>, $V: $Ref<number>) : void
+            /** Creates an RGB colour from HSV input.
+            * @param $H Hue [0..1].
+            * @param $S Saturation [0..1].
+            * @param $V Brightness value [0..1].
+            * @param $hdr Output HDR colours. If true, the returned colour will not be clamped to [0..1].
+            * @returns An opaque colour with HSV matching the input. 
+            */
+            public static HSVToRGB ($H: number, $S: number, $V: number) : UnityEngine.Color
+            /** Creates an RGB colour from HSV input.
+            * @param $H Hue [0..1].
+            * @param $S Saturation [0..1].
+            * @param $V Brightness value [0..1].
+            * @param $hdr Output HDR colours. If true, the returned colour will not be clamped to [0..1].
+            * @returns An opaque colour with HSV matching the input. 
+            */
+            public static HSVToRGB ($H: number, $S: number, $V: number, $hdr: boolean) : UnityEngine.Color
+            public constructor ($r: number, $g: number, $b: number, $a: number)
+            public constructor ($r: number, $g: number, $b: number)
+            public Equals ($obj: any) : boolean
+            public static Equals ($objA: any, $objB: any) : boolean
+            public constructor ()
         }
         /** Option flags for specifying special treatment of a log message.
         */
@@ -4695,11 +4818,12 @@
         class RaycasterService extends System.Object
         {
             protected [__keep_incompatibility]: never;
-            public add_OnCastBegin ($value: System.Action) : void
-            public remove_OnCastBegin ($value: System.Action) : void
+            public add_OnCastBegin ($value: System.Action$1<ALM.Screens.Mission.IRaycaster>) : void
+            public remove_OnCastBegin ($value: System.Action$1<ALM.Screens.Mission.IRaycaster>) : void
             public add_OnCastFinished ($value: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
             public remove_OnCastFinished ($value: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
             public Cast ($raycaster: ALM.Screens.Mission.IRaycaster) : void
+            public CastOverride ($raycaster: ALM.Screens.Mission.IRaycaster, $origin: UnityEngine.Vector3, $direction: UnityEngine.Vector3) : void
             public constructor ()
         }
         class BallPoolService extends System.Object implements System.IDisposable
@@ -4815,7 +4939,7 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        class Timer extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class Timer extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
         }
@@ -4870,6 +4994,8 @@
             public set PlayedAt(value: System.DateTimeOffset);
             public get ScoreData(): ALM.Data.MissionScoreData;
             public set ScoreData(value: ALM.Data.MissionScoreData);
+            public get ReplayData(): System.Array$1<number>;
+            public set ReplayData(value: System.Array$1<number>);
             public constructor ()
             public constructor ($mission: ALM.Data.MissionData, $scoreData: ALM.Data.MissionScoreData)
         }
@@ -5089,15 +5215,22 @@
             public add_OnClickColorBlock ($value: System.Action$1<UnityEngine.UIElements.ClickEvent>) : void
             public remove_OnClickColorBlock ($value: System.Action$1<UnityEngine.UIElements.ClickEvent>) : void
             public constructor ()
-            public constructor ($label: string)
+            public constructor ($withAlpha: boolean)
+            public constructor ($label: string, $withAlpha?: boolean)
         }
     }
     namespace ALM.Util.UIToolkitExtend.Elements.ColorBindElement {
-        class Bindable extends ALM.Util.UIToolkitExtend.Bindable
+        class RgbBindable extends ALM.Util.UIToolkitExtend.Bindable
         {
             protected [__keep_incompatibility]: never;
             public Default : UnityEngine.Color
             public get Value(): UnityEngine.Color;
+            public constructor ()
+            public constructor ($defaultColor: UnityEngine.Color)
+        }
+        class RgbaBindable extends ALM.Util.UIToolkitExtend.Elements.ColorBindElement.RgbBindable
+        {
+            protected [__keep_incompatibility]: never;
             public constructor ()
             public constructor ($defaultColor: UnityEngine.Color)
         }

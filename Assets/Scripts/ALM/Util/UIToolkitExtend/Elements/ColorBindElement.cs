@@ -12,17 +12,38 @@ namespace ALM.Util.UIToolkitExtend.Elements
         FloatField _r;
         FloatField _g;
         FloatField _b;
+        FloatField _a;
 
-        Button _colorBlock;
+        Button _colorBtn;
+        VisualElement _colorBlock;
         public event Action<ClickEvent> OnClickColorBlock;
 
-        public ColorBindElement() : base("Color", RGBContainer()) => new ColorBindElement("Color");
-        public ColorBindElement(string label) : base(label, RGBContainer())
+        public ColorBindElement() : this(false) { }
+        public ColorBindElement(bool withAlpha) : base("Color", RGBContainer()) =>
+            new ColorBindElement("Color", withAlpha);
+        public ColorBindElement(string label, bool withAlpha = false) : base(label, RGBContainer(withAlpha))
         {
             _r = this.Q<FloatField>("R");
             _g = this.Q<FloatField>("G");
             _b = this.Q<FloatField>("B");
-            _colorBlock = this.Q<Button>("ColorBlock");
+
+            if (withAlpha)
+                _a = this.Q<FloatField>("A");
+
+            _colorBtn = this.Q<Button>("ColorBlock");
+            _colorBtn.style.backgroundImage = RuntimeResources.TransparencyGrid;
+            _colorBtn.style.paddingBottom =
+                _colorBtn.style.paddingTop =
+                _colorBtn.style.paddingLeft =
+                _colorBtn.style.paddingRight = 0;
+            _colorBtn.Add(_colorBlock = new VisualElement()
+            {
+                pickingMode = PickingMode.Ignore,
+                style =
+                {
+                    flexGrow = 1
+                }
+            });
 
             value = Color.black;
             _r.RegisterValueChangedCallback<float>(v =>
@@ -32,21 +53,26 @@ namespace ALM.Util.UIToolkitExtend.Elements
             _b.RegisterValueChangedCallback<float>(v =>
                 value = GetColorCopy(b: v.newValue));
 
+            if (withAlpha)
+                _a.RegisterValueChangedCallback<float>(v =>
+                    value = GetColorCopy(a: v.newValue));
+
             this.AddToClassList("color-input-field");
 
-            _colorBlock.RegisterCallback<ClickEvent>(e => OnClickColorBlock?.Invoke(e));
-
-            Color GetColorCopy(float r = -1, float g = -1, float b = -1)
-            {
-                var c = value;
-                if (r != -1) c.r = r;
-                if (g != -1) c.g = g;
-                if (b != -1) c.b = b;
-                return c;
-            }
+            _colorBtn.RegisterCallback<ClickEvent>(e => OnClickColorBlock?.Invoke(e));
         }
 
-        static VisualElement RGBContainer()
+        protected Color GetColorCopy(float r = -1, float g = -1, float b = -1, float a = -1)
+        {
+            var c = value;
+            if (r != -1) c.r = r;
+            if (g != -1) c.g = g;
+            if (b != -1) c.b = b;
+            if (a != -1) c.a = a;
+            return c;
+        }
+
+        protected static VisualElement RGBContainer(bool withAlpha = false)
         {
             var container = new VisualElement();
             container.style.flexDirection = FlexDirection.Row;
@@ -54,6 +80,9 @@ namespace ALM.Util.UIToolkitExtend.Elements
             container.Add(RGBField("R", 0));
             container.Add(RGBField("G", 0));
             container.Add(RGBField("B", 0));
+
+            if (withAlpha)
+                container.Add(RGBField("A", 1));
 
             var colorBlock = new Button();
             colorBlock.name = "ColorBlock";
@@ -64,7 +93,7 @@ namespace ALM.Util.UIToolkitExtend.Elements
             return container;
         }
 
-        static FloatField RGBField(string name, float defaultValue)
+        protected static FloatField RGBField(string name, float defaultValue)
         {
             var field = new FloatField(name);
             field.name = name;
@@ -83,13 +112,16 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 _g.value = value.g;
                 _b.value = value.b;
 
+                if (_a is not null)
+                    _a.value = value.a;
+
                 _colorBlock.style.backgroundColor = value;
 
                 (this.dataSource as IDataTarget)?.IsDirty(this.bindingPath);
             }
         }
 
-        public class Bindable : UIToolkitExtend.Bindable
+        public class RgbBindable : UIToolkitExtend.Bindable
         {
             public Color Default;
             public Color Value
@@ -102,8 +134,8 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 }
             }
 
-            public Bindable() { }
-            public Bindable(Color defaultColor)
+            public RgbBindable() { }
+            public RgbBindable(Color defaultColor)
             {
                 Default = defaultColor;
                 AfterBuild += _ => Value = Default;
@@ -113,6 +145,15 @@ namespace ALM.Util.UIToolkitExtend.Elements
                 new ColorBindElement(Label) as T;
             public override void Bind(VisualElement ui, IDataTarget obj) =>
                 CommonBind<ColorBindElement, Color>(ui, obj);
+        }
+
+        public class RgbaBindable : RgbBindable
+        {
+            // Rewrite constructors for js env
+            public RgbaBindable() : base() { }
+            public RgbaBindable(Color defaultColor) : base(defaultColor) { }
+            public override T ElementBuilder<T>() =>
+                new ColorBindElement(Label, true) as T;
         }
     }
 }

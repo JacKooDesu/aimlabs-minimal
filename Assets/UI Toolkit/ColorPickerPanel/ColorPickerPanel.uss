@@ -50,6 +50,13 @@
     border-left-width: 2px;
 }
 
+.alpha-picker {
+    margin-top: 8px;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    margin-left: 16px;
+}
+
 .rgb-label {
     flex-grow: 4;
     -unity-font-style: bold;
