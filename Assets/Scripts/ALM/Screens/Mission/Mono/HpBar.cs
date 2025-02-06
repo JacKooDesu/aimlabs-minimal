@@ -28,6 +28,8 @@ namespace ALM.Screens.Mission
             _renderer = GetComponent<MeshRenderer>();
             _filter = GetComponent<MeshFilter>();
 
+            _renderer.material = RuntimeResources.DefaultUnlitMaterial;
+
             var mesh = new Mesh
             {
                 vertices = new Vector3[]
@@ -52,7 +54,6 @@ namespace ALM.Screens.Mission
             };
 
             _filter.mesh = mesh;
-            _renderer.material = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
         }
 
         void UpdateMesh()

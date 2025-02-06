@@ -32,5 +32,12 @@ namespace ALM
             tex.filterMode = FilterMode.Point;
             return tex;
         }
+
+        public static Material DefaultLitMaterial =>
+            _defaultLitMaterial ??= new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        static Material _defaultLitMaterial;
+        public static Material DefaultUnlitMaterial =>
+            _defaultUnlitMaterial ??= new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+        static Material _defaultUnlitMaterial;
     }
 }
