@@ -98,7 +98,8 @@ namespace ALM.Screens.Mission
 
         void OnFinishedMission()
         {
-            if (_replay is not null)
+            if (_replay is not null &&
+                _replay.InputFrames.Count is not 0)
                 _playHistoryService.AddPlayHistory(
                     _playHistory, _replay.Serialize());
 

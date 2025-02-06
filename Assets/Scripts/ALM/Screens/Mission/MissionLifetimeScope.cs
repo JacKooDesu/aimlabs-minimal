@@ -142,9 +142,12 @@ namespace ALM.Screens.Mission
                     .WithParameter<bool>(mission.Outline.Type is Data.MissionOutline.MissionType.Tracking)
                     .AsImplementedInterfaces();
 
-                if (mission.Outline.Time > 0)
+                if (mission.Outline.Time > 0 &&
+                    mission.Outline.Type is not Data.MissionOutline.MissionType.Tracking)
+                {
                     builder.Register<RecordService>(Lifetime.Scoped)
                         .AsImplementedInterfaces();
+                }
 
                 builder.RegisterInstance<Util.Rng>(
                     new Util.Rng((uint)Guid.NewGuid().GetHashCode()));
