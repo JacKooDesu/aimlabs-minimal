@@ -46,12 +46,9 @@ namespace ALM.Screens.Mission
             SetFov();
             _gameplaySetting.OnChange += OnGamePlaySettingChange;
 
-            _isTracking = mission.Outline.Type is Data.MissionOutline.MissionType.Tracking;
-
             _controller.OnFire += Fire;
         }
 
-        bool _isTracking;
         Camera _camera;
 
         #region IRaycaster
@@ -72,9 +69,6 @@ namespace ALM.Screens.Mission
 
         void Fire()
         {
-            if (_isTracking)
-                return;
-
             _raycasterService.Cast(this);
         }
 

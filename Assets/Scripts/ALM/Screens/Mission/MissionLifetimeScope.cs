@@ -138,6 +138,8 @@ namespace ALM.Screens.Mission
                     return IManagedTickable.Create(jsEnv.Tick);
                 }, Lifetime.Scoped);
                 builder.Register<FpsController>(Lifetime.Scoped)
+                    // If tracking mode use keep fire mode
+                    .WithParameter<bool>(mission.Outline.Type is Data.MissionOutline.MissionType.Tracking)
                     .AsImplementedInterfaces();
 
                 if (mission.Outline.Time > 0)

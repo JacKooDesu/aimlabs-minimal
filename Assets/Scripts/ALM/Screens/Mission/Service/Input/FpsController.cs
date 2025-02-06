@@ -16,12 +16,16 @@ namespace ALM.Screens.Mission
         public float RotX { get; private set; } = 0.0f;
         public float RotY { get; private set; } = 0.0f;
 
+        bool _keepFireMode;
+
         public FpsController(
             GameplaySetting gameplaySetting,
-            ControlSetting controlSetting)
+            ControlSetting controlSetting,
+            bool keepFireMode = false)
         {
             _gameplaySetting = gameplaySetting;
             _controlSetting = controlSetting;
+            _keepFireMode = keepFireMode;
         }
 
         public void Tick()
@@ -29,7 +33,7 @@ namespace ALM.Screens.Mission
             RotY += Input.GetAxisRaw("Mouse Y") * _gameplaySetting.Sensitivity;
             RotX += Input.GetAxisRaw("Mouse X") * _gameplaySetting.Sensitivity;
 
-            if (Input.GetKeyDown(_controlSetting.FireButton))
+            if (_keepFireMode || Input.GetKeyDown(_controlSetting.FireButton))
                 OnFire?.Invoke();
         }
 
