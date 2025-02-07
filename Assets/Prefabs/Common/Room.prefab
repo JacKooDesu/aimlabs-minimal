@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2748677222256878864}
-  - component: {fileID: 4921806651750580197}
-  - component: {fileID: 2741819570427509547}
-  - component: {fileID: 8594135678396500359}
-  - component: {fileID: 7433961998049087521}
+  - component: {fileID: 280968097133889939}
+  - component: {fileID: 6665946107322612601}
+  - component: {fileID: 621249489436881167}
   m_Layer: 0
   m_Name: Room
   m_TagString: Untagged
@@ -35,15 +34,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4921806651750580197
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3199345895509212736}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2741819570427509547
+--- !u!23 &280968097133889939
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bec7c418f12705744ac25cbb62066cb9, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,28 +79,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8594135678396500359
-BoxCollider:
+--- !u!33 &6665946107322612601
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3199345895509212736}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7433961998049087521
+  m_Mesh: {fileID: 0}
+--- !u!114 &621249489436881167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,3 +99,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5c72b411a496a4d8fff83dca14b232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fallbackTexture: {fileID: 2800000, guid: 1ab53e726ae16f541a2ecf3df8e1858f, type: 3}

@@ -52,7 +52,7 @@ namespace ALM.Screens.Mission
                 ReleaseBall,
                 DestroyBall);
 
-            _material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            _material = RuntimeResources.DefaultLitMaterial;
 
             _objectSetting.OnChange += UpdateBallColor;
             _audioSetting.OnChange += OnAudioChange;

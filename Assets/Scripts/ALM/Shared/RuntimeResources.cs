@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace ALM
@@ -32,5 +33,42 @@ namespace ALM
             tex.filterMode = FilterMode.Point;
             return tex;
         }
+
+        public static Material DefaultLitMaterial =>
+            _defaultLitMaterial ??= new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        static Material _defaultLitMaterial;
+        public static Material DefaultUnlitMaterial =>
+            _defaultUnlitMaterial ??= new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+        static Material _defaultUnlitMaterial;
+
+        /// <summary>
+        /// Return a copy of default cube mesh
+        /// </summary>
+        public static Mesh CubeMesh() =>
+            (_cubeMesh ??= Resources
+                .GetBuiltinResource<Mesh>("Cube.fbx").Copy())
+                .Copy();
+        static Mesh _cubeMesh;
+        /// <summary>
+        /// Return a copy of default cube mesh
+        /// </summary>
+        public static Mesh QuadMesh() =>
+            (_quadMesh ??= Resources
+                .GetBuiltinResource<Mesh>("Quad.fbx").Copy())
+                .Copy();
+        static Mesh _quadMesh;
+
+        static Mesh Copy(this Mesh mesh,
+            bool uv = true,
+            bool normals = true,
+            bool tangents = true) =>
+            new()
+            {
+                vertices = mesh.vertices.ToArray(),
+                triangles = mesh.triangles.ToArray(),
+                uv = uv ? mesh.uv.ToArray() : Array.Empty<Vector2>(),
+                normals = normals ? mesh.normals.ToArray() : Array.Empty<Vector3>(),
+                tangents = tangents ? mesh.tangents.ToArray() : Array.Empty<Vector4>(),
+            };
     }
 }

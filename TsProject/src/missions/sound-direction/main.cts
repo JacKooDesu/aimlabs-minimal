@@ -33,7 +33,7 @@ export function entry() {
 
   FileIO.LoadExternalSoundSync(path, (r) => {
     clip = r;
-    next();
+    setTimeout(() => next(), 0);
   });
 }
 
