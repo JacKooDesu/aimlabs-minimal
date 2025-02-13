@@ -35,10 +35,10 @@ namespace ALM
         }
 
         public static Material DefaultLitMaterial =>
-            _defaultLitMaterial ??= new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            _defaultLitMaterial ??= Resources.Load<Material>("Materials/Lit");
         static Material _defaultLitMaterial;
         public static Material DefaultUnlitMaterial =>
-            _defaultUnlitMaterial ??= new Material(Shader.Find("Universal Render Pipeline/Unlit"));
+            _defaultUnlitMaterial ??= Resources.Load<Material>("Materials/Unlit");
         static Material _defaultUnlitMaterial;
 
         /// <summary>
