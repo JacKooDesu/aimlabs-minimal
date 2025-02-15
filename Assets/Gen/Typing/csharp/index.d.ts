@@ -4852,7 +4852,7 @@
         class GltfLoaderService extends System.Object
         {
             protected [__keep_incompatibility]: never;
-            public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>) : ALM.Screens.Mission.GltfLoaderService
+            public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>, $basePath: string) : ALM.Screens.Mission.GltfLoaderService
             public Register ($name: string, $path: string) : void
             public Get ($name: string) : void
             public Release ($name: string, $go: UnityEngine.GameObject) : void
@@ -5610,5 +5610,29 @@
             public constructor ($texture: UnityEngine.Texture2D)
             public constructor ()
         }
+    }
+    namespace ALM.Util.EventBinder {
+        class CollideBasedEventHandler extends UnityEngine.MonoBehaviour
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class CollisionEventHandler extends ALM.Util.EventBinder.CollideBasedEventHandler
+        {
+            protected [__keep_incompatibility]: never;
+            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
+            public Register ($timing: ALM.Util.EventBinder.CollideBasedEventHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.CollisionEventHandler
+            public constructor ()
+        }
+        class TriggerEventHandler extends ALM.Util.EventBinder.CollideBasedEventHandler
+        {
+            protected [__keep_incompatibility]: never;
+            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
+            public Register ($timing: ALM.Util.EventBinder.CollideBasedEventHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.TriggerEventHandler
+            public constructor ()
+        }
+    }
+    namespace ALM.Util.EventBinder.CollideBasedEventHandler {
+        enum Timing
+        { Enter = 0, Stay = 1, Exit = 2 }
     }
 }

@@ -109,6 +109,9 @@ public class TypeConfig
                 typeof(ALM.Util.Texturing.Creator),
                 typeof(ALM.Util.Texturing.Drawer),
                 typeof(ALM.Util.Rng),
+                typeof(ALM.Util.EventBinder.CollideBasedEventHandler),
+                typeof(ALM.Util.EventBinder.CollisionEventHandler),
+                typeof(ALM.Util.EventBinder.TriggerEventHandler),
             };
         }
     }

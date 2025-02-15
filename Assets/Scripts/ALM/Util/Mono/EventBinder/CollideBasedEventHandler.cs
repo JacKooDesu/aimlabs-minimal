@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Util.EventBinder
+namespace ALM.Util.EventBinder
 {
     public abstract class CollideBasedEventHandler : MonoBehaviour
     {
