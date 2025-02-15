@@ -46,11 +46,15 @@ namespace ALM.Util.EventBinder
                     return null;
                 }
 
-                collider = target.AddComponent<BoxCollider>();
+                var box = target.AddComponent<BoxCollider>();
                 Bounds bounds = new(target.transform.position, Vector3.zero);
                 foreach (var render in target.GetComponentsInChildren<Renderer>())
                     bounds.Encapsulate(render.bounds);
                 bounds.center = target.transform.InverseTransformPoint(bounds.center);
+                box.size = bounds.size;
+                box.center = bounds.center;
+
+                collider = box;
             }
 
             var result = target.AddComponent<T>();
