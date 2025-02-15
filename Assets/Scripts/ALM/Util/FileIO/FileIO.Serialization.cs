@@ -69,6 +69,8 @@ namespace ALM.Util
             { typeof(ZIP), "zip" },
             { typeof(CJS), "cjs" },
             { typeof(TXT), "txt" },
+            { typeof(GLTF), "gltf" },
+            { typeof(GLB), "glb" },
         };
         public static ExtensionFilter[] ParseExtension(this Extension extension)
         {
@@ -126,5 +128,7 @@ namespace ALM.Util
         public record ZIP() : Extension();
         public record CJS() : Extension();
         public record TXT() : Extension();
+        public record GLTF() : Extension();
+        public record GLB() : Extension();
     }
 }
