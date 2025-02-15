@@ -9,6 +9,7 @@ namespace ALM.Screens.Result
     using ALM.Data;
     using ALM.Screens.Base;
     using ALM.Screens.Mission;
+    using Cysharp.Threading.Tasks;
 
     [HandlabeScene("Result")]
     public class ResultLifetimeScope : HandlableLifetimeScope<ResultLifetimeScope, ResultEntry>
@@ -26,12 +27,14 @@ namespace ALM.Screens.Result
         public record Payload(
             MissionOutline Mission,
             PlayHistory PlayHistory) : LoadPayload;
-        public override void AfterLoad(LoadPayload payload)
+        public override UniTask AfterLoad(LoadPayload payload)
         {
             if (payload is not Payload p)
-                return;
+                return UniTask.CompletedTask;
 
             _payload = p;
+
+            return UniTask.CompletedTask;
         }
 
         protected override void Configure(IContainerBuilder builder)

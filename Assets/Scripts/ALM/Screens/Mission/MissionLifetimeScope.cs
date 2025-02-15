@@ -10,6 +10,7 @@ using TsEnvCore;
 
 namespace ALM.Screens.Mission
 {
+    using System.Linq;
     using ALM.Common;
     using ALM.Screens.Base;
     using ALM.Screens.Base.Setting;
@@ -20,7 +21,7 @@ namespace ALM.Screens.Mission
     public class MissionLifetimeScope : HandlableLifetimeScope<MissionLifetimeScope, MissionEntry>
     {
         [SerializeField]
-        string _missionName = null;
+        MissionLoader.PlayableMission _mission;
         bool _replay = false;
         PlayHistory _playHistory;
 
@@ -31,6 +32,8 @@ namespace ALM.Screens.Mission
         [SerializeField]
         GameObject _pauseBlur;
 
+        GltfLoaderService _gltfLoaderService;
+
         protected override Type[] UiTypes() => new[]
         {
             typeof(PauseUi),
@@ -40,25 +43,31 @@ namespace ALM.Screens.Mission
 
         public record MissionPayload(string MissionName) : LoadPayload;
         public record ReplayPayload(PlayHistory PlayHistory) : LoadPayload;
-        public override void AfterLoad(LoadPayload payload)
+        public override UniTask AfterLoad(LoadPayload payload)
         {
+            var missionName = string.Empty;
             if (payload is ReplayPayload rp)
             {
                 _replay = true;
-                _missionName = rp.PlayHistory.Mission.Name;
+                missionName = rp.PlayHistory.Mission.Name;
                 _playHistory = rp.PlayHistory;
-
-                return;
             }
 
             if (payload is MissionPayload mp)
             {
-                _missionName = mp.MissionName;
-
-                return;
+                missionName = mp.MissionName;
             }
 
-            throw new ArgumentException();
+            if (string.IsNullOrEmpty(missionName))
+                throw new ArgumentException();
+
+            var missionLoader = Parent.Container.Resolve<MissionLoader>();
+            _mission = missionLoader.GetMission(missionName);
+
+            if (_mission.Outline.GltfResources is not null)
+                _gltfLoaderService = GltfLoaderService.Create(_mission.Outline.GltfResources);
+
+            return UniTask.CompletedTask;
         }
 
         protected override void Configure(IContainerBuilder builder)
@@ -66,16 +75,13 @@ namespace ALM.Screens.Mission
             base.Configure(builder);
             builder.Register<JsConfigure>(Lifetime.Scoped);
 
-            var missionLoader = Parent.Container.Resolve<MissionLoader>();
-            var mission = missionLoader.GetMission(_missionName);
-
-            builder.Register(_ => mission, Lifetime.Scoped);
+            builder.Register(_ => _mission, Lifetime.Scoped);
             builder.Register<JsEnv>(
                 r =>
                 {
                     var loader = new LoaderCollection();
                     loader.AddLoader(new DefaultLoader());
-                    loader.AddLoader(new TsEnvCore.RootBasedLoader(mission.Path));
+                    loader.AddLoader(new TsEnvCore.RootBasedLoader(_mission.Path));
 
                     return new JsEnv(loader);
                 }, Lifetime.Scoped);
@@ -90,6 +96,9 @@ namespace ALM.Screens.Mission
                 .AsImplementedInterfaces()
                 .AsSelf();
             builder.Register<CrosshairService>(Lifetime.Scoped);
+            builder.Register<GltfLoaderService>(
+                _ => _gltfLoaderService ?? new(),
+                Lifetime.Scoped);
 
             builder.RegisterComponent<UIDocument>(_rootUi);
             builder.RegisterComponent(_crosshair);
@@ -129,7 +138,7 @@ namespace ALM.Screens.Mission
 
                 builder.Register(r =>
                 {
-                    var missionData = r.Resolve<Realm>().Find<MissionData>(_missionName);
+                    var missionData = r.Resolve<Realm>().Find<MissionData>(_mission.Outline.Name);
                     return new PlayHistory(missionData, new());
                 }, Lifetime.Scoped);
                 builder.Register(r =>
@@ -139,11 +148,11 @@ namespace ALM.Screens.Mission
                 }, Lifetime.Scoped);
                 builder.Register<FpsController>(Lifetime.Scoped)
                     // If tracking mode use keep fire mode
-                    .WithParameter<bool>(mission.Outline.Type is Data.MissionOutline.MissionType.Tracking)
+                    .WithParameter<bool>(_mission.Outline.Type is Data.MissionOutline.MissionType.Tracking)
                     .AsImplementedInterfaces();
 
-                if (mission.Outline.Time > 0 &&
-                    mission.Outline.Type is not Data.MissionOutline.MissionType.Tracking)
+                if (_mission.Outline.Time > 0 &&
+                    _mission.Outline.Type is not Data.MissionOutline.MissionType.Tracking)
                 {
                     builder.Register<RecordService>(Lifetime.Scoped)
                         .AsImplementedInterfaces();
