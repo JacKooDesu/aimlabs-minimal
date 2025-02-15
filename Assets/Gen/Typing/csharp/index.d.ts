@@ -4802,6 +4802,8 @@
             public set Score(value: ALM.Screens.Mission.ScoreService);
             public get ScoreData(): ALM.Data.MissionScoreData;
             public set ScoreData(value: ALM.Data.MissionScoreData);
+            public get GltfLoader(): ALM.Screens.Mission.GltfLoaderService;
+            public set GltfLoader(value: ALM.Screens.Mission.GltfLoaderService);
             public get Rng(): ALM.Util.Rng;
             public set Rng(value: ALM.Util.Rng);
             public get Time(): ALM.Screens.Mission.Time;
@@ -4810,8 +4812,8 @@
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>, $Rng: $Ref<ALM.Util.Rng>, $Time: $Ref<ALM.Screens.Mission.Time>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData, $Rng: ALM.Util.Rng, $Time: ALM.Screens.Mission.Time)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>, $GltfLoader: $Ref<ALM.Screens.Mission.GltfLoaderService>, $Rng: $Ref<ALM.Util.Rng>, $Time: $Ref<ALM.Screens.Mission.Time>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData, $GltfLoader: ALM.Screens.Mission.GltfLoaderService, $Rng: ALM.Util.Rng, $Time: ALM.Screens.Mission.Time)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4838,13 +4840,22 @@
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
+        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
             public Tick () : void
             public Dispose () : void
             public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
+            public constructor ()
+        }
+        class GltfLoaderService extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+            public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>) : ALM.Screens.Mission.GltfLoaderService
+            public Register ($name: string, $path: string) : void
+            public Get ($name: string) : void
+            public Release ($name: string, $go: UnityEngine.GameObject) : void
             public constructor ()
         }
         class Time extends System.Object
@@ -4860,7 +4871,7 @@
         Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
         }
         var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
-        class Ball extends UnityEngine.MonoBehaviour implements ALM.Screens.Mission.IRaycastTarget, ALM.Common.IManagedTickable
+        class Ball extends UnityEngine.MonoBehaviour implements ALM.Common.IManagedTickable, ALM.Screens.Mission.IRaycastTarget
         {
             protected [__keep_incompatibility]: never;
             public get TypeIndex(): number;
@@ -4939,7 +4950,7 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        class Timer extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
+        class Timer extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
         }
@@ -5030,6 +5041,8 @@
             public static OpenFolder ($path: string, $absolutePath?: boolean) : void
             public static GetMissionFolder ($missionName: string) : string
             public static CopyFileProcessor ($origin: ALM.Util.FileIO._File, $file: string, $destPath: string) : ALM.Util.FileIO._File
+            public static LoadGltfAsync ($file: ALM.Util.FileIO.File$1<ALM.Util.FileIO.Compose$2<ALM.Util.FileIO.GLTF, ALM.Util.FileIO.GLB>>, $ct?: System.Threading.CancellationToken) : Cysharp.Threading.Tasks.UniTask$1<GLTFast.GltfImport>
+            public static LoadGltfSync ($file: ALM.Util.FileIO.File$1<ALM.Util.FileIO.Compose$2<ALM.Util.FileIO.GLTF, ALM.Util.FileIO.GLB>>) : GLTFast.GltfImport
             public static SavePNG ($bytes: System.Array$1<number>, $path: string, $name: string) : string
             public static ParseExtension ($extension: ALM.Util.FileIO.Extension) : System.Array$1<SFB.ExtensionFilter>
         }
@@ -5160,6 +5173,339 @@
         }
         interface Extension {
             ParseExtension () : System.Array$1<SFB.ExtensionFilter>;
+        }
+        class ComposeExtension extends ALM.Util.FileIO.Extension implements System.IEquatable$1<ALM.Util.FileIO.Extension>, System.IEquatable$1<ALM.Util.FileIO.ComposeExtension>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class GLTF extends ALM.Util.FileIO.Extension implements System.IEquatable$1<ALM.Util.FileIO.Extension>, System.IEquatable$1<ALM.Util.FileIO.GLTF>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class GLB extends ALM.Util.FileIO.Extension implements System.IEquatable$1<ALM.Util.FileIO.Extension>, System.IEquatable$1<ALM.Util.FileIO.GLB>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Compose$2<T1, T2> extends ALM.Util.FileIO.ComposeExtension implements System.IEquatable$1<ALM.Util.FileIO.Extension>, System.IEquatable$1<ALM.Util.FileIO.ComposeExtension>, System.IEquatable$1<ALM.Util.FileIO.Compose$2<T1, T2>>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class File$1<T> extends ALM.Util.FileIO._File
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace GLTFast {
+        class GltfImportBase extends System.Object implements GLTFast.IGltfBuffers, GLTFast.IGltfReadable, GLTFast.IMaterialProvider, GLTFast.IMaterialsVariantsProvider, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IGltfBuffers
+        {
+        }
+        interface IGltfReadable extends GLTFast.IMaterialProvider, GLTFast.IMaterialsVariantsProvider
+        {
+        }
+        interface IMaterialProvider extends GLTFast.IMaterialsVariantsProvider
+        {
+        }
+        interface IMaterialsVariantsProvider
+        {
+        }
+        interface IMaterialsVariantsSlot
+        {
+        }
+        class GltfImportBase$1<TRoot> extends GLTFast.GltfImportBase implements GLTFast.IGltfBuffers, GLTFast.IGltfReadable$1<TRoot>, GLTFast.IGltfReadable, GLTFast.IMaterialProvider, GLTFast.IMaterialsVariantsProvider, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IGltfReadable$1<TRoot> extends GLTFast.IGltfReadable, GLTFast.IMaterialProvider, GLTFast.IMaterialsVariantsProvider
+        {
+        }
+        class GltfImport extends GLTFast.GltfImportBase$1<GLTFast.Schema.Root> implements GLTFast.IGltfBuffers, GLTFast.IGltfReadable$1<GLTFast.Schema.Root>, GLTFast.IGltfReadable, GLTFast.IMaterialProvider, GLTFast.IMaterialsVariantsProvider, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace GLTFast.Schema {
+        class RootBase extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NamedObject extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorSparseBase extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorSparseIndices extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorSparseValues extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorSparseBase$2<TIndices, TValues> extends GLTFast.Schema.AccessorSparseBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorSparse extends GLTFast.Schema.AccessorSparseBase$2<GLTFast.Schema.AccessorSparseIndices, GLTFast.Schema.AccessorSparseValues>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AccessorBase$1<TSparse> extends GLTFast.Schema.AccessorBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Accessor extends GLTFast.Schema.AccessorBase$1<GLTFast.Schema.AccessorSparse>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationChannelBase extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationChannelTarget extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationChannelBase$1<TTarget> extends GLTFast.Schema.AnimationChannelBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationChannel extends GLTFast.Schema.AnimationChannelBase$1<GLTFast.Schema.AnimationChannelTarget>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationSampler extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class AnimationBase$2<TChannel, TSampler> extends GLTFast.Schema.AnimationBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Animation extends GLTFast.Schema.AnimationBase$2<GLTFast.Schema.AnimationChannel, GLTFast.Schema.AnimationSampler>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Asset extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Buffer extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class BufferViewBase extends GLTFast.Schema.NamedObject implements GLTFast.Schema.IBufferView
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IBufferView
+        {
+        }
+        class BufferViewExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class BufferViewBase$1<TExtensions> extends GLTFast.Schema.BufferViewBase implements GLTFast.Schema.IBufferView
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class BufferView extends GLTFast.Schema.BufferViewBase$1<GLTFast.Schema.BufferViewExtensions> implements GLTFast.Schema.IBufferView
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class CameraBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class CameraOrthographic extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class CameraPerspective extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class CameraBase$2<TOrthographic, TPerspective> extends GLTFast.Schema.CameraBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Camera extends GLTFast.Schema.CameraBase$2<GLTFast.Schema.CameraOrthographic, GLTFast.Schema.CameraPerspective>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class RootExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Image extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MaterialBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MaterialExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureInfoBase extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NormalTextureInfoBase extends GLTFast.Schema.TextureInfoBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureInfoExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NormalTextureInfoBase$1<TExtensions> extends GLTFast.Schema.NormalTextureInfoBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NormalTextureInfo extends GLTFast.Schema.NormalTextureInfoBase$1<GLTFast.Schema.TextureInfoExtensions>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class OcclusionTextureInfoBase extends GLTFast.Schema.TextureInfoBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class OcclusionTextureInfoBase$1<TExtensions> extends GLTFast.Schema.OcclusionTextureInfoBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class OcclusionTextureInfo extends GLTFast.Schema.OcclusionTextureInfoBase$1<GLTFast.Schema.TextureInfoExtensions>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class PbrMetallicRoughnessBase extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureInfoBase$1<TExtensions> extends GLTFast.Schema.TextureInfoBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureInfo extends GLTFast.Schema.TextureInfoBase$1<GLTFast.Schema.TextureInfoExtensions>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class PbrMetallicRoughnessBase$1<TTextureInfo> extends GLTFast.Schema.PbrMetallicRoughnessBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class PbrMetallicRoughness extends GLTFast.Schema.PbrMetallicRoughnessBase$1<GLTFast.Schema.TextureInfo>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MaterialBase$6<TExtensions, TNormalTextureInfo, TOcclusionTextureInfo, TPbrMetallicRoughness, TTextureInfo, TTextureInfoExtensions> extends GLTFast.Schema.MaterialBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Material extends GLTFast.Schema.MaterialBase$6<GLTFast.Schema.MaterialExtensions, GLTFast.Schema.NormalTextureInfo, GLTFast.Schema.OcclusionTextureInfo, GLTFast.Schema.PbrMetallicRoughness, GLTFast.Schema.TextureInfo, GLTFast.Schema.TextureInfoExtensions>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshExtras extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshPrimitiveBase extends System.Object implements GLTFast.IMaterialsVariantsSlot, System.ICloneable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshPrimitiveExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshPrimitiveBase$1<TExtensions> extends GLTFast.Schema.MeshPrimitiveBase implements GLTFast.IMaterialsVariantsSlot, System.ICloneable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshPrimitive extends GLTFast.Schema.MeshPrimitiveBase$1<GLTFast.Schema.MeshPrimitiveExtensions> implements GLTFast.IMaterialsVariantsSlot, System.ICloneable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class MeshBase$2<TExtras, TPrimitive> extends GLTFast.Schema.MeshBase implements System.ICloneable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Mesh extends GLTFast.Schema.MeshBase$2<GLTFast.Schema.MeshExtras, GLTFast.Schema.MeshPrimitive> implements System.ICloneable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NodeBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NodeExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class NodeBase$1<TExtensions> extends GLTFast.Schema.NodeBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Node extends GLTFast.Schema.NodeBase$1<GLTFast.Schema.NodeExtensions>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Sampler extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Scene extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Skin extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureBase extends GLTFast.Schema.NamedObject
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureExtensions extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class TextureBase$1<TExtensions> extends GLTFast.Schema.TextureBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Texture extends GLTFast.Schema.TextureBase$1<GLTFast.Schema.TextureExtensions>
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class RootBase$15<TAccessor, TAnimation, TAsset, TBuffer, TBufferView, TCamera, TExtensions, TImage, TMaterial, TMesh, TNode, TSampler, TScene, TSkin, TTexture> extends GLTFast.Schema.RootBase
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class Root extends GLTFast.Schema.RootBase$15<GLTFast.Schema.Accessor, GLTFast.Schema.Animation, GLTFast.Schema.Asset, GLTFast.Schema.Buffer, GLTFast.Schema.BufferView, GLTFast.Schema.Camera, GLTFast.Schema.RootExtensions, GLTFast.Schema.Image, GLTFast.Schema.Material, GLTFast.Schema.Mesh, GLTFast.Schema.Node, GLTFast.Schema.Sampler, GLTFast.Schema.Scene, GLTFast.Schema.Skin, GLTFast.Schema.Texture>
+        {
+            protected [__keep_incompatibility]: never;
         }
     }
     namespace SFB {
