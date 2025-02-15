@@ -6,36 +6,49 @@ using UnityEngine.Pool;
 
 namespace ALM.Screens.Mission
 {
-    using System;
     using Util;
 
     public class GltfLoaderService
     {
         Dictionary<string, _GltfHandle> _gltfs = new();
+        string _basePath = "";
 
         public GltfLoaderService() { }
 
-        public static GltfLoaderService Create(Dictionary<string, string> resPaths)
+        public static async UniTask<GltfLoaderService> Create(
+            Dictionary<string, string> resPaths, string basePath)
         {
             var service = new GltfLoaderService();
+            service._basePath = basePath;
 
-            foreach (var (key, path) in resPaths)
-                service.Register(key, path);
+            await UniTask.WhenAll(
+                resPaths.Select(x =>
+                    UniTask.Create(async () =>
+                        await service.Register(x.Key, x.Value))));
 
             return service;
         }
 
-        public void Register(string name, string path)
+        public async UniTask Register(string name, string path)
         {
+            path = System.IO.Path.Combine(_basePath, path);
+
+            var import = await FileIO.LoadGltfAsync(new(path, FileIO.PathType.Absolute));
+
             _gltfs.TryAdd(
                 name,
-                new(FileIO.LoadGltfSync(new(path)), name));
+                await (new _GltfHandle()).Setup(import, name));
+
+            path.Dbg("Registered gltf: ");
         }
 
-        public void Get(string name)
+        public GameObject Get(string name)
         {
+            GameObject result = null;
             if (_gltfs.TryGetValue(name, out var handle))
-                handle.Pool.Get();
+                result = handle.Pool.Get();
+
+            return result;
         }
 
         public void Release(string name, GameObject go)
@@ -50,9 +63,9 @@ namespace ALM.Screens.Mission
             GameObject _origin;
             public GltfImport Gltf;
             public ObjectPool<GameObject> Pool;
-            bool _isReady;
+            // bool _isReady;
 
-            public _GltfHandle(GltfImport gltf, string name = "")
+            public async UniTask<_GltfHandle> Setup(GltfImport gltf, string name = "")
             {
                 _root = new GameObject(name).transform;
                 _root.gameObject.SetActive(false);
@@ -61,35 +74,23 @@ namespace ALM.Screens.Mission
                 _origin.transform.SetParent(_root);
 
                 this.Gltf = gltf;
-                _isReady = false;
+                await Gltf.InstantiateMainSceneAsync(_origin.transform)
+                    .AsUniTask();
 
                 Pool = new(
                     createFunc: Create,
                     actionOnGet: OnGet,
                     actionOnRelease: OnRelease);
 
-                UniTask.WaitUntil(() => Gltf.LoadingDone || Gltf.LoadingError)
-                    .ContinueWith(async () =>
-                    {
-                        if (Gltf.LoadingError)
-                            throw new Exception("Failed to load gltf");
-
-                        await Gltf.InstantiateMainSceneAsync(_origin.transform)
-                            .AsUniTask();
-                    })
-                    .Forget();
+                return this;
             }
 
 
             GameObject Create()
             {
                 GameObject result;
-                if (!_isReady)
-                    Gltf.InstantiateMainSceneAsync((result = new()).transform)
-                        .AsUniTask()
-                        .Forget();
-                else
-                    result = UnityEngine.Object.Instantiate(_origin);
+
+                result = UnityEngine.Object.Instantiate(_origin, parent: _root);
 
                 return result;
             }

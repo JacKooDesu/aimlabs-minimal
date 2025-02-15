@@ -43,7 +43,7 @@ namespace ALM.Screens.Mission
 
         public record MissionPayload(string MissionName) : LoadPayload;
         public record ReplayPayload(PlayHistory PlayHistory) : LoadPayload;
-        public override UniTask AfterLoad(LoadPayload payload)
+        public override async UniTask AfterLoad(LoadPayload payload)
         {
             var missionName = string.Empty;
             if (payload is ReplayPayload rp)
@@ -61,13 +61,13 @@ namespace ALM.Screens.Mission
             if (string.IsNullOrEmpty(missionName))
                 throw new ArgumentException();
 
-            var missionLoader = Parent.Container.Resolve<MissionLoader>();
+            var missionLoader = Find<BaseLifetimeScope>().Container.Resolve<MissionLoader>();
             _mission = missionLoader.GetMission(missionName);
 
             if (_mission.Outline.GltfResources is not null)
-                _gltfLoaderService = GltfLoaderService.Create(_mission.Outline.GltfResources);
-
-            return UniTask.CompletedTask;
+                _gltfLoaderService = await GltfLoaderService.Create(
+                    _mission.Outline.GltfResources,
+                    _mission.Path);
         }
 
         protected override void Configure(IContainerBuilder builder)
