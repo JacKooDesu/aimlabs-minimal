@@ -4854,7 +4854,7 @@
             protected [__keep_incompatibility]: never;
             public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>, $basePath: string) : ALM.Screens.Mission.GltfLoaderService
             public Register ($name: string, $path: string) : void
-            public Get ($name: string) : void
+            public Get ($name: string) : UnityEngine.GameObject
             public Release ($name: string, $go: UnityEngine.GameObject) : void
             public constructor ()
         }
@@ -4916,7 +4916,7 @@
             public remove_OnHitBy ($value: System.Action$1<number>) : void
             public add_OnHit ($value: System.Action) : void
             public remove_OnHit ($value: System.Action) : void
-            public Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : void
+            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Screens.Mission.AnomoyousRaycastTarget
             public HitBy ($index: number) : void
             public constructor ()
         }
