@@ -4909,6 +4909,17 @@
             Origin : UnityEngine.Vector3
             Direction : UnityEngine.Vector3
         }
+        class AnomoyousRaycastTarget extends ALM.Util.EventBinder.CollideBasedHandler implements ALM.Screens.Mission.IRaycastTarget
+        {
+            protected [__keep_incompatibility]: never;
+            public add_OnHitBy ($value: System.Action$1<number>) : void
+            public remove_OnHitBy ($value: System.Action$1<number>) : void
+            public add_OnHit ($value: System.Action) : void
+            public remove_OnHit ($value: System.Action) : void
+            public Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : void
+            public HitBy ($index: number) : void
+            public constructor ()
+        }
         interface IScoreCalculator
         {
             OnCasted ($caster: ALM.Screens.Mission.IRaycaster, $target: ALM.Screens.Mission.IRaycastTarget) : void
@@ -5117,6 +5128,26 @@
         class PlayableMission extends System.Object implements System.IEquatable$1<ALM.Screens.Base.MissionLoader.PlayableMission>
         {
             protected [__keep_incompatibility]: never;
+        }
+    }
+    namespace ALM.Util.EventBinder {
+        class CollideBasedHandler extends UnityEngine.MonoBehaviour
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class CollisionEventHandler extends ALM.Util.EventBinder.CollideBasedHandler
+        {
+            protected [__keep_incompatibility]: never;
+            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
+            public Register ($timing: ALM.Util.EventBinder.CollideBasedHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.CollisionEventHandler
+            public constructor ()
+        }
+        class TriggerEventHandler extends ALM.Util.EventBinder.CollideBasedHandler
+        {
+            protected [__keep_incompatibility]: never;
+            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
+            public Register ($timing: ALM.Util.EventBinder.CollideBasedHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.TriggerEventHandler
+            public constructor ()
         }
     }
     namespace UnityEngine.Audio {
@@ -5611,27 +5642,7 @@
             public constructor ()
         }
     }
-    namespace ALM.Util.EventBinder {
-        class CollideBasedEventHandler extends UnityEngine.MonoBehaviour
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        class CollisionEventHandler extends ALM.Util.EventBinder.CollideBasedEventHandler
-        {
-            protected [__keep_incompatibility]: never;
-            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
-            public Register ($timing: ALM.Util.EventBinder.CollideBasedEventHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.CollisionEventHandler
-            public constructor ()
-        }
-        class TriggerEventHandler extends ALM.Util.EventBinder.CollideBasedEventHandler
-        {
-            protected [__keep_incompatibility]: never;
-            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
-            public Register ($timing: ALM.Util.EventBinder.CollideBasedEventHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.TriggerEventHandler
-            public constructor ()
-        }
-    }
-    namespace ALM.Util.EventBinder.CollideBasedEventHandler {
+    namespace ALM.Util.EventBinder.CollideBasedHandler {
         enum Timing
         { Enter = 0, Stay = 1, Exit = 2 }
     }

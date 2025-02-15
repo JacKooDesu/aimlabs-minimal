@@ -6,10 +6,8 @@ using UnityEngine.Events;
 
 namespace ALM.Util.EventBinder
 {
-    public class CollisionEventHandler : CollideBasedEventHandler
+    public class CollisionEventHandler : CollideBasedHandler
     {
-        protected override Type TargetType() => typeof(CollisionEventHandler);
-
         public static CollisionEventHandler Setup(GameObject target, bool autoSetup = false) =>
             Setup<CollisionEventHandler>(target, autoSetup);
 

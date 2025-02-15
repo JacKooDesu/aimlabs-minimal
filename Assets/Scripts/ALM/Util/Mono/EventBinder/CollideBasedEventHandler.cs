@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace ALM.Util.EventBinder
 {
-    public abstract class CollideBasedEventHandler : MonoBehaviour
+    public abstract class CollideBasedHandler : MonoBehaviour
     {
         public abstract class Setting
         {
@@ -18,8 +18,6 @@ namespace ALM.Util.EventBinder
             internal UnityEvent<T> Event { get; } = new();
             public override void Invoke<_>(_ t) => Event.Invoke(t as T);
         }
-
-        protected abstract Type TargetType();
 
         public enum Timing
         {
@@ -38,13 +36,13 @@ namespace ALM.Util.EventBinder
         protected Dictionary<Timing, Dictionary<Type, Setting>> hooks { get; set; } = new();
 
         protected static T Setup<T>(GameObject target, bool autoSetup = false)
-            where T : CollideBasedEventHandler
+            where T : CollideBasedHandler
         {
             if (!target.TryGetComponent<Collider>(out var collider))
             {
                 if (!autoSetup)
                 {
-                    Debug.Log($"[CollisionHandler] {target} not attach collider!");
+                    Debug.Log($"[Collide Based Handler] {target} not attach collider!");
                     return null;
                 }
 
@@ -67,7 +65,7 @@ namespace ALM.Util.EventBinder
             C handler,
             Timing timing,
             UnityAction<T> action)
-        where C : CollideBasedEventHandler
+        where C : CollideBasedHandler
         where T : Component
         {
             Dictionary<Type, Setting> dict;
