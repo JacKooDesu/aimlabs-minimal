@@ -13,7 +13,9 @@ namespace ALM.Util
         public static async UniTask<GltfImport> LoadGltfAsync(
             File<Compose<GLTF, GLB>> file, CancellationToken ct = default)
         {
-            string path = file;
+            if (!file.TryGetPathSafe(out var path))
+                return null;
+
             var gltf = new GltfImport();
 
             var success = Path.GetExtension(path) switch
@@ -28,7 +30,9 @@ namespace ALM.Util
 
         public static GltfImport LoadGltfSync(File<Compose<GLTF, GLB>> file)
         {
-            string path = file;
+            if (!file.TryGetPathSafe(out var path))
+                return null;
+
             var gltf = new GltfImport();
 
             var task = Path.GetExtension(path) switch

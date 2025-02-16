@@ -37,6 +37,15 @@ namespace ALM.Util
             public static _File Relative(string path) =>
                 new AnomoyousFile(path, PathType.Relative);
 
+            /// <summary>
+            /// If file is not exist, return false
+            /// </summary>
+            public bool TryGetPathSafe(out string path)
+            {
+                path = this;
+                return System.IO.File.Exists(path);
+            }
+
             class AnomoyousFile : _File
             {
                 public AnomoyousFile(string path, PathType type) :

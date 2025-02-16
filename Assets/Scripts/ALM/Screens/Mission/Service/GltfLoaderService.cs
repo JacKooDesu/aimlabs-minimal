@@ -36,6 +36,9 @@ namespace ALM.Screens.Mission
             path = System.IO.Path.Combine(_basePath, path);
             var import = await FileIO.LoadGltfAsync(new(path, FileIO.PathType.Absolute));
 
+            if (import is null)
+                return;
+
             _gltfs.TryAdd(
                 name,
                 await handle.Setup(import, name));
