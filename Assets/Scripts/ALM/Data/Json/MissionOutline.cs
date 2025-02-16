@@ -1,11 +1,11 @@
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
 namespace ALM.Data
 {
     using ALM.Util;
-    using MemoryPack;
 
     [JsonObject]
     public class MissionOutline
@@ -31,6 +31,9 @@ namespace ALM.Data
         [JsonProperty("version")]
         public string Version { get; private set; } = "v0.0.0";
         public int VersionInt => VersionChecker.VersionToInt(Version);
+
+        [JsonProperty("gltf_resources")]
+        public Dictionary<string, string> GltfResources { get; private set; }
 
         public enum MissionType : int
         {

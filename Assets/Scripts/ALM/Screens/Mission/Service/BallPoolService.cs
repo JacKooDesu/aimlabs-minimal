@@ -7,6 +7,7 @@ using Unity.Mathematics;
 
 namespace ALM.Screens.Mission
 {
+    using System.Linq;
     using ALM.Screens.Base;
     using Base.Setting;
     using Data;
@@ -19,6 +20,16 @@ namespace ALM.Screens.Mission
         readonly AudioSetting _audioSetting;
 
         public ObjectPool<Ball> Pool { get; private set; }
+        public Func<Ball> BallFactory;
+        Ball _BallFactory()
+        {
+            var ball = GameObject
+                .CreatePrimitive(PrimitiveType.Sphere);
+            ball.GetComponent<MeshRenderer>().material = _material;
+            var component = ball.AddComponent<Ball>();
+
+            return component;
+        }
         /// <summary>
         /// All balls in pool
         /// </summary>
@@ -47,7 +58,7 @@ namespace ALM.Screens.Mission
                 clip => _hitSound = clip);
 
             Pool = new ObjectPool<Ball>(
-                () => CreateBall(missionScoreData, mission),
+                () => CreateBall(mission),
                 GetBall,
                 ReleaseBall,
                 DestroyBall);
@@ -81,33 +92,30 @@ namespace ALM.Screens.Mission
         }
 
         Ball CreateBall(
-            MissionScoreData scoreData,
             MissionLoader.PlayableMission mission)
         {
-            var ball = GameObject
-                .CreatePrimitive(PrimitiveType.Sphere);
-            ball.GetComponent<MeshRenderer>().material = _material;
-            var component = ball.AddComponent<Ball>();
-            component.OnHit += () => OnBallHit?.Invoke(component);
+            var ball = (BallFactory ??= _BallFactory).Invoke();
+
+            ball.OnHit += () => OnBallHit?.Invoke(ball);
             if (mission.Outline.Type is Data.MissionOutline.MissionType.Tracking)
             {
                 var s = _audioService.BindTo(ball.transform);
                 s.clip = _hitSound;
-                component.OnHit += () =>
+                ball.OnHit += () =>
                 {
-                    s.pitch = math.lerp(1.5f, 1f, component.Hp);
+                    s.pitch = math.lerp(1.5f, 1f, ball.Hp);
                     s.Play();
                 };
             }
             else
-                component.OnHit += () =>
+                ball.OnHit += () =>
                     _audioService.PlaySoundAtPos(
                         _hitSound,
                         ball.transform.position);
 
-            _balls.Add(component);
+            _balls.Add(ball);
 
-            return component;
+            return ball;
         }
 
         void GetBall(Ball ball)
@@ -136,14 +144,8 @@ namespace ALM.Screens.Mission
             return ball;
         }
 
-        public Ball[] GetBalls(int count, int type = 0)
-        {
-            var balls = new Ball[count];
-            for (var i = 0; i < count; i++)
-                balls[i] = Ball(type);
-
-            return balls;
-        }
+        public Ball[] GetBalls(int count, int type = 0) =>
+            Enumerable.Repeat(Ball(type), count).ToArray();
 
         public void Dispose()
         {

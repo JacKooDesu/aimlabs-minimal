@@ -82,12 +82,14 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.Time),
                 typeof(ALM.Screens.Mission.IRaycaster),
                 typeof(ALM.Screens.Mission.IRaycastTarget),
+                typeof(ALM.Screens.Mission.AnomoyousRaycastTarget),
                 typeof(ALM.Screens.Mission.Ball),
                 typeof(ALM.Screens.Base.AudioService),
                 typeof(ALM.Screens.Mission.ScoreService),
                 typeof(ALM.Screens.Mission.IScoreCalculator),
                 typeof(ALM.Screens.Mission.JsScoreCalculator),
                 typeof(ALM.Screens.Base.CrosshairPanel.OptionSetting),
+                typeof(ALM.Screens.Mission.GltfLoaderService),
 
                 // ALM Datas
                 typeof(ALM.Data.MissionData),
@@ -108,6 +110,9 @@ public class TypeConfig
                 typeof(ALM.Util.Texturing.Creator),
                 typeof(ALM.Util.Texturing.Drawer),
                 typeof(ALM.Util.Rng),
+                typeof(ALM.Util.EventBinder.CollideBasedHandler),
+                typeof(ALM.Util.EventBinder.CollisionEventHandler),
+                typeof(ALM.Util.EventBinder.TriggerEventHandler),
             };
         }
     }

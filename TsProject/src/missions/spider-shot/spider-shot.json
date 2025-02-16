@@ -1,7 +1,6 @@
 {
   "name": "spider-shot",
   "description": "This is a simple spider shot",
-  "map": "10m",
   "map_size": 25,
   "time_seconds": 90
 }

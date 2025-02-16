@@ -13,6 +13,7 @@ namespace ALM.Screens.Mission
         AudioService Audio,
         ScoreService Score,
         MissionScoreData ScoreData,
+        GltfLoaderService GltfLoader,
         Util.Rng Rng,
         Time Time);
 

@@ -37,6 +37,15 @@ namespace ALM.Util
             public static _File Relative(string path) =>
                 new AnomoyousFile(path, PathType.Relative);
 
+            /// <summary>
+            /// If file is not exist, return false
+            /// </summary>
+            public bool TryGetPathSafe(out string path)
+            {
+                path = this;
+                return System.IO.File.Exists(path);
+            }
+
             class AnomoyousFile : _File
             {
                 public AnomoyousFile(string path, PathType type) :
@@ -69,6 +78,8 @@ namespace ALM.Util
             { typeof(ZIP), "zip" },
             { typeof(CJS), "cjs" },
             { typeof(TXT), "txt" },
+            { typeof(GLTF), "gltf" },
+            { typeof(GLB), "glb" },
         };
         public static ExtensionFilter[] ParseExtension(this Extension extension)
         {
@@ -126,5 +137,7 @@ namespace ALM.Util
         public record ZIP() : Extension();
         public record CJS() : Extension();
         public record TXT() : Extension();
+        public record GLTF() : Extension();
+        public record GLB() : Extension();
     }
 }

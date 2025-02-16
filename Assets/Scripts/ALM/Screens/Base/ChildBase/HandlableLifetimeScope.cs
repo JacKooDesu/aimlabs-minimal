@@ -29,7 +29,7 @@ namespace ALM.Screens.Base
             await SceneManager.LoadSceneAsync(sceneAttr.SceneName).ToUniTask();
 
             var scope = LifetimeScope.Find<TScope>() as TScope;
-            scope.AfterLoad(payload);
+            await scope.AfterLoad(payload);
 
             if (!scope.autoRun)
                 scope.Build();
@@ -38,7 +38,8 @@ namespace ALM.Screens.Base
         /// <summary>
         /// Scene loaded, before scope build.
         /// </summary>
-        public virtual void AfterLoad(LoadPayload payload) { }
+        public virtual UniTask AfterLoad(LoadPayload payload) =>
+            UniTask.CompletedTask;
 
         protected override void Configure(IContainerBuilder builder)
         {

@@ -1,7 +1,6 @@
 {
   "name": "grid-shot",
   "description": "This is a simple grid shot",
-  "map": "10m",
   "map_size": 40,
   "time_seconds": 90
 }

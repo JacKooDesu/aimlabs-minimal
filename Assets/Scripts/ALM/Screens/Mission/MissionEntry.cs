@@ -9,6 +9,7 @@ using Cursor = UnityEngine.Cursor;
 
 namespace ALM.Screens.Mission
 {
+    using ALM.Util;
     using ALM.Common;
     using ALM.Screens.Base;
     using Data;
@@ -22,7 +23,8 @@ namespace ALM.Screens.Mission
         readonly PauseHandleService _pauseHandleService;
         readonly PlayHistoryService _playHistoryService;
         readonly CrosshairService _crosshairService;
-
+        readonly GltfLoaderService _gltfLoaderService;
+        private readonly IPlayer _player;
         readonly PlayHistory _playHistory;
         readonly Timer _timer;
         readonly Room _room;
@@ -36,6 +38,8 @@ namespace ALM.Screens.Mission
             PlayHistoryService playHistoryService,
             PlayHistory playHistory,
             CrosshairService crosshairService,
+            GltfLoaderService gltfLoaderService,
+            IPlayer player,
             Room room,
             Replay replay,
             Realm realm,
@@ -50,6 +54,8 @@ namespace ALM.Screens.Mission
             _pauseHandleService = pauseHandleService;
             _playHistoryService = playHistoryService;
             _crosshairService = crosshairService;
+            _gltfLoaderService = gltfLoaderService;
+            _player = player;
 
             _playHistory = playHistory;
             _room = room;
@@ -67,7 +73,7 @@ namespace ALM.Screens.Mission
 
         public override void Start()
         {
-            _room.SetSize(_mission.Outline.MapSize);
+            SetupRoom();
 
             foreach (var script in _mission.Scripts)
             {
@@ -94,6 +100,25 @@ namespace ALM.Screens.Mission
                 _timer.Reset();
             }
             _pauseHandleService.CountDown();
+        }
+
+        void SetupRoom()
+        {
+            if (_gltfLoaderService.TryGet("MAP", out var map))
+            {
+                if (map.transform.TryFind("Origin", out var origin))
+                    map.transform.position = origin.worldToLocalMatrix
+                        .MultiplyPoint3x4(map.transform.position);
+
+                if (map.transform.TryFind("Player", out var player))
+                    _player.SetPosition(player.position);
+
+                _room.gameObject.SetActive(false);
+            }
+            else
+            {
+                _room.SetSize(_mission.Outline.MapSize);
+            }
         }
 
         void OnFinishedMission()
@@ -123,6 +148,7 @@ namespace ALM.Screens.Mission
 
         public override void Dispose()
         {
+            _room?.gameObject.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
         }
     }

@@ -12,8 +12,8 @@ namespace ALM.Screens.Mission
         {
             set
             {
-                var renderer = GetComponent<Renderer>();
-                renderer.material.color = value;
+                foreach (var x in GetComponentsInChildren<Renderer>())
+                    x.material.color = value;
             }
         }
 
@@ -31,6 +31,7 @@ namespace ALM.Screens.Mission
         public event Action<int> OnHitBy;
         public event Action OnHit;
 
+        // FIXME: height offset need fix
         HpBar _hpBar;
 
         public void Tick()
@@ -55,6 +56,16 @@ namespace ALM.Screens.Mission
             Hp = 1f;
 
             return this;
+        }
+
+        public static Ball Create(GameObject target, AnomoyousRaycastTarget raycastTarget)
+        {
+            var ball = target.gameObject.AddComponent<Ball>();
+
+            raycastTarget.OnHit += () => ball.OnHit?.Invoke();
+            raycastTarget.OnHitBy += i => ball.OnHitBy?.Invoke(i);
+
+            return ball;
         }
     }
 }

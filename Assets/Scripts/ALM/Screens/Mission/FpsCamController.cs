@@ -11,7 +11,14 @@ using VContainer;
 namespace ALM.Screens.Mission
 {
     using Common;
-    public class FpsCamController : MonoBehaviour, IRaycaster, IManagedTickable
+
+    public interface IPlayer
+    {
+        Action UpdateOverride { get; }
+        void SetPosition(Vector3 position);
+    }
+
+    public class FpsCamController : MonoBehaviour, IRaycaster, IManagedTickable, IPlayer
     {
         [SerializeField]
         float _mouseSensitivity = 100.0f;
@@ -72,7 +79,7 @@ namespace ALM.Screens.Mission
             _raycasterService.Cast(this);
         }
 
-        public Action UpdateOverride = null;
+        public Action UpdateOverride { get; set; }
 
         void OnDestroy()
         {
@@ -88,6 +95,11 @@ namespace ALM.Screens.Mission
         void SetFov()
         {
             _camera.fieldOfView = Camera.HorizontalToVerticalFieldOfView(_gameplaySetting.FOV, 16f / 9f);
+        }
+
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
         }
     }
 }
