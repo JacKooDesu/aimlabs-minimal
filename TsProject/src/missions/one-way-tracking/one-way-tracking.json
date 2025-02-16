@@ -1,7 +1,6 @@
 {
   "name": "one-way-tracking",
   "description": "This is a simple tracking",
-  "map": "10m",
   "map_size": 25,
   "time_seconds": 90,
   "type": "tracking"

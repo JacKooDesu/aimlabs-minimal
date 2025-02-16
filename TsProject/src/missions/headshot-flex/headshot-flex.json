@@ -1,7 +1,7 @@
 {
   "name": "headshot-flex",
   "description": "This is a simple headshot flex mission",
-  "map": "10m",
+  "map": "./stage.glb",
   "map_size": 25,
   "time_seconds": 90,
   "gltf_resources": {

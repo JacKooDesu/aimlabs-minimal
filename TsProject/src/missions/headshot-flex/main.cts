@@ -1,6 +1,4 @@
 const V3 = CS.UnityEngine.Vector3;
-const Path = CS.System.IO.Path;
-const FileIO = CS.ALM.Util.FileIO;
 const ConfigType = CS.ALM.Util.EventBinder.CollideBasedHandler.AutoConfig;
 
 const minRadius = 5;
@@ -19,13 +17,13 @@ export function entry() {
   rig = service.GltfLoader.Get("rig");
 
   raycastTarget = CS.ALM.Screens.Mission.AnomoyousRaycastTarget.Setup(
-    rig.transform.Find("Scene/Head").gameObject,
+    rig.transform.Find("Head").gameObject,
     ConfigType.Mesh
   );
 
   next();
 
-  rig.add_OnHit(() => next());
+  raycastTarget.add_OnHit(() => next());
 }
 
 function next() {
