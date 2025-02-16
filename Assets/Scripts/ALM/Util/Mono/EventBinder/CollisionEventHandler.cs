@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace ALM.Util.EventBinder
 {
-    public class CollisionEventHandler : CollideBasedHandler
+    public class CollisionEventHandler : CollideEventHandler
     {
         public static CollisionEventHandler Setup(GameObject target, bool autoSetup = false) =>
             Setup<CollisionEventHandler>(target, autoSetup);

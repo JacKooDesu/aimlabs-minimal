@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace ALM.Util.EventBinder
 {
-    public class TriggerEventHandler : CollideBasedHandler
+    public class TriggerEventHandler : CollideEventHandler
     {
         protected override void AfterSetup(Collider collider)
         {
