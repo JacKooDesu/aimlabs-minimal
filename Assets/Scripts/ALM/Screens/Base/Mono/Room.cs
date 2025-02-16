@@ -9,7 +9,6 @@ namespace ALM.Screens.Base
     [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
     public class Room : MonoBehaviour
     {
-        const string CUBE_MESH_NAME = "Cube.fbx";
         public const float DEFAULT_TEXTURE_SCALER = 10f;
 
         [Inject]

@@ -4840,7 +4840,7 @@
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
+        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
@@ -4849,14 +4849,19 @@
             public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
             public constructor ()
         }
-        class GltfLoaderService extends System.Object
+        class GltfLoaderService extends System.Object implements System.IDisposable
         {
             protected [__keep_incompatibility]: never;
-            public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>, $basePath: string) : Cysharp.Threading.Tasks.UniTask$1<ALM.Screens.Mission.GltfLoaderService>
-            public Register ($name: string, $path: string) : Cysharp.Threading.Tasks.UniTask
+            public RegisterSingle ($name: string, $path: string) : Cysharp.Threading.Tasks.UniTask
+            public RegisterPool ($resPaths: System.Collections.Generic.Dictionary$2<string, string>) : Cysharp.Threading.Tasks.UniTask
+            public RegisterPool ($name: string, $path: string) : Cysharp.Threading.Tasks.UniTask
+            public TryGetHandle ($name: string, $handle: $Ref<ALM.Screens.Mission.GltfLoaderService.IGltfHandle>) : boolean
+            public TryGet ($name: string, $go: $Ref<UnityEngine.GameObject>) : boolean
             public Get ($name: string) : UnityEngine.GameObject
             public Release ($name: string, $go: UnityEngine.GameObject) : void
+            public Dispose () : void
             public constructor ()
+            public constructor ($basePath: string)
         }
         class Time extends System.Object
         {
@@ -5191,6 +5196,11 @@
             public get Bindables(): System.Array$1<ALM.Util.UIToolkitExtend.Bindable>;
             public set Bindables(value: System.Array$1<ALM.Util.UIToolkitExtend.Bindable>);
             public constructor ()
+        }
+    }
+    namespace ALM.Screens.Mission.GltfLoaderService {
+        interface IGltfHandle extends System.IDisposable
+        {
         }
     }
     namespace Newtonsoft.Json {

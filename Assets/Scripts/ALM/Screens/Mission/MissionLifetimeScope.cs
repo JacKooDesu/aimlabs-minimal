@@ -64,10 +64,14 @@ namespace ALM.Screens.Mission
             var missionLoader = Find<BaseLifetimeScope>().Container.Resolve<MissionLoader>();
             _mission = missionLoader.GetMission(missionName);
 
+            if (!string.IsNullOrEmpty(_mission.Outline.Map))
+                await GltfCreator().RegisterSingle("MAP", _mission.Outline.Map);
+
             if (_mission.Outline.GltfResources is not null)
-                _gltfLoaderService = await GltfLoaderService.Create(
-                    _mission.Outline.GltfResources,
-                    _mission.Path);
+                await GltfCreator().RegisterPool(_mission.Outline.GltfResources);
+
+            GltfLoaderService GltfCreator() =>
+                _gltfLoaderService ??= new(_mission.Path);
         }
 
         protected override void Configure(IContainerBuilder builder)
