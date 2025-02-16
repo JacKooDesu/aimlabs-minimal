@@ -12,29 +12,26 @@ namespace ALM.Util.EventBinder
         {
             None,
             Bound,
-
+            Mesh,
         }
 
-        protected static T Setup<T>(GameObject target, bool autoSetup = false)
+        protected static T Setup<T>(GameObject target, AutoConfig autoSetup = AutoConfig.None)
             where T : CollideBasedHandler
         {
             if (!target.TryGetComponent<Collider>(out var collider))
             {
-                if (!autoSetup)
+                if (autoSetup is AutoConfig.None)
                 {
                     Debug.Log($"[Collide Based Handler] {target} not attach collider!");
                     return null;
                 }
 
-                var box = target.AddComponent<BoxCollider>();
-                Bounds bounds = new(target.transform.position, Vector3.zero);
-                foreach (var render in target.GetComponentsInChildren<Renderer>())
-                    bounds.Encapsulate(render.bounds);
-                bounds.center = target.transform.InverseTransformPoint(bounds.center);
-                box.size = bounds.size;
-                box.center = bounds.center;
-
-                collider = box;
+                collider = autoSetup switch
+                {
+                    AutoConfig.Bound => ConfigByBound(target.transform),
+                    AutoConfig.Mesh => ConfigByMesh(target.transform),
+                    _ => throw new NotImplementedException(),
+                };
             }
 
             var result = target.AddComponent<T>();
@@ -43,6 +40,26 @@ namespace ALM.Util.EventBinder
             return result;
         }
 
+        static Collider ConfigByBound(Transform target)
+        {
+            var box = target.gameObject.AddComponent<BoxCollider>();
+
+            Bounds bounds = new(target.position, Vector3.zero);
+            foreach (var render in target.GetComponentsInChildren<Renderer>())
+                bounds.Encapsulate(render.bounds);
+            bounds.center = target.transform.InverseTransformPoint(bounds.center);
+            box.size = bounds.size;
+            box.center = bounds.center;
+
+            return box;
+        }
+
+        static Collider ConfigByMesh(Transform target)
+        {
+            var meshCol = target.gameObject.AddComponent<MeshCollider>();
+            meshCol.sharedMesh = target.GetComponent<MeshFilter>().sharedMesh;
+            return meshCol;
+        }
         protected virtual void AfterSetup(Collider collider) { }
     }
 }

@@ -17,8 +17,8 @@ namespace ALM.Screens.Mission
         public event Action<int> OnHitBy;
         public event Action OnHit;
 
-        public static AnomoyousRaycastTarget Setup(GameObject target, bool autoSetup = false) =>
-            Setup<AnomoyousRaycastTarget>(target, autoSetup);
+        public static AnomoyousRaycastTarget Setup(GameObject target, AutoConfig autoConfig = AutoConfig.None) =>
+            Setup<AnomoyousRaycastTarget>(target, autoConfig);
 
         public void HitBy(int index)
         {

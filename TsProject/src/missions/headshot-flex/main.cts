@@ -1,6 +1,7 @@
 const V3 = CS.UnityEngine.Vector3;
 const Path = CS.System.IO.Path;
 const FileIO = CS.ALM.Util.FileIO;
+const ConfigType = CS.ALM.Util.EventBinder.CollideBasedHandler.AutoConfig;
 
 const minRadius = 5;
 const maxRadius = 10;
@@ -11,17 +12,20 @@ export function configure(s: CS.ALM.Screens.Mission.JsConfigure) {
   return (service = s);
 }
 
-let target: CS.ALM.Screens.Mission.AnomoyousRaycastTarget;
+let rig;
+let raycastTarget: CS.ALM.Screens.Mission.AnomoyousRaycastTarget;
 
 export function entry() {
-  target = CS.ALM.Screens.Mission.AnomoyousRaycastTarget.Setup(
-    service.GltfLoader.Get("rig"),
-    true
+  rig = service.GltfLoader.Get("rig");
+
+  raycastTarget = CS.ALM.Screens.Mission.AnomoyousRaycastTarget.Setup(
+    rig.transform.Find("Scene/Head").gameObject,
+    ConfigType.Mesh
   );
 
   next();
 
-  target.add_OnHit(() => next());
+  rig.add_OnHit(() => next());
 }
 
 function next() {
@@ -31,5 +35,5 @@ function next() {
   let x = Math.cos(angle) * radius;
   let z = Math.sin(angle) * radius;
 
-  target.transform.position = new V3(x, 0, z);
+  rig.transform.position = new V3(x, 0, z);
 }

@@ -8,8 +8,8 @@ namespace ALM.Util.EventBinder
 {
     public class CollisionEventHandler : CollideEventHandler
     {
-        public static CollisionEventHandler Setup(GameObject target, bool autoSetup = false) =>
-            Setup<CollisionEventHandler>(target, autoSetup);
+        public static CollisionEventHandler Setup(GameObject target, AutoConfig autoConfig = AutoConfig.None) =>
+            Setup<CollisionEventHandler>(target, autoConfig);
 
         public CollisionEventHandler Register<T>(
             Timing timing,

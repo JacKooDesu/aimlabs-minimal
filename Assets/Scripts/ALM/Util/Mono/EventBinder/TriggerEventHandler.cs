@@ -12,8 +12,8 @@ namespace ALM.Util.EventBinder
         {
             collider.isTrigger = true;
         }
-        public static CollisionEventHandler Setup(GameObject target, bool autoSetup = false) =>
-            Setup<CollisionEventHandler>(target, autoSetup);
+        public static CollisionEventHandler Setup(GameObject target, AutoConfig autoConfig = AutoConfig.None) =>
+            Setup<CollisionEventHandler>(target, autoConfig);
 
         public TriggerEventHandler Register<T>(
             Timing timing,

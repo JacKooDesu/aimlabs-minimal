@@ -4840,7 +4840,7 @@
             public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class ScoreService extends System.Object implements System.IDisposable, ALM.Common.IManagedTickable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
@@ -4852,8 +4852,8 @@
         class GltfLoaderService extends System.Object
         {
             protected [__keep_incompatibility]: never;
-            public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>, $basePath: string) : ALM.Screens.Mission.GltfLoaderService
-            public Register ($name: string, $path: string) : void
+            public static Create ($resPaths: System.Collections.Generic.Dictionary$2<string, string>, $basePath: string) : Cysharp.Threading.Tasks.UniTask$1<ALM.Screens.Mission.GltfLoaderService>
+            public Register ($name: string, $path: string) : Cysharp.Threading.Tasks.UniTask
             public Get ($name: string) : UnityEngine.GameObject
             public Release ($name: string, $go: UnityEngine.GameObject) : void
             public constructor ()
@@ -4916,7 +4916,7 @@
             public remove_OnHitBy ($value: System.Action$1<number>) : void
             public add_OnHit ($value: System.Action) : void
             public remove_OnHit ($value: System.Action) : void
-            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Screens.Mission.AnomoyousRaycastTarget
+            public static Setup ($target: UnityEngine.GameObject, $autoConfig?: ALM.Util.EventBinder.CollideBasedHandler.AutoConfig) : ALM.Screens.Mission.AnomoyousRaycastTarget
             public HitBy ($index: number) : void
             public constructor ()
         }
@@ -5135,20 +5135,28 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        class CollisionEventHandler extends ALM.Util.EventBinder.CollideBasedHandler
+        class CollideEventHandler extends ALM.Util.EventBinder.CollideBasedHandler
         {
             protected [__keep_incompatibility]: never;
-            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
-            public Register ($timing: ALM.Util.EventBinder.CollideBasedHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.CollisionEventHandler
-            public constructor ()
         }
-        class TriggerEventHandler extends ALM.Util.EventBinder.CollideBasedHandler
+        class CollisionEventHandler extends ALM.Util.EventBinder.CollideEventHandler
         {
             protected [__keep_incompatibility]: never;
-            public static Setup ($target: UnityEngine.GameObject, $autoSetup?: boolean) : ALM.Util.EventBinder.CollisionEventHandler
-            public Register ($timing: ALM.Util.EventBinder.CollideBasedHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.TriggerEventHandler
+            public static Setup ($target: UnityEngine.GameObject, $autoConfig?: ALM.Util.EventBinder.CollideBasedHandler.AutoConfig) : ALM.Util.EventBinder.CollisionEventHandler
+            public Register ($timing: ALM.Util.EventBinder.CollideEventHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.CollisionEventHandler
             public constructor ()
         }
+        class TriggerEventHandler extends ALM.Util.EventBinder.CollideEventHandler
+        {
+            protected [__keep_incompatibility]: never;
+            public static Setup ($target: UnityEngine.GameObject, $autoConfig?: ALM.Util.EventBinder.CollideBasedHandler.AutoConfig) : ALM.Util.EventBinder.CollisionEventHandler
+            public Register ($timing: ALM.Util.EventBinder.CollideEventHandler.Timing, $action: UnityEngine.Events.UnityAction$1<UnityEngine.Component>) : ALM.Util.EventBinder.TriggerEventHandler
+            public constructor ()
+        }
+    }
+    namespace ALM.Util.EventBinder.CollideBasedHandler {
+        enum AutoConfig
+        { None = 0, Bound = 1, Mesh = 2 }
     }
     namespace UnityEngine.Audio {
         /** Represents an audio resource asset that you can play through an AudioSource.
@@ -5642,7 +5650,7 @@
             public constructor ()
         }
     }
-    namespace ALM.Util.EventBinder.CollideBasedHandler {
+    namespace ALM.Util.EventBinder.CollideEventHandler {
         enum Timing
         { Enter = 0, Stay = 1, Exit = 2 }
     }
