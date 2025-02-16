@@ -2839,6 +2839,12 @@
         {
             protected [__keep_incompatibility]: never;
         }
+        /** A base class of all colliders.
+        */
+        class Collider extends UnityEngine.Component
+        {
+            protected [__keep_incompatibility]: never;
+        }
     }
     namespace System.Collections.Generic {
         interface IEnumerable$1<T> extends System.Collections.IEnumerable
@@ -4831,6 +4837,7 @@
         class BallPoolService extends System.Object implements System.IDisposable
         {
             protected [__keep_incompatibility]: never;
+            public BallFactory : System.Func$1<ALM.Screens.Mission.Ball>
             public get Pool(): UnityEngine.Pool.ObjectPool$1<ALM.Screens.Mission.Ball>;
             public add_OnBallHit ($value: System.Action$1<ALM.Screens.Mission.Ball>) : void
             public remove_OnBallHit ($value: System.Action$1<ALM.Screens.Mission.Ball>) : void
@@ -4891,6 +4898,7 @@
             public Tick () : void
             public HitBy ($index: number) : void
             public HasHpBar () : ALM.Screens.Mission.Ball
+            public static Create ($target: UnityEngine.GameObject, $raycastTarget: ALM.Screens.Mission.AnomoyousRaycastTarget) : ALM.Screens.Mission.Ball
             public constructor ()
         }
         interface IRaycastTarget
@@ -5139,6 +5147,7 @@
         class CollideBasedHandler extends UnityEngine.MonoBehaviour
         {
             protected [__keep_incompatibility]: never;
+            public get Collider(): UnityEngine.Collider;
         }
         class CollideEventHandler extends ALM.Util.EventBinder.CollideBasedHandler
         {

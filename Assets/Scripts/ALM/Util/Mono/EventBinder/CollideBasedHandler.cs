@@ -8,6 +8,9 @@ namespace ALM.Util.EventBinder
 {
     public abstract class CollideBasedHandler : MonoBehaviour
     {
+        Collider _collider;
+        public Collider Collider => _collider;
+
         public enum AutoConfig
         {
             None,
@@ -36,6 +39,7 @@ namespace ALM.Util.EventBinder
 
             var result = target.AddComponent<T>();
             result?.AfterSetup(collider);
+            result._collider = collider;
 
             return result;
         }
