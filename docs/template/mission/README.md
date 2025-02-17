@@ -38,6 +38,12 @@ mission
   - `version` 版本，新 API 可能不能兼容
   - `gltf_resources` Json Map 類型，可註冊相對路徑 glb/gltf 模型，使用 `GltfLoaderService.Get(string name)` 在任務腳本中取得模型
 
+## 關於 `Rng`
+
+目前回放機能並不是紀錄所有物件的狀態，而是記錄操作，透過輸入 random seed 來保證回放時隨機結果相同。
+
+由於 Javascript 的 `Math.random()` 並不提供 seed 輸入，所以要保證回放機能正常就需要使用到 `service.Rng` 來獲得隨機數 (於載入任務時就已經完成 seed 的設置，撰寫任務腳本時只需要呼叫對應類型的隨機函式即可)
+
 ## 關於 gltf 製作與使用
 
 > 可參考 [headshot-flex 任務](../../../TsProject/src/missions/headshot-flex/)
