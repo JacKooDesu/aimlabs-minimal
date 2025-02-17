@@ -30,9 +30,9 @@ Can download it from release page
 
 ### Linux
 
-### Webgl
+### ~~Webgl~~
 
-[Link]()
+~~[Link]()~~
 
 ## Q&A
 

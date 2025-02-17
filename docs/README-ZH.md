@@ -25,9 +25,9 @@
 
 ### Linux
 
-### WebGL
+### ~~WebGL~~
 
-[連結]()
+~~[連結]()~~
 
 ## 問答
 
@@ -55,7 +55,7 @@
 
 ### 任務開發
 
-- 可用的 API 已在 [index.d.ts](./Assets/Gen/Typing/csharp/index.d.ts) 中生成
+- 可用的 API 已在 [index.d.ts](../Assets/Gen/Typing/csharp/index.d.ts) 中生成
 - [任務模板](../docs/template/mission/)
 - 可透過添加 `-debugger` 參數開啟除錯模式
 
