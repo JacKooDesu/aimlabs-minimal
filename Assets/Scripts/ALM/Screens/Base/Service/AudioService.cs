@@ -15,6 +15,7 @@ namespace ALM.Screens.Base
         public ObjectPool<AudioSource> Pool { get; private set; }
         public List<AudioSource> _activeSources = new();
         Transform _poolHolder;
+        bool _paused = false;
 
         public AudioService(AudioSetting audioSetting)
         {
@@ -76,9 +77,9 @@ namespace ALM.Screens.Base
             source.transform.position = pos;
             addtionSetting?.Invoke(source);
             source.Play();
-            await UniTask.WaitUntil(() =>
-                !source.isPlaying &&
-                source.time >= clip.length,
+            await UniTask.WaitWhile(() =>
+                _paused ||
+                (source.isPlaying && source.time < clip.length),
                 cancellationToken: source.GetCancellationTokenOnDestroy());
 
             if (source is null)
@@ -109,10 +110,13 @@ namespace ALM.Screens.Base
 
         public void Pause()
         {
+            _paused = true;
             _activeSources.ForEach(s => s.Pause());
         }
+
         public void Resume()
         {
+            _paused = false;
             _activeSources.ForEach(s => s.UnPause());
         }
     }
