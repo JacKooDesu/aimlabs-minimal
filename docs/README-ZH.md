@@ -44,7 +44,7 @@
 
 ### 關於準心設定
 
-準心設定是使用 [crosshair-config.js](../Assets/Resources/crosshair-config.cjs) 來完成的，詳細請看 [如何新增自訂準心腳本](./docs/template/crosshair-config/README.md)
+準心設定是使用 [crosshair-config.js](../Assets/Resources/crosshair-config.cjs) 來完成的，詳細請看 [如何新增自訂準心腳本](./template/crosshair-config/README.md)
 
 ### 關於任務儲藏庫
 
