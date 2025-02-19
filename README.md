@@ -41,6 +41,12 @@ Can download it from release page
 When the version of database on your device too old([min-version-support](./Assets/Resources/min-version-support.txt)), you'll need those migration updater script to update it.
 Simplily download and put them into `[game-root]/updater`.
 
+### How to import Missions
+
+The game exe folder has a default create folder named `missions`, which can placed mission folder/zip into it and simplily click `Import Mission` > `Auto Import`
+You can use `Select File` and select the mission zip in your disk to import as well
+> Note: Currently, the game build zip contains some missions by default, they are under maintenance by me and usually exampling some key features of ALM
+
 ### About Crosshair Config
 
 Crosshair configuration is working by [crosshair-config.js](./Assets/Resources/crosshair-config.cjs), see more detail in [How to added own crosshair configure](./docs/template/crosshair-config/README.md)

@@ -36,6 +36,12 @@
 當數據庫版本過舊時（[min-version-support](../Assets/Resources/min-version-support.txt)），會需要這些遷移更新腳本來更新它
 只需下載並將它們放入 `[game-root]/updater`
 
+### 如何匯入任務
+
+遊戲執行檔案資料夾中有一個預設的 `missions` 資料夾，可以將任務資料夾/壓縮檔放入其中，然後點擊 `Import Mission` > `Auto Import`
+您也可以使用 `Select File` 並選擇磁碟中的任務壓縮檔來匯入
+> 注意：目前，遊戲建置壓縮檔中預設包含一些任務，這些任務由我維護，通常用來展示 ALM 的一些關鍵功能
+
 ### 關於準心設定
 
 準心設定是使用 [crosshair-config.js](../Assets/Resources/crosshair-config.cjs) 來完成的，詳細請看 [如何新增自訂準心腳本](./docs/template/crosshair-config/README.md)
