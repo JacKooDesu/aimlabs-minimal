@@ -1,12 +1,15 @@
+var ALM = CS.ALM;
+var CrosshairPanel = ALM.Screens.Base.CrosshairPanel;
+var OriginBindalbe = ALM.Util.UIToolkitExtend.OriginBindalbe;
+var Elements = ALM.Util.UIToolkitExtend.Elements;
+var Creator = ALM.Util.Texturing.Creator;
+var Drawer = ALM.Util.Texturing.Drawer;
+var Setting = CrosshairPanel.OptionSetting;
+var SliderIntBind = OriginBindalbe.SliderInt;
+var ColorBind = Elements.ColorBindElement.RgbaBindable;
 const arr = CS.System.Array.CreateInstance(puer.$typeof(CS.ALM.Util.UIToolkitExtend.Bindable), 7);
-const V2Int = CS.UnityEngine.Vector2Int;
-const Setting = CS.ALM.Screens.Base.CrosshairPanel.OptionSetting;
-const Drawer = CS.ALM.Util.Texturing.Drawer;
-const SliderIntBind = CS.ALM.Util.UIToolkitExtend.OriginBindalbe.SliderInt;
-const ToggleBind = CS.ALM.Util.UIToolkitExtend.OriginBindalbe.Toggle;
-const ColorBind = CS.ALM.Util.UIToolkitExtend.Elements.ColorBindElement.RgbaBindable;
 const DefaultColor = CS.UnityEngine.Color.green;
-var inner = new SliderIntBind(0, 50, 0);
+var inner = new OriginBindalbe.SliderInt(0, 50, 0);
 inner.DataPath = "inner";
 inner.Label = "Inner";
 var outer = new SliderIntBind(0, 50, 5);
@@ -27,15 +30,18 @@ innerCircle.Label = "Inner Circle";
 var circleColor = new ColorBind(DefaultColor);
 circleColor.DataPath = "circleColor";
 circleColor.Label = "circleColor";
-var drawer = new Drawer(CS.ALM.Util.Texturing.Creator.New(256, 256));
+var drawer = new Drawer(Creator.New(256, 256));
+var _arr = [
+    inner,
+    outer,
+    thickness,
+    color,
+    outerCircle,
+    innerCircle,
+    circleColor,
+];
 export function binding() {
-    arr.SetValue(inner, 0);
-    arr.SetValue(outer, 1);
-    arr.SetValue(thickness, 2);
-    arr.SetValue(color, 3);
-    arr.SetValue(outerCircle, 4);
-    arr.SetValue(innerCircle, 5);
-    arr.SetValue(circleColor, 6);
+    _arr.forEach((b, i) => arr.SetValue(b, i));
     let setting = new Setting();
     setting.Bindables = arr;
     return setting;

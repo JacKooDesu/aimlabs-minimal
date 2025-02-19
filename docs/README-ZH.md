@@ -25,9 +25,9 @@
 
 ### Linux
 
-### WebGL
+### ~~WebGL~~
 
-[連結]()
+~~[連結]()~~
 
 ## 問答
 
@@ -35,6 +35,20 @@
 
 當數據庫版本過舊時（[min-version-support](../Assets/Resources/min-version-support.txt)），會需要這些遷移更新腳本來更新它
 只需下載並將它們放入 `[game-root]/updater`
+
+### 如何匯入任務
+
+遊戲執行檔案資料夾中有一個預設的 `missions` 資料夾，可以將任務資料夾/壓縮檔放入其中，然後點擊 `Import Mission` > `Auto Import`
+您也可以使用 `Select File` 並選擇磁碟中的任務壓縮檔來匯入
+> 注意：目前，遊戲建置壓縮檔中預設包含一些任務，這些任務由我維護，通常用來展示 ALM 的一些關鍵功能
+
+### 關於準心設定
+
+準心設定是使用 [crosshair-config.js](../Assets/Resources/crosshair-config.cjs) 來完成的，詳細請看 [如何新增自訂準心腳本](./docs/template/crosshair-config/README.md)
+
+### 關於任務儲藏庫
+
+雖然還沒詳細規範與開發，但簡短來說，希望訓練任務能夠流通化，並提供玩家一個簡單的方式獲取
 
 ## 開發
 
@@ -55,7 +69,7 @@
 
 ### 任務開發
 
-- 可用的 API 已在 [index.d.ts](./Assets/Gen/Typing/csharp/index.d.ts) 中生成
+- 可用的 API 已在 [index.d.ts](../Assets/Gen/Typing/csharp/index.d.ts) 中生成
 - [任務模板](../docs/template/mission/)
 - 可透過添加 `-debugger` 參數開啟除錯模式
 

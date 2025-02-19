@@ -8,7 +8,7 @@ const ballsInactive: CS.ALM.Screens.Mission.Ball[] = [];
 // should not be removed if u dont know what u doing
 export var service: CS.ALM.Screens.Mission.JsConfigure;
 export function configure(s: CS.ALM.Screens.Mission.JsConfigure) {
-  return service = s;
+  return (service = s);
 }
 
 // this is method unity side called after `configure()` method called
@@ -23,9 +23,7 @@ export function entry() {
       ballsInactive.push(ball);
       ball.gameObject.SetActive(false);
     }
-  });
 
-  balls.forEach((ball) => {
     ball.add_OnHit(() => switchBall(ball));
   });
 }
@@ -33,9 +31,8 @@ export function entry() {
 function switchBall(ball) {
   ball.gameObject.SetActive(false);
 
-  let rand = service.Rng.Float();
-  const randomIndex = Math.floor(rand * ballsInactive.length);
-  const randomBall = ballsInactive.splice(randomIndex, 1)[0];
+  let rand = service.Rng.IntRange(0, ballsInactive.length);
+  const randomBall = ballsInactive.splice(rand, 1)[0];
 
   ballsActive.push(randomBall);
   ballsInactive.push(ball);
