@@ -36,6 +36,14 @@
 當數據庫版本過舊時（[min-version-support](../Assets/Resources/min-version-support.txt)），會需要這些遷移更新腳本來更新它
 只需下載並將它們放入 `[game-root]/updater`
 
+### 關於準心設定
+
+準心設定是使用 [crosshair-config.js](../Assets/Resources/crosshair-config.cjs) 來完成的，詳細請看 [如何新增自訂準心腳本](./docs/template/crosshair-config/README.md)
+
+### 關於任務儲藏庫
+
+雖然還沒詳細規範與開發，但簡短來說，希望訓練任務能夠流通化，並提供玩家一個簡單的方式獲取
+
 ## 開發
 
 > 我 TypeScript 和 JavaScript 都很菜。如果發現有什麼錯誤或寫得不好的地方，請幫助我

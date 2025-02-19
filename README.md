@@ -41,6 +41,14 @@ Can download it from release page
 When the version of database on your device too old([min-version-support](./Assets/Resources/min-version-support.txt)), you'll need those migration updater script to update it.
 Simplily download and put them into `[game-root]/updater`.
 
+### About Crosshair Config
+
+Crosshair configuration is working by [crosshair-config.js](./Assets/Resources/crosshair-config.cjs), see more detail in [How to added own crosshair configure](./docs/template/crosshair-config/README.md)
+
+### What is Mission Repo
+
+Mission Repo is under construct but in short, hoping the training mission can be shared easily and provide a simple way for user to get them
+
 ## Develop
 
 >I am very new to TypeScript and JavaScript. Plz help me if figured there's something wrong or bad writing
