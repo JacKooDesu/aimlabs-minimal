@@ -114,6 +114,10 @@ namespace ALM.Screens.Mission
             // replay use fixedDeltaTime
             builder.RegisterInstance<Time>(new(_replay));
 
+            builder.Register<EntityService>(Lifetime.Scoped)
+                .AsImplementedInterfaces()
+                .AsSelf();
+
             if (_replay)
             {
                 builder.Register(r =>
