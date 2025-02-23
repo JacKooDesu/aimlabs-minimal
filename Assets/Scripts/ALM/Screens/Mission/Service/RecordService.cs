@@ -28,9 +28,9 @@ namespace ALM.Screens.Mission
             Replay replay)
         {
             _controller = controller;
-            raycasterService.OnCastBegin += caster =>
+            raycasterService.OnCastFinished += (caster, target) =>
                 _replay.CastFrames.TryAdd(
-                    _currentFrame, new CastFrame(caster.Origin, caster.Direction));
+                    _currentFrame, new CastFrame(caster, target));
 
             _replay = replay;
 

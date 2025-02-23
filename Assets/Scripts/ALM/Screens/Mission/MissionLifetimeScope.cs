@@ -133,6 +133,9 @@ namespace ALM.Screens.Mission
                 builder.Register<Replay>(
                     r => Replay.Deserialize(_playHistory.ReplayData).Dbg(),
                     Lifetime.Scoped);
+                builder.Register<ReplayPlayerService>(Lifetime.Scoped)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
                 builder.Register<ReplayController>(Lifetime.Scoped)
                     .AsImplementedInterfaces();
 

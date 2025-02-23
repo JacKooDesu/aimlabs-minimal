@@ -10,18 +10,25 @@ namespace ALM.Screens.Mission
         public void Cast(IRaycaster raycaster)
         {
             OnCastBegin?.Invoke(raycaster);
-            _Cast(raycaster.Origin, raycaster.Direction, out var target);
+            _Cast(raycaster, raycaster.Origin, raycaster.Direction, out var target);
             OnCastFinished?.Invoke(raycaster, target);
         }
 
         public void CastOverride(IRaycaster raycaster, Vector3 origin, Vector3 direction)
         {
             OnCastBegin?.Invoke(raycaster);
-            _Cast(origin, direction, out var target);
+            _Cast(raycaster, origin, direction, out var target);
             OnCastFinished?.Invoke(raycaster, target);
         }
 
-        void _Cast(in Vector3 origin, in Vector3 direction, out IRaycastTarget target)
+        public void CastOverride(IRaycaster raycaster, IRaycastTarget target)
+        {
+            OnCastBegin?.Invoke(raycaster);
+            target?.HitBy(raycaster.Id.Value);
+            OnCastFinished?.Invoke(raycaster, target);
+        }
+
+        void _Cast(IRaycaster raycaster, in Vector3 origin, in Vector3 direction, out IRaycastTarget target)
         {
             target = default;
             if (Physics.Raycast(
@@ -31,7 +38,7 @@ namespace ALM.Screens.Mission
             {
                 if (hit.transform.TryGetComponent<IRaycastTarget>(out target))
                 {
-                    target.HitBy(0);
+                    target.HitBy(raycaster.Id.Value);
                 }
             }
         }

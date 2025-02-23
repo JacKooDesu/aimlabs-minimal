@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MemoryPack;
+using Unity.Mathematics;
+using ALM.Screens.Mission;
 
 namespace ALM.Data
 {
@@ -21,27 +23,30 @@ namespace ALM.Data
             MemoryPackSerializer.Deserialize<Replay>(data);
     }
 
-    public interface IFrame { }
     public readonly struct InputFrame
     {
-        public readonly float RotX;
-        public readonly float RotY;
+        public readonly float2 MouseDelta;
 
-        public InputFrame(bool fire, float rotX, float rotY)
+        public InputFrame(float2 mouseDelta)
         {
-            RotX = rotX;
-            RotY = rotY;
+            MouseDelta = mouseDelta;
         }
     }
 
     public readonly struct CastFrame
     {
+        public readonly int Caster;
+        public readonly int Target;
         public readonly Vector3 Origin;
         public readonly Vector3 Direction;
-        public CastFrame(Vector3 origin, Vector3 dir)
+        public CastFrame(
+            IRaycaster raycaster, IRaycastTarget target)
         {
-            Origin = origin;
-            Direction = dir;
+            Caster = raycaster.Id.Value;
+            Target = target?.Id.Value ?? -1;
+
+            Origin = raycaster.Origin;
+            Direction = raycaster.Direction;
         }
     }
 }
