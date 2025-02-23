@@ -30,6 +30,8 @@ namespace ALM.Screens.Mission
         readonly Room _room;
         readonly Replay _replay;
 
+        readonly CursorLockMode _defaultCursorMode;
+
         public MissionEntry(
             JsEnv jsEnv,
             JsConfigure jsConfigure,
@@ -59,7 +61,16 @@ namespace ALM.Screens.Mission
 
             _playHistory = playHistory;
             _room = room;
-            _replay = replay.InputFrames.Count > 0 ? null : replay;
+
+            if (replay.InputFrames.Count > 0)
+            {
+                _defaultCursorMode = CursorLockMode.None;
+            }
+            else
+            {
+                _replay = replay;
+                _defaultCursorMode = CursorLockMode.Locked;
+            }
 
             if (_mission.Outline.Time > 0)
                 _timer = timerFactory(_mission.Outline.Time);
@@ -86,12 +97,12 @@ namespace ALM.Screens.Mission
             }
 
             // lock cursor
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = _defaultCursorMode;
 
             _handler.Register<MissionEntry>(
                 GameStatus.Paused, () => Cursor.lockState = CursorLockMode.None);
             _handler.Register<MissionEntry>(
-                GameStatus.Playing, () => Cursor.lockState = CursorLockMode.Locked);
+                GameStatus.Playing, () => Cursor.lockState = _defaultCursorMode);
 
             UIStackHandler.PushUI(((uint)UIIndex.Base), _timer);
             if (_timer is not null)
