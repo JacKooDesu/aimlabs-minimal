@@ -28,6 +28,8 @@ namespace ALM.Screens.Mission
             }
         }
 
+        public IEntityId Id { get; set; }
+
         public event Action<int> OnHitBy;
         public event Action OnHit;
 

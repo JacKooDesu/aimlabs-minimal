@@ -18,6 +18,7 @@ namespace ALM.Screens.Mission
         readonly AudioService _audioService;
         readonly ObjectSetting _objectSetting;
         readonly AudioSetting _audioSetting;
+        readonly EntityService _entityService;
 
         public ObjectPool<Ball> Pool { get; private set; }
         public Func<Ball> BallFactory;
@@ -46,12 +47,14 @@ namespace ALM.Screens.Mission
             ObjectSetting objectSetting,
             AudioService audioService,
             AudioSetting audioSetting,
-            MissionLoader.PlayableMission mission)
+            MissionLoader.PlayableMission mission,
+            EntityService entityService)
         {
             _scope = scope;
             _audioService = audioService;
             _objectSetting = objectSetting;
             _audioSetting = audioSetting;
+            _entityService = entityService;
 
             audioSetting.GetAudioClipSync(
                 Constants.Audio.HIT_SOUND,
@@ -115,7 +118,7 @@ namespace ALM.Screens.Mission
 
             _balls.Add(ball);
 
-            return ball;
+            return _entityService.Add(ball);
         }
 
         void GetBall(Ball ball)
@@ -134,6 +137,8 @@ namespace ALM.Screens.Mission
             entry.UnregTickable(ball);
 
             _balls.Add(ball);
+
+            _entityService.Rm(ball.Id);
         }
 
         public Ball Ball(int typeIndex = 0)

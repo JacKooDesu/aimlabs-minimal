@@ -12,13 +12,13 @@ namespace ALM.Screens.Mission
 {
     using Common;
 
-    public interface IPlayer
+    public interface IPlayer : IRaycaster, IRaycastTarget, IManagedTickable, IEntity
     {
         Action UpdateOverride { get; }
         void SetPosition(Vector3 position);
     }
 
-    public class FpsCamController : MonoBehaviour, IRaycaster, IManagedTickable, IPlayer
+    public class FpsCamController : MonoBehaviour, IPlayer
     {
         [SerializeField]
         float _mouseSensitivity = 100.0f;
@@ -42,7 +42,8 @@ namespace ALM.Screens.Mission
             ControlSetting controlSetting,
             GameplaySetting gameplaySetting,
             RaycasterService raycasterService,
-            MissionLoader.PlayableMission mission)
+            MissionLoader.PlayableMission mission,
+            EntityService entityService)
         {
             _controller = controller;
             _controlSetting = controlSetting;
@@ -54,9 +55,14 @@ namespace ALM.Screens.Mission
             _gameplaySetting.OnChange += OnGamePlaySettingChange;
 
             _controller.OnFire += Fire;
+
+            entityService.Add(this);
         }
 
         Camera _camera;
+
+        public event Action<int> OnHitBy;
+        public event Action OnHit;
 
         #region IRaycaster
         public Vector3 Origin => transform.position;
@@ -80,6 +86,7 @@ namespace ALM.Screens.Mission
         }
 
         public Action UpdateOverride { get; set; }
+        public IEntityId Id { get; set; }
 
         void OnDestroy()
         {
@@ -100,6 +107,11 @@ namespace ALM.Screens.Mission
         public void SetPosition(Vector3 position)
         {
             transform.position = position;
+        }
+
+        public void HitBy(int index)
+        {
+            throw new NotImplementedException();
         }
     }
 }

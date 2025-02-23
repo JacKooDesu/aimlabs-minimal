@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ALM.Screens.Mission
 {
-    public interface IRaycastTarget
+    public interface IRaycastTarget : IEntity
     {
         event Action<int> OnHitBy;
         event Action OnHit;
@@ -16,6 +16,8 @@ namespace ALM.Screens.Mission
     {
         public event Action<int> OnHitBy;
         public event Action OnHit;
+
+        IEntityId IEntity.Id { get; set; }
 
         public static AnomoyousRaycastTarget Setup(GameObject target, AutoConfig autoConfig = AutoConfig.None) =>
             Setup<AnomoyousRaycastTarget>(target, autoConfig);
