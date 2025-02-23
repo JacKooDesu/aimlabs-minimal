@@ -6,8 +6,9 @@ namespace ALM.Screens.Mission
     using ALM.Common;
     using ALM.Data;
     using ALM.Screens.Base.Setting;
+    using Unity.Mathematics;
 
-    public class ReplayController : IController, IManagedFixedTickable
+    public class ReplayController : IController, IManagedTickable, IManagedFixedTickable
     {
         readonly Replay _replay;
         readonly RaycasterService _raycasterService;
@@ -15,8 +16,13 @@ namespace ALM.Screens.Mission
 
         public float RotX { get; private set; }
         public float RotY { get; private set; }
+        public float2 MouseDelta => _mouseDelta;
+        public float2 _mouseDelta;
 
         public event Action OnFire;
+
+        float _renderTime = 0.0f;
+        float _fixedTime = 0.0f;
 
         public ReplayController(
             Replay replay,
@@ -28,6 +34,8 @@ namespace ALM.Screens.Mission
 
         public void FixedTick()
         {
+            _fixedTime += UnityEngine.Time.fixedDeltaTime;
+
             if (_currentFrame >= _replay.InputFrames.Count)
                 return;
 
@@ -37,11 +45,20 @@ namespace ALM.Screens.Mission
                     null, cf.Origin, cf.Direction);
 
             var frame = _replay.InputFrames[_currentFrame];
+            _mouseDelta = frame.MouseDelta;
 
-            RotX = frame.RotX;
-            RotY = frame.RotY;
+            RotX += frame.MouseDelta.x;
+            RotY += frame.MouseDelta.y;
 
             _currentFrame++;
+        }
+
+        public void Tick()
+        {
+            // if (_currentFrame is 0)
+            //     return;
+
+            // _renderTime += UnityEngine.Time.deltaTime;
         }
 
         public Quaternion Qx() =>
