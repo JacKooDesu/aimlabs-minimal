@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ALM.Common;
+using Unity.Mathematics;
 
 namespace ALM.Screens.Mission
 {
@@ -22,9 +23,12 @@ namespace ALM.Screens.Mission
             });
         }
 
+        public void Write(ICommand cmd) =>
+            _commands.Enqueue(cmd);
+
         public void FixedTick()
         {
-            _renderTime -= UnityEngine.Time.fixedDeltaTime;
+            _renderTime = 0;
 
             while (_commands.TryDequeue(out var command))
                 command.Execute();
@@ -34,6 +38,7 @@ namespace ALM.Screens.Mission
         {
             _renderTime += UnityEngine.Time.deltaTime;
             var t = _renderTime / UnityEngine.Time.fixedDeltaTime;
+            t.Dbg();
             foreach (var command in _commands)
                 command.Simulate(t);
         }

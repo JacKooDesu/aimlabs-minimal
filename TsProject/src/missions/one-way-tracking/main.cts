@@ -3,8 +3,8 @@ const stayTime = 3;
 const distanceZ = 10;
 const moveDstHalf = 5;
 const moveDst = moveDstHalf * 2;
-const speedMin = 3;
-const speedMax = 6;
+const speedMin = 3 / 50;
+const speedMax = 6 / 50;
 
 export var service: CS.ALM.Screens.Mission.JsConfigure;
 export function configure(s: CS.ALM.Screens.Mission.JsConfigure) {
@@ -43,11 +43,9 @@ function moveBall() {
   if (x < -moveDstHalf) dir = 1;
   if (x > moveDstHalf) dir = -1;
 
-  x += dir * speedCurrent * service.Time.Delta;
+  x += dir * speedCurrent;
 
-  ball.transform.Translate(
-    new V3(dir * speedCurrent * service.Time.Delta, 0, 0)
-  );
+  service.CommandWriter.Write(ball.Translate(new V3(dir * speedCurrent, 0, 0)));
 
   ball.Hp = timer / stayTime;
 }

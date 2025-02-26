@@ -118,13 +118,18 @@ namespace ALM.Screens.Mission
                 .AsImplementedInterfaces()
                 .AsSelf();
 
+            builder.Register(r =>
+            {
+                var jsEnv = r.Resolve<JsEnv>();
+                return IManagedFixedTickable.Create(jsEnv.Tick);
+            }, Lifetime.Scoped);
+
+            builder.Register<CommandWriter>(Lifetime.Scoped)
+                .AsImplementedInterfaces()
+                .AsSelf();
+
             if (_replay)
             {
-                builder.Register(r =>
-                {
-                    var jsEnv = r.Resolve<JsEnv>();
-                    return IManagedFixedTickable.Create(jsEnv.Tick);
-                }, Lifetime.Scoped);
                 builder.Register(r =>
                 {
                     var missionData = _playHistory.Mission;
@@ -151,11 +156,6 @@ namespace ALM.Screens.Mission
                 {
                     var missionData = r.Resolve<Realm>().Find<MissionData>(_mission.Outline.Name);
                     return new PlayHistory(missionData, new());
-                }, Lifetime.Scoped);
-                builder.Register(r =>
-                {
-                    var jsEnv = r.Resolve<JsEnv>();
-                    return IManagedTickable.Create(jsEnv.Tick);
                 }, Lifetime.Scoped);
                 builder.Register<FpsController>(Lifetime.Scoped)
                     // If tracking mode use keep fire mode

@@ -7,19 +7,21 @@ namespace ALM.Screens.Mission
 
     public struct Vector3Command : ICommand
     {
-        public V3 Value;
+        public float3 Origin;
+        public float3 Value;
         public Commander<V3> Commander;
 
-        public Vector3Command(V3 value, Commander<V3> commander)
+        public Vector3Command(V3 origin, V3 value, Commander<V3> commander)
         {
+            Origin = origin;
             Value = value;
             Commander = commander;
         }
 
         public void Execute() =>
-            Commander.Executor(Value);
+            Commander.Executor(Origin + Value);
 
         public void Simulate(float t) =>
-            Commander.Executor(math.lerp(V3.zero, Value, t));
+            Commander.Executor(Origin + math.lerp(V3.zero, Value, t));
     }
 }

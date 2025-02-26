@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ALM.Screens.Mission
 {
-    public class Ball : MonoBehaviour, IRaycastTarget, IManagedTickable
+    public class Ball : MonoCommander, IRaycastTarget, IManagedTickable
     {
         public int TypeIndex { get; set; }
         public Color Color

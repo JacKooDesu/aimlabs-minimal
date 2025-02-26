@@ -90,6 +90,8 @@ public class TypeConfig
                 typeof(ALM.Screens.Mission.JsScoreCalculator),
                 typeof(ALM.Screens.Base.CrosshairPanel.OptionSetting),
                 typeof(ALM.Screens.Mission.GltfLoaderService),
+                typeof(ALM.Screens.Mission.MonoCommander),
+                typeof(ALM.Screens.Mission.CommandWriter),
 
                 // ALM Datas
                 typeof(ALM.Data.MissionData),

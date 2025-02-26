@@ -24,9 +24,9 @@ namespace ALM.Screens.Mission
         Commander<Vector3> _scaleCommander;
 
         public ICommand Translate(Vector3 value) =>
-            new Vector3Command(value, _positionCommander);
+            new Vector3Command(transform.position, value, PositionCommander);
 
         public ICommand Rotate(Vector3 value) =>
-            new Vector3Command(value, _rotationCommander);
+            new Vector3Command(transform.eulerAngles, value, RotationCommander);
     }
 }

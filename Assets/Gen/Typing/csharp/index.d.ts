@@ -4808,6 +4808,8 @@
             public set Score(value: ALM.Screens.Mission.ScoreService);
             public get ScoreData(): ALM.Data.MissionScoreData;
             public set ScoreData(value: ALM.Data.MissionScoreData);
+            public get CommandWriter(): ALM.Screens.Mission.CommandWriter;
+            public set CommandWriter(value: ALM.Screens.Mission.CommandWriter);
             public get GltfLoader(): ALM.Screens.Mission.GltfLoaderService;
             public set GltfLoader(value: ALM.Screens.Mission.GltfLoaderService);
             public get Rng(): ALM.Util.Rng;
@@ -4818,8 +4820,8 @@
             public static op_Equality ($left: ALM.Screens.Mission.JsConfigure, $right: ALM.Screens.Mission.JsConfigure) : boolean
             public Equals ($obj: any) : boolean
             public Equals ($other: ALM.Screens.Mission.JsConfigure) : boolean
-            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>, $GltfLoader: $Ref<ALM.Screens.Mission.GltfLoaderService>, $Rng: $Ref<ALM.Util.Rng>, $Time: $Ref<ALM.Screens.Mission.Time>) : void
-            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData, $GltfLoader: ALM.Screens.Mission.GltfLoaderService, $Rng: ALM.Util.Rng, $Time: ALM.Screens.Mission.Time)
+            public Deconstruct ($Raycaster: $Ref<ALM.Screens.Mission.RaycasterService>, $BallPool: $Ref<ALM.Screens.Mission.BallPoolService>, $Audio: $Ref<ALM.Screens.Base.AudioService>, $Score: $Ref<ALM.Screens.Mission.ScoreService>, $ScoreData: $Ref<ALM.Data.MissionScoreData>, $CommandWriter: $Ref<ALM.Screens.Mission.CommandWriter>, $GltfLoader: $Ref<ALM.Screens.Mission.GltfLoaderService>, $Rng: $Ref<ALM.Util.Rng>, $Time: $Ref<ALM.Screens.Mission.Time>) : void
+            public constructor ($Raycaster: ALM.Screens.Mission.RaycasterService, $BallPool: ALM.Screens.Mission.BallPoolService, $Audio: ALM.Screens.Base.AudioService, $Score: ALM.Screens.Mission.ScoreService, $ScoreData: ALM.Data.MissionScoreData, $CommandWriter: ALM.Screens.Mission.CommandWriter, $GltfLoader: ALM.Screens.Mission.GltfLoaderService, $Rng: ALM.Util.Rng, $Time: ALM.Screens.Mission.Time)
             public static Equals ($objA: any, $objB: any) : boolean
             public constructor ()
         }
@@ -4832,6 +4834,7 @@
             public remove_OnCastFinished ($value: System.Action$2<ALM.Screens.Mission.IRaycaster, ALM.Screens.Mission.IRaycastTarget>) : void
             public Cast ($raycaster: ALM.Screens.Mission.IRaycaster) : void
             public CastOverride ($raycaster: ALM.Screens.Mission.IRaycaster, $origin: UnityEngine.Vector3, $direction: UnityEngine.Vector3) : void
+            public CastOverride ($raycaster: ALM.Screens.Mission.IRaycaster, $target: ALM.Screens.Mission.IRaycastTarget) : void
             public constructor ()
         }
         class BallPoolService extends System.Object implements System.IDisposable
@@ -4844,7 +4847,7 @@
             public Ball ($typeIndex?: number) : ALM.Screens.Mission.Ball
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
             public Dispose () : void
-            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
+            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission, $entityService: ALM.Screens.Mission.EntityService)
             public constructor ()
         }
         class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
@@ -4854,6 +4857,14 @@
             public Tick () : void
             public Dispose () : void
             public constructor ($mission: ALM.Screens.Base.MissionLoader.PlayableMission, $raycaster: ALM.Screens.Mission.RaycasterService, $timerFactory: System.Func$2<number, ALM.Screens.Base.Timer>)
+            public constructor ()
+        }
+        class CommandWriter extends System.Object implements ALM.Common.IManagedFixedTickable, ALM.Common.IManagedTickable
+        {
+            protected [__keep_incompatibility]: never;
+            public Write ($cmd: ALM.Screens.Mission.ICommand) : void
+            public FixedTick () : void
+            public Tick () : void
             public constructor ()
         }
         class GltfLoaderService extends System.Object implements System.IDisposable
@@ -4883,7 +4894,14 @@
         Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
         }
         var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
-        class Ball extends UnityEngine.MonoBehaviour implements ALM.Common.IManagedTickable, ALM.Screens.Mission.IRaycastTarget
+        class MonoCommander extends UnityEngine.MonoBehaviour
+        {
+            protected [__keep_incompatibility]: never;
+            public Translate ($value: UnityEngine.Vector3) : ALM.Screens.Mission.ICommand
+            public Rotate ($value: UnityEngine.Vector3) : ALM.Screens.Mission.ICommand
+            public constructor ()
+        }
+        class Ball extends ALM.Screens.Mission.MonoCommander implements ALM.Screens.Mission.IRaycastTarget, ALM.Common.IManagedTickable, ALM.Screens.Mission.IEntity
         {
             protected [__keep_incompatibility]: never;
             public get TypeIndex(): number;
@@ -4891,6 +4909,8 @@
             public set Color(value: UnityEngine.Color);
             public get Hp(): number;
             public set Hp(value: number);
+            public get Id(): ALM.Screens.Mission.IEntityId;
+            public set Id(value: ALM.Screens.Mission.IEntityId);
             public add_OnHitBy ($value: System.Action$1<number>) : void
             public remove_OnHitBy ($value: System.Action$1<number>) : void
             public add_OnHit ($value: System.Action) : void
@@ -4901,13 +4921,16 @@
             public static Create ($target: UnityEngine.GameObject, $raycastTarget: ALM.Screens.Mission.AnomoyousRaycastTarget) : ALM.Screens.Mission.Ball
             public constructor ()
         }
-        interface IRaycastTarget
+        interface IRaycastTarget extends ALM.Screens.Mission.IEntity
         {
             add_OnHitBy ($value: System.Action$1<number>) : void
             remove_OnHitBy ($value: System.Action$1<number>) : void
             add_OnHit ($value: System.Action) : void
             remove_OnHit ($value: System.Action) : void
             HitBy ($index: number) : void
+        }
+        interface IEntity
+        {
         }
         class MissionEntry extends ALM.Screens.Base.HandlableEntry$1<ALM.Screens.Mission.MissionEntry> implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, VContainer.Unity.IFixedTickable, System.IDisposable
         {
@@ -4917,12 +4940,16 @@
         {
             protected [__keep_incompatibility]: never;
         }
-        interface IRaycaster
+        class EntityService extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IRaycaster extends ALM.Screens.Mission.IEntity
         {
             Origin : UnityEngine.Vector3
             Direction : UnityEngine.Vector3
         }
-        class AnomoyousRaycastTarget extends ALM.Util.EventBinder.CollideBasedHandler implements ALM.Screens.Mission.IRaycastTarget
+        class AnomoyousRaycastTarget extends ALM.Util.EventBinder.CollideBasedHandler implements ALM.Screens.Mission.IRaycastTarget, ALM.Screens.Mission.IEntity
         {
             protected [__keep_incompatibility]: never;
             public add_OnHitBy ($value: System.Action$1<number>) : void
@@ -4932,6 +4959,9 @@
             public static Setup ($target: UnityEngine.GameObject, $autoConfig?: ALM.Util.EventBinder.CollideBasedHandler.AutoConfig) : ALM.Screens.Mission.AnomoyousRaycastTarget
             public HitBy ($index: number) : void
             public constructor ()
+        }
+        interface IEntityId
+        {
         }
         interface IScoreCalculator
         {
@@ -4945,6 +4975,12 @@
             public Tick ($deltaTime: number) : void
             public constructor ($onCasted: ALM.Screens.Mission.JsScoreCalculator.CastedAction)
             public constructor ()
+        }
+        interface ICommand
+        {
+        }
+        interface Commander$1<T>
+        {
         }
     }
     namespace ALM.Screens.Base {
@@ -4981,6 +5017,9 @@
     }
     namespace ALM.Common {
         interface IManagedTickable
+        {
+        }
+        interface IManagedFixedTickable
         {
         }
     }
