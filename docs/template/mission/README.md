@@ -38,7 +38,7 @@ mission
   - `version` 版本，新 API 可能不能兼容
   - `gltf_resources` Json Map 類型，可註冊相對路徑 glb/gltf 模型，使用 `GltfLoaderService.Get(string name)` 在任務腳本中取得模型
 
-## 關於 `Commander`
+## 關於 `Command`
 
 遊戲開發時，物體的位移、轉向與現實中 **連續的作動** 不同，它是 **離散** 的 (根據座標最小間隔)
 
@@ -67,11 +67,16 @@ Render Tick └─┴───┴┴──┴────┴─
 1. 相同時間內 `Render Tick` 與 `Fixed Tick` 的次數不相同
 2. 在 `Fixed Tick` 內，目標值不一定立即被渲染出來
 
-由於 `Fixed Tick` 的時間間隔是已知的[^3]，利用這個特性，ALM 內使用 `Commander` 操作就能做到不關心 `delta Time` 來完成值變化的操作
+因為這些原因，如果只在 `Fixed Tick` 內對值進行操作，渲染出來肯定是會有問題的，這就是為何需要使用 `Command`
 
-[^1]:通常在 Unity 內為 `Update()` 方法
-[^2]:通常在 Unity 內為 `FixedUpdate()` 方法，但其實也能透過自定義的 tick loop 來與引擎脫鉤
-[^3]:它只是相對固定，不可能每次呼叫的間隔都完全相同，這裡忽略微小誤差
+由於 `Fixed Tick` 的時間間隔是已知的[^3]，利用這個特性，ALM 內使用 `Command` 操作就能做到不關心 `delta Time` 來完成值變化的操作，`Render Tick` 也能將當前的確切數值模擬出來[^4]
+
+因此，我們只需要知道 `Fixed Tick` 每秒執行的次數 (Unity 預設 `Fixed Timestep` 為 `0.02` 秒，`1 / 0.02 = 50次/秒`)；假設希望某個物體以 `10單位/秒` 速度移動，只需要持續寫入 `0.2單位` 的位移就能達成
+
+[^1]: 通常在 Unity 內為 `Update()` 方法
+[^2]: 通常在 Unity 內為 `FixedUpdate()` 方法，但其實也能透過自定義的 tick loop 來與引擎脫鉤
+[^3]: 它只是相對固定，不可能每次呼叫的間隔都完全相同，這裡忽略微小誤差
+[^4]: 模擬指的是糙作判定應該都要基於 `Fixed Tick`，雖然目前沒有完全實作，有很多都還是在 `Render Tick` 內完成
 
 ## 關於 `Rng`
 
