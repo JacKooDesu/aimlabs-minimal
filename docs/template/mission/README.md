@@ -38,6 +38,41 @@ mission
   - `version` 版本，新 API 可能不能兼容
   - `gltf_resources` Json Map 類型，可註冊相對路徑 glb/gltf 模型，使用 `GltfLoaderService.Get(string name)` 在任務腳本中取得模型
 
+## 關於 `Commander`
+
+遊戲開發時，物體的位移、轉向與現實中 **連續的作動** 不同，它是 **離散** 的 (根據座標最小間隔)
+
+請看下面這個 `Render Tick`[^1] 的時間軸的呼叫情形：
+
+```text
+1 2   34  5    6 ...
+└─┴───┴┴──┴────┴─
+```
+
+可以發現呼叫的時間間隔並不相同，所以通常會將目標值乘上 `delta time` 來讓時間內結果能夠被預期
+
+在 ALM 中開發任務也會遇到類似的情形，通常會使用 js 的 `setInterval()` 來達成
+
+這裡必須說明，PuerTs 提供的 js 執行環境 tick 時機點其實是 C# 端來決定的，為了避免各種操作變得難以預測，ALM 的任務運行選擇將 tick 間隔固定 —— 使用 `Fixed Tick`[^2]，我們來觀察時間軸：
+
+```text
+Fixed Tick  1   2   3   4   5...
+            └───┴───┴───┴───┴
+            1 2   34  5    6 ...
+Render Tick └─┴───┴┴──┴────┴─
+```
+
+可以發現：
+
+1. 相同時間內 `Render Tick` 與 `Fixed Tick` 的次數不相同
+2. 在 `Fixed Tick` 內，目標值不一定立即被渲染出來
+
+由於 `Fixed Tick` 的時間間隔是已知的[^3]，利用這個特性，ALM 內使用 `Commander` 操作就能做到不關心 `delta Time` 來完成值變化的操作
+
+[^1]:通常在 Unity 內為 `Update()` 方法
+[^2]:通常在 Unity 內為 `FixedUpdate()` 方法，但其實也能透過自定義的 tick loop 來與引擎脫鉤
+[^3]:它只是相對固定，不可能每次呼叫的間隔都完全相同，這裡忽略微小誤差
+
 ## 關於 `Rng`
 
 目前回放機能並不是紀錄所有物件的狀態，而是記錄操作，透過輸入 random seed 來保證回放時隨機結果相同。
