@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ALM.Screens.Mission
 {
-    using ALM.Common;
+    using ALM.Screens.Base;
     using ALM.Screens.Base.Setting;
 
     public class FpsController : IController, IManagedTickable

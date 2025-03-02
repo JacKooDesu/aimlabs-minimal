@@ -8,13 +8,21 @@ using VContainer.Unity;
 
 namespace ALM.Screens.Base
 {
+    using ConstTickGroup = Common.TickableGroup<TickTiming.ConstRender>;
+    using ConstFixedTickGroup = Common.TickableGroup<TickTiming.ConstFixed>;
+    using TickGroup = Common.TickableGroup<TickTiming.ManagedRender>;
+    using FixedGroup = Common.TickableGroup<TickTiming.ManagedFixed>;
+
     public abstract class HandlableEntry<TEntry> : ITickable, IFixedTickable, IStartable, IDisposable
         where TEntry : HandlableEntry<TEntry>
     {
         bool _paused = false;
 
         protected IEnumerable<UIBase> _uis;
-        protected List<IManagedTickable> _tickables;
+        ConstTickGroup _constTickGroup;
+        ConstFixedTickGroup _constFixedTickGroup;
+        TickGroup _tickGroup;
+        FixedGroup _fixedGroup;
         protected List<IManagedFixedTickable> _fixedTickables;
         protected GameStatusHandler _handler;
         protected AudioService _audioService;
@@ -25,15 +33,37 @@ namespace ALM.Screens.Base
             GameStatusHandler handler,
             AudioService audioService,
             IEnumerable<UIBase> uis,
-            IEnumerable<IAutoRegister> autoRegisters,
             IEnumerable<IManagedTickable> tickables,
-            IEnumerable<IManagedFixedTickable> fixedTickables)
+            IEnumerable<IManagedFixedTickable> fixedTickables,
+            IEnumerable<IManagedConstTickable> constTickables,
+            IEnumerable<IManagedConstFixedTickable> constFixedTickables,
+            ConstTickGroup constTickGroup,
+            ConstFixedTickGroup constFixedTickGroup,
+            TickGroup tickGroup,
+            FixedGroup fixedGroup,
+            IEnumerable<IAutoRegister> autoRegisters)
         {
             var type = typeof(TEntry);
             _handler = handler;
             _audioService = audioService;
-            _tickables = new(tickables);
-            _fixedTickables = new(fixedTickables);
+
+            _constTickGroup = constTickGroup;
+            _constFixedTickGroup = constFixedTickGroup;
+            _tickGroup = tickGroup;
+            _fixedGroup = fixedGroup;
+
+            foreach (var t in tickables)
+                _tickGroup.Reg(t);
+
+            foreach (var t in fixedTickables)
+                _fixedGroup.Reg(t);
+
+            foreach (var t in constTickables)
+                _constTickGroup.Reg(t);
+
+            foreach (var t in constFixedTickables)
+                _constFixedTickGroup.Reg(t);
+
             _handler.AddEntry(type);
 
             _handler.Register(type, GameStatus.Paused, () => _paused = true);
@@ -60,6 +90,11 @@ namespace ALM.Screens.Base
 
         void IStartable.Start()
         {
+            _tickGroup.Tick();
+            _fixedGroup.Tick();
+            _constTickGroup.Tick();
+            _constFixedTickGroup.Tick();
+
             foreach (var ui in _uis)
                 ui.Config(_rootUi.rootVisualElement);
 
@@ -72,26 +107,25 @@ namespace ALM.Screens.Base
         {
             this.ConstTick();
 
+            _constTickGroup.Tick();
+
             if (_paused)
                 return;
 
             this.Tick();
-
-            foreach (var tickable in _tickables)
-                tickable?.Tick();
+            _tickGroup.Tick();
         }
 
         void IFixedTickable.FixedTick()
         {
             ConstFixedTick();
+            _constFixedTickGroup.Tick();
 
             if (_paused)
                 return;
 
             FixedTick();
-
-            foreach (var fixedTickalbe in _fixedTickables)
-                fixedTickalbe?.FixedTick();
+            _fixedGroup.Tick();
         }
 
         /// <summary>
@@ -110,12 +144,6 @@ namespace ALM.Screens.Base
         }
 
         public virtual void Dispose() { }
-
-        public void RegTickable(IManagedTickable tickable) =>
-            _tickables.Add(tickable);
-
-        public void UnregTickable(IManagedTickable tickable) =>
-            _tickables.Remove(tickable);
 
         interface IAutoRegister
         {

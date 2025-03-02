@@ -43,6 +43,7 @@ namespace ALM.Screens.Mission
             Room room,
             Replay replay,
             Realm realm,
+            TickableGroup<TickTiming.ManagedRender> tickGroup,
             DiscordHandler discordHandler,
             Func<float, Timer> timerFactory,
             UIDocument rootUi) : base(rootUi)
@@ -62,7 +63,8 @@ namespace ALM.Screens.Mission
             _replay = replay.InputFrames.Count > 0 ? null : replay;
 
             if (_mission.Outline.Time > 0)
-                _timer = timerFactory(_mission.Outline.Time);
+                tickGroup.Reg(
+                    _timer = timerFactory(_mission.Outline.Time));
 
             discordHandler.SetMission(
                 _mission.Outline,
@@ -133,15 +135,9 @@ namespace ALM.Screens.Mission
                        _mission.Outline, _playHistory)).Forget();
         }
 
-        protected override void ConstTick()
-        {
-            _pauseHandleService.CheckState();
-        }
+        protected override void ConstTick() { }
 
-        protected override void Tick()
-        {
-            _timer?.Tick();
-        }
+        protected override void Tick() { }
 
         protected override void FixedTick() { }
 

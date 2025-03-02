@@ -6,8 +6,9 @@ namespace ALM.Screens.Mission
 {
     using ALM.Screens.Base;
     using ALM.Common;
+    using TickGroup = Common.TickableGroup<Base.TickTiming.ConstRender>;
 
-    public class PauseHandleService
+    public class PauseHandleService : IManagedConstTickable
     {
         const float COUNT_DOWN_TIME = 3f;
 
@@ -20,15 +21,18 @@ namespace ALM.Screens.Mission
 
         public PauseHandleService(
             GameStatusHandler handler,
+            TickGroup tickGroup,
             Func<float, Timer> timerFactory)
         {
             _handler = handler;
             _countDownTimer = timerFactory(COUNT_DOWN_TIME);
 
+            tickGroup.Reg(_countDownTimer);
+
             _countDownTimer.OnComplete += Resume;
         }
 
-        public void CheckState()
+        void ITickable<TickTiming.ConstRender>.Tick()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -38,14 +42,12 @@ namespace ALM.Screens.Mission
                 else
                     Paused();
             }
-
-            _countDownTicker?.Invoke();
         }
 
         void Paused()
         {
             OnPause?.Invoke();
-            _countDownTicker = null;
+            _countDownTimer.Pause();
 
             UIStackHandler.PushUI((uint)UIIndex.Pause);
             UIStackHandler.WaitUntilUiPop((uint)UIIndex.Pause)
@@ -63,7 +65,7 @@ namespace ALM.Screens.Mission
                 UIStackHandler.PushUI((uint)UIIndex.Countdown, _countDownTimer);
 
             _countDownTimer.Reset();
-            _countDownTicker = _countDownTimer.Tick;
+            _countDownTimer.Resume();
 
             // We need know when to off blur ui, 
             // not like the method Resume() to set game status

@@ -7,14 +7,17 @@ using Unity.Mathematics;
 
 namespace ALM.Screens.Mission
 {
+
     using System.Linq;
     using ALM.Screens.Base;
     using Base.Setting;
     using Data;
 
+    using TickGroup = Common.TickableGroup<Base.TickTiming.ManagedRender>;
+
     public class BallPoolService : IDisposable
     {
-        readonly MissionLifetimeScope _scope;
+        readonly TickGroup _tickGroup;
         readonly AudioService _audioService;
         readonly ObjectSetting _objectSetting;
         readonly AudioSetting _audioSetting;
@@ -41,14 +44,14 @@ namespace ALM.Screens.Mission
         AudioClip _hitSound;
 
         public BallPoolService(
-            MissionLifetimeScope scope,
+            TickGroup tickGroup,
             MissionScoreData missionScoreData,
             ObjectSetting objectSetting,
             AudioService audioService,
             AudioSetting audioSetting,
             MissionLoader.PlayableMission mission)
         {
-            _scope = scope;
+            _tickGroup = tickGroup;
             _audioService = audioService;
             _objectSetting = objectSetting;
             _audioSetting = audioSetting;
@@ -120,18 +123,18 @@ namespace ALM.Screens.Mission
 
         void GetBall(Ball ball)
         {
-            var entry = _scope.Container.Resolve<MissionEntry>();
-            entry.RegTickable(ball);
+            _tickGroup.Reg(ball);
+
+            ball.gameObject.SetActive(true);
         }
         void ReleaseBall(Ball ball)
         {
-            var entry = _scope.Container.Resolve<MissionEntry>();
-            entry.UnregTickable(ball);
+            _tickGroup.Unreg(ball);
+            ball.gameObject.SetActive(false);
         }
         void DestroyBall(Ball ball)
         {
-            var entry = _scope.Container.Resolve<MissionEntry>();
-            entry.UnregTickable(ball);
+            _tickGroup.Unreg(ball);
 
             _balls.Add(ball);
         }
@@ -146,6 +149,8 @@ namespace ALM.Screens.Mission
 
         public Ball[] GetBalls(int count, int type = 0) =>
             Enumerable.Repeat(Ball(type), count).ToArray();
+
+        public void Release(Ball ball) => Pool.Release(ball);
 
         public void Dispose()
         {

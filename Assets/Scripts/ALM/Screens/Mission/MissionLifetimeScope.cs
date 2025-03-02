@@ -92,7 +92,9 @@ namespace ALM.Screens.Mission
 
             builder.Register<BallPoolService>(Lifetime.Scoped);
             builder.Register<RaycasterService>(Lifetime.Scoped);
-            builder.Register<PauseHandleService>(Lifetime.Scoped);
+            builder.Register<PauseHandleService>(Lifetime.Scoped)
+                .AsImplementedInterfaces()
+                .AsSelf();
             builder.RegisterFactory<float, Timer>(
                 _ => f => new(f),
                 Lifetime.Scoped);

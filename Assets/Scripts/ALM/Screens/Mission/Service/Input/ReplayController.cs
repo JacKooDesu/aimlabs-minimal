@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ALM.Screens.Mission
 {
-    using ALM.Common;
+    using Base;
     using ALM.Data;
     using ALM.Screens.Base.Setting;
 
@@ -26,7 +26,7 @@ namespace ALM.Screens.Mission
             _raycasterService = raycasterService;
         }
 
-        public void FixedTick()
+        public void Tick()
         {
             if (_currentFrame >= _replay.InputFrames.Count)
                 return;

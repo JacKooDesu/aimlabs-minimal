@@ -11,6 +11,11 @@ namespace ALM.Screens.Base
     using ALM.Common;
     using ALM.Screens.Menu;
 
+    using ConstTickGroup = Common.TickableGroup<TickTiming.ConstRender>;
+    using ConstFixedTickGroup = Common.TickableGroup<TickTiming.ConstFixed>;
+    using TickGroup = Common.TickableGroup<TickTiming.ManagedRender>;
+    using FixedGroup = Common.TickableGroup<TickTiming.ManagedFixed>;
+
     public abstract class HandlableLifetimeScope<TScope, TEntry> : LifetimeScope
         where TScope : HandlableLifetimeScope<TScope, TEntry>
         where TEntry : HandlableEntry<TEntry>
@@ -56,6 +61,11 @@ namespace ALM.Screens.Base
                 builder.RegisterComponent(x).AsImplementedInterfaces();
 
             builder.RegisterEntryPointExceptionHandler(ExcpetionHandler);
+
+            builder.Register<ConstTickGroup>(Lifetime.Scoped);
+            builder.Register<ConstFixedTickGroup>(Lifetime.Scoped);
+            builder.Register<TickGroup>(Lifetime.Scoped);
+            builder.Register<FixedGroup>(Lifetime.Scoped);
         }
 
         void ExcpetionHandler(Exception e)
