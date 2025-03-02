@@ -4,17 +4,19 @@ using System.Collections.Generic;
 
 namespace ALM.Common
 {
-    public class TickableGroup<T> : ITickable
-        where T : ITickable
+    public class TickableGroup<T>
+        where T : ITickTiming
     {
-        List<T> _tickables = new();
+        List<ITickable<T>> _tickables = new();
 
-        Queue<T> _pendingReg = new();
-        Queue<T> _pendingUnreg = new();
+        Queue<ITickable<T>> _pendingReg = new();
+        Queue<ITickable<T>> _pendingUnreg = new();
 
-        public void Reg(T t) =>
+        public TickableGroup() { }
+
+        public void Reg(ITickable<T> t) =>
             _pendingReg.Enqueue(t);
-        public void Unreg(T t) =>
+        public void Unreg(ITickable<T> t) =>
             _pendingUnreg.Enqueue(t);
 
         public void Tick()
