@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace ALM.Screens.Mission
 {
+    using Screens.Base;
     public class Ball : MonoBehaviour, IRaycastTarget, IManagedTickable
     {
         public int TypeIndex { get; set; }
