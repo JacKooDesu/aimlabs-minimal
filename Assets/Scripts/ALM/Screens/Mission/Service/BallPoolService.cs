@@ -130,7 +130,6 @@ namespace ALM.Screens.Mission
         void ReleaseBall(Ball ball)
         {
             _tickGroup.Unreg(ball);
-            ball.Reset();
             ball.gameObject.SetActive(false);
         }
         void DestroyBall(Ball ball)
