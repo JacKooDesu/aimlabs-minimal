@@ -14,7 +14,14 @@
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "Mono.Cecil.dll",
+        "Realm.dll",
+        "DiscordRPC.dll",
+        "Ookii.Dialogs.dll",
+        "MemoryPack.Core.dll",
+        "Newtonsoft.Json.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],

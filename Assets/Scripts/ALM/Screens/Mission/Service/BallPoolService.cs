@@ -21,6 +21,7 @@ namespace ALM.Screens.Mission
         readonly AudioService _audioService;
         readonly ObjectSetting _objectSetting;
         readonly AudioSetting _audioSetting;
+        readonly RecordService _recordService;
 
         public ObjectPool<Ball> Pool { get; private set; }
         public Func<Ball> BallFactory;
@@ -141,6 +142,10 @@ namespace ALM.Screens.Mission
 
         public Ball Ball(int typeIndex = 0)
         {
+            _recordService.RecordMethodCall(
+                typeof(BallPoolService), 
+                nameof(Ball), 
+                typeIndex.ToString());
             var ball = Pool.Get();
             ball.Color = _objectSetting.GetBallColor(typeIndex);
             ball.TypeIndex = typeIndex;

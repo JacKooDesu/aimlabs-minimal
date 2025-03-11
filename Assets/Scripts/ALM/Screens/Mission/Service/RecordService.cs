@@ -26,6 +26,10 @@ namespace ALM.Screens.Mission
                     _currentFrame, new CastFrame(caster.Origin, caster.Direction));
         }
 
+        public void RecordMethodCall(System.Type serviceType, string methodName, params string[] parameters)
+        {
+        }
+
         void ITickable<TickTiming.ManagedFixed>.Tick()
         {
             var rotX = _controller.RotX;
