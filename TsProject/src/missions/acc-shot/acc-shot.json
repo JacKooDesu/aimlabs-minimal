@@ -1,0 +1,6 @@
+{
+  "name": "acc-shot",
+  "description": "This is a simple grid shot",
+  "map_size": 80,
+  "time_seconds": 90
+}
