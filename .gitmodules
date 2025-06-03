@@ -1,3 +1,4 @@
 [submodule "aimlabs-minimal-ts-gen"]
 	path = aimlabs-minimal-ts-gen
 	url = https://github.com/JacKooDesu/aimlabs-minimal-ts-gen.git
+	branch = main
