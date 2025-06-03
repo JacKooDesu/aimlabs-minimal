@@ -4843,11 +4843,12 @@
             public remove_OnBallHit ($value: System.Action$1<ALM.Screens.Mission.Ball>) : void
             public Ball ($typeIndex?: number) : ALM.Screens.Mission.Ball
             public GetBalls ($count: number, $type?: number) : System.Array$1<ALM.Screens.Mission.Ball>
+            public Release ($ball: ALM.Screens.Mission.Ball) : void
             public Dispose () : void
-            public constructor ($scope: ALM.Screens.Mission.MissionLifetimeScope, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
+            public constructor ($tickGroup: ALM.Common.TickableGroup$1<ALM.Screens.Base.TickTiming.ManagedRender>, $missionScoreData: ALM.Data.MissionScoreData, $objectSetting: ALM.Screens.Base.Setting.ObjectSetting, $audioService: ALM.Screens.Base.AudioService, $audioSetting: ALM.Screens.Base.AudioSetting, $mission: ALM.Screens.Base.MissionLoader.PlayableMission)
             public constructor ()
         }
-        class ScoreService extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class ScoreService extends System.Object implements ALM.Common.ITickable$1<ALM.Screens.Base.TickTiming.ManagedRender>, ALM.Screens.Base.IManagedTickable, System.IDisposable
         {
             protected [__keep_incompatibility]: never;
             public OverrideCalculator ($calculator: ALM.Screens.Mission.IScoreCalculator) : void
@@ -4883,7 +4884,7 @@
         Invoke?: (configure: ALM.Screens.Mission.JsConfigure) => void;
         }
         var JsConfigureDel: { new (func: (configure: ALM.Screens.Mission.JsConfigure) => void): JsConfigureDel; }
-        class Ball extends UnityEngine.MonoBehaviour implements ALM.Common.IManagedTickable, ALM.Screens.Mission.IRaycastTarget
+        class Ball extends UnityEngine.MonoBehaviour implements ALM.Common.ITickable$1<ALM.Screens.Base.TickTiming.ManagedRender>, ALM.Screens.Base.IManagedTickable, ALM.Screens.Mission.IRaycastTarget
         {
             protected [__keep_incompatibility]: never;
             public get TypeIndex(): number;
@@ -4908,14 +4909,6 @@
             add_OnHit ($value: System.Action) : void
             remove_OnHit ($value: System.Action) : void
             HitBy ($index: number) : void
-        }
-        class MissionEntry extends ALM.Screens.Base.HandlableEntry$1<ALM.Screens.Mission.MissionEntry> implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, VContainer.Unity.IFixedTickable, System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        class MissionLifetimeScope extends ALM.Screens.Base.HandlableLifetimeScope$2<ALM.Screens.Mission.MissionLifetimeScope, ALM.Screens.Mission.MissionEntry> implements System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
         }
         interface IRaycaster
         {
@@ -4962,26 +4955,41 @@
             public constructor ($audioSetting: ALM.Screens.Base.AudioSetting)
             public constructor ()
         }
-        class HandlableEntry$1<TEntry> extends System.Object implements VContainer.Unity.IStartable, VContainer.Unity.ITickable, VContainer.Unity.IFixedTickable, System.IDisposable
+        interface IManagedTickable extends ALM.Common.ITickable$1<ALM.Screens.Base.TickTiming.ManagedRender>
         {
-            protected [__keep_incompatibility]: never;
-        }
-        class HandlableLifetimeScope$2<TScope, TEntry> extends VContainer.Unity.LifetimeScope implements System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
         }
         class AudioSetting extends System.Object implements ALM.Util.UIToolkitExtend.IDataTarget
         {
             protected [__keep_incompatibility]: never;
         }
-        class Timer extends System.Object implements ALM.Common.IManagedTickable, System.IDisposable
+        class Timer extends System.Object implements ALM.Common.ITickable$1<ALM.Screens.Base.TickTiming.ManagedRender>, ALM.Common.ITickable$1<ALM.Screens.Base.TickTiming.ConstRender>, ALM.Screens.Base.IManagedConstTickable, ALM.Screens.Base.IManagedTickable, System.IDisposable
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        interface IManagedConstTickable extends ALM.Common.ITickable$1<ALM.Screens.Base.TickTiming.ConstRender>
+        {
+        }
+    }
+    namespace ALM.Screens.Base.TickTiming {
+        class ManagedRender extends System.Object implements ALM.Common.ITickTiming
+        {
+            protected [__keep_incompatibility]: never;
+        }
+        class ConstRender extends System.Object implements ALM.Common.ITickTiming
         {
             protected [__keep_incompatibility]: never;
         }
     }
     namespace ALM.Common {
-        interface IManagedTickable
+        interface ITickTiming
         {
+        }
+        interface ITickable$1<T>
+        {
+        }
+        class TickableGroup$1<T> extends System.Object
+        {
+            protected [__keep_incompatibility]: never;
         }
     }
     namespace System.ComponentModel {
@@ -5085,21 +5093,6 @@
             protected [__keep_incompatibility]: never;
         }
         interface IObjectPool$1<T>
-        {
-        }
-    }
-    namespace VContainer.Unity {
-        class LifetimeScope extends UnityEngine.MonoBehaviour implements System.IDisposable
-        {
-            protected [__keep_incompatibility]: never;
-        }
-        interface IStartable
-        {
-        }
-        interface ITickable
-        {
-        }
-        interface IFixedTickable
         {
         }
     }
