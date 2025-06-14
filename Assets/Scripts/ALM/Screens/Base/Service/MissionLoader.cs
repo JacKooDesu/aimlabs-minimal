@@ -157,7 +157,7 @@ namespace ALM.Screens.Base
 
             var outlinePath = Path.Combine(
                 di.FullName,
-                $"{(di.Name)}.json");
+                "mission.json");
 
             if (!File.Exists(outlinePath))
             {
