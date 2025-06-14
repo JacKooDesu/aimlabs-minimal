@@ -10,16 +10,19 @@ using UnityEngine.UIElements;
 namespace ALM.Screens.Menu
 {
     using ALM.Common;
+    using ALM.Data;
     using ALM.Screens.Base;
     using ALM.Util;
 
-    public class MissionRepos : MenuUIBase
+    public class MissionSources : MenuUIBase
     {
-        public override uint Index => ((uint)UIIndex.MissionRepos);
-        protected override string BaseElementName => "MissionRepos";
+        public override uint Index => ((uint)UIIndex.MissionSources);
+        protected override string BaseElementName => "MissionSources";
 
         [Inject]
         MissionImporter _missionImporter;
+        [Inject]
+        LoadingPanel _loadingPanel;
 
         VisualElement _selectionInner;
         List<Button> _buttons { get; } = new();
@@ -38,23 +41,28 @@ namespace ALM.Screens.Menu
             _buttons.ForEach(button => _selectionInner.Remove(button));
             _buttons.Clear();
 
-            _missionImporter.GetMissionRepoList()
-                .Repos.ToList().ForEach(
-                    r =>
-                    {
-                        Button button = new();
-                        button.text = r.Name;
-                        button.RegisterCallback<ClickEvent>(_ => OnSelectRepo(r));
-                        _selectionInner.Add(button);
+            var endpoints = _missionImporter.GetMissionSources();
 
-                        _buttons.Add(button);
-                    }
-                );
+            _loadingPanel.ShowSync(
+                UniTask.WhenAll(
+                    endpoints.Select(e => CreateButton(e))));
+
+            async UniTask CreateButton(string endpoint)
+            {
+                var sourceDataResponse = await _missionImporter.GetSourceContent(endpoint, true);
+
+                Button button = new();
+                button.text = sourceDataResponse.Name;
+                button.RegisterCallback<ClickEvent>(_ => OnSelectRepo(endpoint));
+                _selectionInner.Add(button);
+
+                _buttons.Add(button);
+            }
         }
 
-        void OnSelectRepo(Data.MissionRepo r)
+        void OnSelectRepo(string endpoint)
         {
-            UIStackHandler.PushUI((uint)UIIndex.RepoMissions, r);
+            UIStackHandler.PushUI((uint)UIIndex.RepoMissions, endpoint);
         }
     }
 }

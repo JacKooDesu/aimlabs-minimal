@@ -21,7 +21,7 @@ namespace ALM.Screens.Menu
             typeof(ManageAssets),
             typeof(AssetsList),
             typeof(HistoryPanel),
-            typeof(MissionRepos),
+            typeof(MissionSources),
             typeof(RepoMissions),
             typeof(RepoMissionInfo),
         };

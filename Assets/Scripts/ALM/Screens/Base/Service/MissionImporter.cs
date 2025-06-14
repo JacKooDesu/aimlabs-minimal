@@ -124,46 +124,97 @@ namespace ALM.Screens.Base
             return result;
         }
 
-        public MissionRepoList GetMissionRepoList()
+        public string[] GetMissionSources()
         {
             var path = Path.Combine(
                 DEFAULT_PATH,
                 DEFAULT_REPO_SETTING);
 
-            return FileIO.JLoad<MissionRepoList>(FileIO._File.Absolute(path), true);
+            var sourceList = FileIO.JLoad<MissionSourceList>(FileIO._File.Absolute(path), true);
+
+            return sourceList.Sources.ToArray();
         }
 
-        public async UniTask<RepoContent> GetRepoContent(MissionRepo repo, bool forceUpdate = false)
+        public async UniTask<MissionSourceContentResponse> GetSourceContent(
+            string endpoint, bool forceUpdate = false)
         {
             if (!forceUpdate)
             {
-                var data = _realm.Find<MissionRepoData>(repo.Name);
+                var data = _realm.Find<MissionSourceData>(endpoint);
                 if (data is not null)
-                    return data.RepoContent;
+                    return data.SourceContent;
             }
 
             var request = await UnityWebRequest
-                .Get(repo.Endpoint)
+                .Get(endpoint)
                 .SendWebRequest()
                 .ToUniTask();
 
             if (request.result is not UnityWebRequest.Result.Success)
                 throw new Exception("Failed to get mission list.");
 
-            var content = JsonConvert.DeserializeObject<RepoContent>(request.downloadHandler.text);
+            var content = JsonConvert.DeserializeObject<MissionSourceContentResponse>(request.downloadHandler.text);
 
             _realm.Write(() =>
             {
-                _realm.Add(new MissionRepoData(repo, request.downloadHandler.text), update: true);
+                _realm.Add(new MissionSourceData(
+                    endpoint, content, request.downloadHandler.text), update: true);
+            });
+
+            request.downloadHandler.text.Dbg();
+            return content;
+        }
+
+        public async UniTask<MissionDetailResponse> GetSourceMissionDetail(
+            string endpoint, string missionName, bool forceUpdate = false)
+        {
+            var source = _realm.Find<MissionSourceData>(endpoint);
+
+            if (source is null)
+                throw new Exception($"Mission source not found: {endpoint}");
+
+            if (!forceUpdate)
+            {
+                var data = source?
+                    .Missions
+                    .FirstOrDefault(x => x.Name == missionName);
+
+                if (data is not null)
+                    return data.MissionDetail;
+            }
+
+            var detailUrl = source
+                .SourceContent
+                .Missions
+                .FirstOrDefault(x => x.Name == missionName)?
+                .DetailUrl;
+
+            if (string.IsNullOrEmpty(detailUrl))
+                throw new Exception("Mission detail URL is empty.");
+
+            var request = await UnityWebRequest
+                .Get(detailUrl)
+                .SendWebRequest()
+                .ToUniTask();
+
+            var content = JsonConvert.DeserializeObject<MissionDetailResponse>(
+                request.downloadHandler.text);
+
+            _realm.Write(() =>
+            {
+                _realm.Add(new SourceMissionData(
+                    content.Name, source, request.downloadHandler.text), update: true);
             });
 
             return content;
         }
 
-        public async UniTask<string> DownloadMission(RepoContent repo, MissionOutline outline)
+        public async UniTask<string> DownloadMission(string endpoint, string missionName)
         {
+            var detail = await GetSourceMissionDetail(endpoint, missionName);
+
             var result = await UnityWebRequest
-                .Get(repo.GetMissionDownloadUrl(outline))
+                .Get(detail.ArchiveUrl)
                 .SendWebRequest()
                 .ToUniTask();
 
@@ -173,7 +224,7 @@ namespace ALM.Screens.Base
 
             var path = Path.Combine(
                 DEFAULT_PATH,
-                outline.Name + ".zip");
+                detail.Info.Name + ".zip");
 
             File.WriteAllBytes(path, Convert.FromBase64String(result.downloadHandler.text));
 

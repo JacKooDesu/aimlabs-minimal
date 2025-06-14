@@ -61,7 +61,7 @@ namespace ALM.Screens.Menu
 
         void ExploreMission(ClickEvent _)
         {
-            UIStackHandler.PushUI((uint)UIIndex.MissionRepos);
+            UIStackHandler.PushUI((uint)UIIndex.MissionSources);
         }
 
         void FileSelected(string[] paths)
