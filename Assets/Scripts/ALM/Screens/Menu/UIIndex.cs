@@ -9,7 +9,7 @@ namespace ALM.Screens.Menu
         ManageAssets,
         AssetsList,
         HistoryPanel,
-        MissionRepos,
+        MissionSources,
         RepoMissions,
         RepoMissionInfo,
     }

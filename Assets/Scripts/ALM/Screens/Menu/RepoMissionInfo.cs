@@ -12,7 +12,7 @@ namespace ALM.Screens.Menu
     {
         public override uint Index => (uint)UIIndex.RepoMissionInfo;
         protected override string BaseElementName => "RepoMissionInfo";
-        public record Payload(RepoContent Repo, MissionOutline Outline);
+        public record Payload(string Endpoint, string MissionName);
 
         [Inject]
         MissionImporter _missionImporter;
@@ -39,7 +39,9 @@ namespace ALM.Screens.Menu
             if (UIStackHandler.Current().data is not Payload payload)
                 throw new Exception("MissionOutline is null");
 
-            UpdateInfo(payload.Outline);
+            _loadingPanel.ShowSync(
+                _missionImporter.GetSourceMissionDetail(payload.Endpoint, payload.MissionName)
+                .ContinueWith(c => UpdateInfo(c.Info)));
         }
 
         private void Download(ClickEvent _)
@@ -47,13 +49,13 @@ namespace ALM.Screens.Menu
             if (UIStackHandler.Current().data is not Payload payload)
                 throw new Exception("MissionOutline is null");
 
-            var task = _missionImporter.DownloadMission(payload.Repo, payload.Outline)
-                .ContinueWith(m => _quickHint.Show("Imported: " + payload.Outline.Name, 1.5f));
+            var task = _missionImporter.DownloadMission(payload.Endpoint, payload.MissionName)
+                .ContinueWith(m => _quickHint.Show("Imported: " + payload.MissionName, 1.5f));
 
 
             _loadingPanel.ShowSync(
-                _missionImporter.DownloadMission(payload.Repo, payload.Outline),
-                () => _quickHint.ShowSync("Imported: " + payload.Outline.Name, 1.5f));
+                _missionImporter.DownloadMission(payload.Endpoint, payload.MissionName),
+                () => _quickHint.ShowSync("Imported: " + payload.MissionName, 1.5f));
         }
     }
 }

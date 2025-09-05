@@ -66,11 +66,7 @@ namespace ALM.Screens.Mission
                 tickGroup.Reg(
                     _timer = timerFactory(_mission.Outline.Time));
 
-            discordHandler.SetMission(
-                _mission.Outline,
-                realm.All<MissionRepoData>()
-                    .GetMissionDownloadUrls(_mission.Outline)
-                    .FirstOrDefault());
+            discordHandler.SetMission(_mission.Data);
         }
 
         public override void Start()

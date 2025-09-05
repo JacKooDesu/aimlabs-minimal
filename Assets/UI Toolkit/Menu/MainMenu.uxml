@@ -49,7 +49,7 @@
         </engine:VisualElement>
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>
-    <engine:VisualElement name="MissionRepos" class="selection-parent inactive 3rd" style="height: auto; top: 10%; bottom: 10%;">
+    <engine:VisualElement name="MissionSources" class="selection-parent inactive 3rd" style="height: auto; top: 10%; bottom: 10%;">
         <engine:VisualElement name="SelectionInner" class="selection-inner" style="flex-grow: 1;" />
         <engine:Button name="ReturnButton" class="return-button" />
     </engine:VisualElement>

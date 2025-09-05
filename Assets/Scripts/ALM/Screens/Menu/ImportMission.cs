@@ -61,7 +61,7 @@ namespace ALM.Screens.Menu
 
         void ExploreMission(ClickEvent _)
         {
-            UIStackHandler.PushUI((uint)UIIndex.MissionRepos);
+            UIStackHandler.PushUI((uint)UIIndex.MissionSources);
         }
 
         void FileSelected(string[] paths)
@@ -69,7 +69,7 @@ namespace ALM.Screens.Menu
             if (paths.Length is 0)
                 return;
 
-            var result = paths.Where(p => !string.IsNullOrEmpty(_missionImporter.ImportZip(p)));
+            var result = paths.Where(p => _missionImporter.ImportZip(p) is not null);
             DisplayResult(result);
         }
 

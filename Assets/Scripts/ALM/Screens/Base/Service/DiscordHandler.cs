@@ -28,8 +28,7 @@ namespace ALM.Screens.Base
         }
 
         public void SetMission(
-            MissionOutline mission,
-            string downloadUrl = null)
+            MissionData mission)
         {
             SetActivity(new()
             {
@@ -38,11 +37,11 @@ namespace ALM.Screens.Base
                 Buttons = _Buttons()
             });
 
-            DiscordRPC.Button[] _Buttons() => downloadUrl is null ?
+            DiscordRPC.Button[] _Buttons() => mission.SourceMissionData is null ?
                 Array.Empty<DiscordRPC.Button>() :
                 new DiscordRPC.Button[] { new(){
                     Label = "Get Mission",
-                    Url = downloadUrl
+                    Url = mission.SourceMissionData.MissionDetail.ArchiveUrl
                 } };
         }
 

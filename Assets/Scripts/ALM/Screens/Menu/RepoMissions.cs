@@ -37,39 +37,40 @@ namespace ALM.Screens.Menu
             base.Push();
             _selectionInner.contentContainer.Clear();
 
-            if (UIStackHandler.Current().data is not Data.MissionRepo repo)
+            if (UIStackHandler.Current().data is not string endpoint)
                 return;
 
-            RefreshRepoContents(repo);
+            RefreshRepoContents(endpoint);
         }
 
-        void OnSelectMission(RepoContent repo, Data.MissionOutline mission)
+        void OnSelectMission(string endpoint, string missionName)
         {
             UIStackHandler.PushUI(
                 (uint)UIIndex.RepoMissionInfo,
-                new RepoMissionInfo.Payload(repo, mission));
+                new RepoMissionInfo.Payload(endpoint, missionName));
         }
 
         void RefreshRepoContents(
-            Data.MissionRepo repo = null, bool forceUpdate = false)
+            string endpoint = null, bool forceUpdate = false)
         {
-            if ((repo ??= (UIStackHandler.Current().data as Data.MissionRepo)) is null)
+            if ((endpoint ??= (UIStackHandler.Current().data as string)) is null)
                 return;
 
             _loadingPanel.ShowSync(
-                _missionImporter.GetRepoContent(repo, forceUpdate)
+                _missionImporter.GetSourceContent(endpoint, forceUpdate)
                 .ContinueWith(c => UpdateButton(c)));
 
-            void UpdateButton(RepoContent c)
+            void UpdateButton(MissionSourceContentResponse c)
             {
-                _functionPanel.Q<Label>("RepoName").text = repo.Name;
+                _functionPanel.Q<Label>("RepoName").text = c.Name;
 
                 _selectionInner.contentContainer.Clear();
                 foreach (var mission in c.Missions)
                 {
                     var button = new Button();
                     button.text = mission.Name;
-                    button.RegisterCallback<ClickEvent>(_ => OnSelectMission(c, mission));
+                    button.RegisterCallback<ClickEvent>(_ => 
+                        OnSelectMission(endpoint, mission.Name));
                     _selectionInner.contentContainer.Add(button);
                 }
             }
