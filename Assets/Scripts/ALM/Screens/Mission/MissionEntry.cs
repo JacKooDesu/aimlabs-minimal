@@ -66,12 +66,7 @@ namespace ALM.Screens.Mission
                 tickGroup.Reg(
                     _timer = timerFactory(_mission.Outline.Time));
 
-            // FIXME: use endpoint search mission download url
-            // discordHandler.SetMission(
-            //     _mission.Outline,
-            //     realm.All<MissionSourceData>()
-            //         .GetMissionDownloadUrls(_mission.Outline)
-            //         .FirstOrDefault());
+            discordHandler.SetMission(_mission.Data);
         }
 
         public override void Start()

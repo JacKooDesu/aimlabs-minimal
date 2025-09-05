@@ -63,23 +63,17 @@ namespace ALM.Screens.Base
 
             foreach (var file in Directory.GetFiles(DEFAULT_PATH, "*.zip"))
             {
-                var missionName = ImportZip(file);
+                var missionName = ImportZip(file, true)?.Name;
                 if (string.IsNullOrEmpty(missionName))
                     continue;
-
-                File.Delete(file);
-
-                result.Add(missionName);
-
-                WriteToRealm(missionName);
             }
 
             return result.ToArray();
         }
 
-        public string ImportZip(string path, bool delete = false)
+        public MissionData ImportZip(string path, bool delete = false)
         {
-            string result = null;
+            MissionData result = null;
 
             using (var archive = ZipFile.OpenRead(path))
             {
@@ -112,10 +106,7 @@ namespace ALM.Screens.Base
                     e.ExtractToFile(dest, true);
                 }
 
-                WriteToRealm(missionName);
-
-
-                result = missionName;
+                result = WriteToRealm(missionName);
             }
 
             if (delete)
@@ -209,7 +200,7 @@ namespace ALM.Screens.Base
             return content;
         }
 
-        public async UniTask<string> DownloadMission(string endpoint, string missionName)
+        public async UniTask<MissionData> DownloadMission(string endpoint, string missionName)
         {
             var detail = await GetSourceMissionDetail(endpoint, missionName);
 
@@ -226,20 +217,38 @@ namespace ALM.Screens.Base
                 DEFAULT_PATH,
                 detail.Info.Name + ".zip");
 
-            File.WriteAllBytes(path, Convert.FromBase64String(result.downloadHandler.text));
+            File.WriteAllBytes(path, result.downloadHandler.data);
 
-            return ImportZip(path, true);
+            var mission = ImportZip(path, true);
+
+            if (mission is not null)
+            {
+                _realm.Write(() =>
+                {
+                    mission.SourceMissionData =
+                        _realm.Find<MissionSourceData>(endpoint)
+                            .Missions
+                            .FirstOrDefault(x => x.Name == missionName);
+
+                    _realm.Refresh();
+                });
+            }
+
+            return mission;
         }
 
-        void WriteToRealm(string missionName)
+        MissionData WriteToRealm(string missionName)
         {
+            MissionData data = null;
             _realm.Write(() =>
             {
-                _realm.Add(new MissionData()
+                data = _realm.Add(new MissionData()
                 {
                     Name = missionName,
                 }, update: true);
             });
+
+            return data;
         }
 
         // This is csharp version of mission md5 generator

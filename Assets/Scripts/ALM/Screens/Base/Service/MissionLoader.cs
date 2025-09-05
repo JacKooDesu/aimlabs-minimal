@@ -23,7 +23,8 @@ namespace ALM.Screens.Base
         public record PlayableMission(
             MissionOutline Outline,
             string Path,
-            string[] Scripts);
+            string[] Scripts,
+            MissionData Data = null);
 
         public MissionLoader(Realm realm)
         {
@@ -84,7 +85,8 @@ namespace ALM.Screens.Base
             return new(
                 outline,
                 fullPath,
-                scripts);
+                scripts,
+                data);
         }
 
         public void ReScanMissions()
